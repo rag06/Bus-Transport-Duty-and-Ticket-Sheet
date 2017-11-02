@@ -98,7 +98,7 @@ class Bus extends CI_Controller {
 	
 	public function deleteBusRoute() {
 				$id =$this->input->post('busRouteId');
-				$result = $this->tickets_model->deleteTicket($id);
+				$result = $this->bus_model->deleteBusRoute($id);
 				if ($result == TRUE) {
 					redirect('admin/bus/bus');
 				}
