@@ -33,7 +33,8 @@ class Ticket_Register extends CI_Controller {
 		if(!isset($this->session->userdata['logged_in'])){
 			redirect('admin/login/index');
 		}
-		$this->load->view('admin/tickets/addTicketRegister');
+		$data['tickets']=$this->tickets_model->listTickets();
+		$this->load->view('admin/tickets/addTicketRegister',$data);
 		
 	}
 	
@@ -47,7 +48,7 @@ class Ticket_Register extends CI_Controller {
 				'TicketRegister_Status' => $this->input->post('ticketRegisterStatus')
 				);
 				
-				$result = $this->tickets_model->addTicket($data);
+				$result = $this->tickets_model->addTicketRegister($data);
 				if ($result == TRUE) {
 					redirect('admin/tickets/Ticket_Register');
 				}
@@ -65,6 +66,8 @@ class Ticket_Register extends CI_Controller {
 		if(!isset($this->session->userdata['logged_in'])){
 			redirect('admin/login/index');
 		}
+		
+		$data['tickets']=$this->tickets_model->listTickets();
 		$data['result'] = $this->tickets_model->getTicketRegister($id);
 		$this->load->view('admin/tickets/editTicketRegister',$data);
 		
@@ -72,27 +75,33 @@ class Ticket_Register extends CI_Controller {
 	
 	public function updateTicketRegister()
 	{
-				$data = array(
+				$params = array(
 				'TicketRegister_Id' => $this->input->post('ticketRegisterId'),
 				'TicketRegister_TicketId' => $this->input->post('ticketId'),
 				'TicketRegister_Qty' => $this->input->post('ticketQty'),
+				'TicketRegister_DateTime' => date('Y-m-d H:i:s'),
+				'TicketRegister_AddedBy' => $this->session->userdata['logged_in']['id'],
 				'TicketRegister_Status' => $this->input->post('ticketRegisterStatus')
 				);
 				
-				$result = $this->tickets_model->updateTicketRegister($data);
+				$result = $this->tickets_model->updateTicketRegister($params);
 				if ($result == TRUE) {
 					redirect('admin/tickets/Ticket_Register');
 				}
 				 else {
+				 
 					$data = array(
 						'error_message' => 'Error in updating TicketRegister'
 					);
-					$this->load->view('admin/ticket/editTicketRegister', $data);
+					
+					$data['tickets']=$this->tickets_model->listTickets();
+					$data['result'] = $this->tickets_model->getTicketRegister($params['TicketRegister_Id']);
+					$this->load->view('admin/tickets/editTicketRegister', $data);
 				}
 		
 	}
 	
-	public function deleteTicket() {
+	public function deleteTicketRegister() {
 				$id =$this->input->post('ticketRegisterId');
 				$result = $this->tickets_model->deleteTicketRegister($id);
 				if ($result == TRUE) {

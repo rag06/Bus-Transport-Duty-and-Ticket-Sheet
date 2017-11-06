@@ -41,7 +41,7 @@ Class Tickets_Model extends CI_Model {
 				return $query->result_array();
 	}
 	
-	public function updateTicket($id,$data)
+	public function updateTicket($data)
 	{			
 		$this->db->where('tickets_Id', $data['tickets_Id']);
 		$this->db->update('tickets' ,$data);
@@ -71,6 +71,8 @@ Class Tickets_Model extends CI_Model {
 		
 		$this->db->select('*');
 		$this->db->from('ticket_register');
+		$this->db->join('tickets', 'ticket_register.TicketRegister_TicketId = tickets.tickets_Id');
+		$this->db->order_by("TicketRegister_DateTime", "desc");
 		$query = $this->db->get();
 		$data=array();
 		$data['result']=$query->result();
@@ -95,7 +97,7 @@ Class Tickets_Model extends CI_Model {
 				return $query->result_array();
 	}
 	
-	public function updateTicketRegister($id,$data)
+	public function updateTicketRegister($data)
 	{			
 		$this->db->where('TicketRegister_Id', $data['TicketRegister_Id']);
 		$this->db->update('ticket_register' ,$data);
