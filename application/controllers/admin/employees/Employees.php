@@ -47,7 +47,7 @@ class Employees extends CI_Controller {
 				'Employee_Status' => $this->input->post('empStatus')
 				);
 				
-				$result = $this->bus_model->addBusRoute($data);
+				$result = $this->emp_model->addEmployee($data);
 				if ($result == TRUE) {
 					redirect('admin/employees/employees');
 				}

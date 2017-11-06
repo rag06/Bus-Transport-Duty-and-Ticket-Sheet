@@ -40,7 +40,7 @@ Class Employee_Model extends CI_Model {
 				return $query->result_array();
 	}
 	
-	public function updateEmployee($id,$data)
+	public function updateEmployee($data)
 	{			
 		$this->db->where('Employee_Id', $data['Employee_Id']);
 		$this->db->update('employees' ,$data);
@@ -94,7 +94,7 @@ Class Employee_Model extends CI_Model {
 				return $query->result_array();
 	}
 	
-	public function updateTicketEmployee($id,$data)
+	public function updateTicketEmployee($data)
 	{			
 		$this->db->where('tickets_employee_Id', $data['tickets_employee_Id']);
 		$this->db->update('tickets_employee' ,$data);
