@@ -40,7 +40,7 @@ Class Bus_Model extends CI_Model {
 				return $query->result_array();
 	}
 	
-	public function updateBusRoute($id,$data)
+	public function updateBusRoute($data)
 	{			
 		$this->db->where('Bus_Routes_Id', $data['Bus_Routes_Id']);
 		$this->db->update('bus_routes' ,$data);
@@ -70,6 +70,9 @@ Class Bus_Model extends CI_Model {
 		
 		$this->db->select('*');
 		$this->db->from('bus_timing');
+		$this->db->join('bus_routes','bus_routes.Bus_Routes_Id = bus_timing.bus_timing_routeId');
+		$this->db->order_by("bus_timing.bus_timing_CreatedOn", "desc");
+		
 		$query = $this->db->get();
 		$data=array();
 		$data['result']=$query->result();
@@ -94,7 +97,7 @@ Class Bus_Model extends CI_Model {
 				return $query->result_array();
 	}
 	
-	public function updateBusTiming($id,$data)
+	public function updateBusTiming($data)
 	{			
 		$this->db->where('bus_timing_Id', $data['bus_timing_Id']);
 		$this->db->update('bus_timing' ,$data);

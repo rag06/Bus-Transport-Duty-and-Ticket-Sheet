@@ -33,7 +33,8 @@ class Bus_Timing extends CI_Controller {
 		if(!isset($this->session->userdata['logged_in'])){
 			redirect('admin/login/index');
 		}
-		$this->load->view('admin/bus/addBusTiming');
+		$data['busRoutes'] = $this->bus_model->listBusRoutes();
+		$this->load->view('admin/bus/addBusTiming',$data);
 		
 	}
 	
@@ -56,6 +57,7 @@ class Bus_Timing extends CI_Controller {
 					$data = array(
 						'error_message' => 'Error in inserting Bus Timing'
 					);
+					$data['busRoutes'] = $this->bus_model->listBusRoutes();
 					$this->load->view('admin/bus/editBusTiming', $data);
 				}
 		
@@ -67,11 +69,12 @@ class Bus_Timing extends CI_Controller {
 			redirect('admin/login/index');
 		}
 		$data['result'] = $this->bus_model->getBusTiming($id);
-		$this->load->view('admin/tickets/editBusTiming',$data);
+		$data['busRoutes'] = $this->bus_model->listBusRoutes();
+		$this->load->view('admin/bus/editBusTiming',$data);
 		
 	}
 	
-	public function updateTicketRegister()
+	public function updateBusTiming()
 	{
 				$data = array(
 				'bus_timing_Id' => $this->input->post('busTimingId'),
@@ -89,6 +92,8 @@ class Bus_Timing extends CI_Controller {
 					$data = array(
 						'error_message' => 'Error in updating Bus Timing'
 					);
+					$data['result'] = $this->bus_model->getBusTiming($id);
+					$data['busRoutes'] = $this->bus_model->listBusRoutes();
 					$this->load->view('admin/ticket/editBusTiming', $data);
 				}
 		

@@ -28,12 +28,12 @@ class Bus extends CI_Controller {
 		$this->load->view('admin/bus/index',$data);
 	}
 	
-	public function addBusRoutes()
+	public function addBusRoute()
 	{
 		if(!isset($this->session->userdata['logged_in'])){
 			redirect('admin/login/index');
 		}
-		$this->load->view('admin/bus/addBusRoutes');
+		$this->load->view('admin/bus/addBusRoute');
 		
 	}
 	
@@ -68,7 +68,7 @@ class Bus extends CI_Controller {
 			redirect('admin/login/index');
 		}
 		$data['result'] = $this->bus_model->getBusRoute($id);
-		$this->load->view('admin/bus/busRoute',$data);
+		$this->load->view('admin/bus/editBusRoute',$data);
 		
 	}
 	
@@ -80,6 +80,8 @@ class Bus extends CI_Controller {
 				'Bus_Routes_Source' => $this->input->post('busRouteSource'),
 				'Bus_Routes_Destination' => $this->input->post('busRouteDest'),
 				'Bus_Routes_Kilometers' => $this->input->post('busRouteKM'),
+				'Bus_Routes_AddedDateandTime' => date('Y-m-d H:i:s'),
+				'Bus_Routes_CreatedBy' => $this->session->userdata['logged_in']['id'],
 				'Bus_Routes_Status' => $this->input->post('busRouteStatus')
 				);
 				
