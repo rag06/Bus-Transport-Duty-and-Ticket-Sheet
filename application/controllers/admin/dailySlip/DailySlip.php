@@ -44,7 +44,10 @@ class DailySlip extends CI_Controller {
 		if(!isset($this->session->userdata['logged_in'])){
 			redirect('admin/login/index');
 		}
-		$this->load->view('admin/dailySlip/addDailySlip');
+		$data['employees'] = $this->emp_model->listEmployees();
+		$data['routes'] = $this->bus_model->listBusRoutes();
+		
+		$this->load->view('admin/dailySlip/addDailySlip',$data);
 		
 	}
 	
@@ -58,7 +61,6 @@ class DailySlip extends CI_Controller {
 					'conductor_daysSlip_BusNumber' => $this->input->post('busNumber'),
 					'conductor_daysSlip_DriveEmpId' => $this->input->post('driverEmpId'),
 					'conductor_daysslip_date' => $this->input->post('dailslipDate'),
-					'conductor_daysslip_TotalIncome' => $this->input->post('totalIncome'),
 					'conductor_daysSlip_AddedDateTime' => date('Y-m-d H:i:s'),
 					'conductor_daysSlip_AddedBy' => $this->session->userdata['logged_in']['id']
 					
@@ -116,7 +118,6 @@ class DailySlip extends CI_Controller {
 					'conductor_daysSlip_BusNumber' => $this->input->post('busNumber'),
 					'conductor_daysSlip_DriveEmpId' => $this->input->post('driverEmpId'),
 					'conductor_daysslip_date' => $this->input->post('dailslipDate'),
-					'conductor_daysslip_TotalIncome' => $this->input->post('totalIncome'),
 					'conductor_daysSlip_AddedDateTime' => date('Y-m-d H:i:s'),
 					'conductor_daysSlip_AddedBy' => $this->session->userdata['logged_in']['id']
 					

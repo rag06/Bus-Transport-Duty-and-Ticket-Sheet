@@ -35,43 +35,79 @@
 								echo validation_errors();
 								echo "</div>";
 								?>
-								<div class="form-group">
-								  <label for="name"> Name</label>
-								  <input type="text" class="form-control" id="name" name="name" placeholder="Enter  Name">
-								</div>
-								<div class="form-group">
-								  <label for="email">Email</label>
-								  <input type="email" class="form-control" id="email" name="email" placeholder="Enter  Email ID">
-								</div>
-								<div class="form-group">
-								  <label for="username">Username</label>
-								  <input type="text" class="form-control" id="username" name="username" placeholder="Enter  Username">
-								</div>
-								<div class="form-group">
-								  <label for="password">Password</label>
-								  <input type="password" class="form-control" id="password" name="password" placeholder="Enter Password">
-								</div>
-								<div class="form-group">
-								 <label for="role"> Admin Role</label>
-								  <select class="form-control" name="role" id="role">
-									<?php
-												echo'<option value="0">General</option>
-													<option value="1">Admin</option>';
-									?>
-								  </select>
-								</div>
-								<div class="form-group">
-								 <label for="status"> Status</label>
-								  <select class="form-control" name="status" id="status">
-									<?php 
-												echo'<option value="0">InActive</option>
-													<option value="1" >Active</option>';
-									?>
-								  </select>
-								</div>
-							
-								<a href="<?php echo base_url() ;?>/admin/admin/users" class="btn btn-success btn-sm">Cancel</a>
-								<button type="submit" class="btn btn-primary pull-right">Add User </button>
+								<fieldset>
+									<legend>Slip:</legend>
+									<div class="">
+										<div class="form-group col-md-6">
+										  <label for="conductorEmpId">Conductor</label>
+										  <select class="form-control" id="conductorEmpId" name="conductorEmpId">
+											<?php 
+												foreach($employees['result'] as $emp){
+													if($emp->Employee_Type == 1)
+													 echo '<option value="'.$emp->Employee_Id.'" >'.$emp->Employee_Number.' ( '.$emp->Employee_Name.' )</option>';
+												}
+											?>
+										  </select>
+										</div>
+										<div class="form-group  col-md-6">
+										  <label for="routeId">Route</label>
+										  <select class="form-control" id="routeId" name="routeId" required>
+											<option value="">Select Route</option>
+										  <?php 
+												foreach($routes['result'] as $route){
+													 echo '<option value="'.$route->Bus_Routes_Id.'" >'.$route->Bus_Routes_Number.' ( '.$route->Bus_Routes_Source.' - '.$route->Bus_Routes_Destination.' )</option>';
+												}
+											?>
+											</select>
+										</div>
+									</div>
+									<div class="">
+									
+										<div class="form-group col-md-6">
+										  <label for="driverEmpId">Driver </label>
+										  <select class="form-control" id="driverEmpId" name="driverEmpId">
+										  <?php 
+												foreach($employees['result'] as $emp){
+													if($emp->Employee_Type == 0)
+													 echo '<option value="'.$emp->Employee_Id.'" >'.$emp->Employee_Number.' ( '.$emp->Employee_Name.' )</option>';
+												}
+											?>
+											</select>
+										</div>
+										<div class="form-group col-md-3">
+										  <label for="busNumber">Bus Number</label>
+										  <input type="text" class="form-control" id="busNumber" name="busNumber" placeholder="Enter Bus Number">
+										</div>
+										
+										<div class="form-group col-md-3">
+										  <label for="dailslipDate">Slip Date</label>
+										  <input type="text" class="form-control" id="dailslipDate" name="dailslipDate" placeholder="yyyy-mm-dd">
+										</div>
+									</div>
+								</fieldset>
+								
+								<fieldset>
+									<legend>Timings:</legend>
+										<table class="table dataTables">
+											<thead>
+												<tr>
+													<th>Start Time</th>
+													<th>End Time</th>
+													<th>Actual Start Time</th>
+													<th>Actual End Time</th>
+													<th>Kilometres</th>
+													<th>Actual Kilometres</th>
+												</tr>
+											</thead>
+											<tbody id="bustiming">
+											</tbody>
+										<table>
+								</fieldset>
+								
+								
+								
+								<a href="<?php echo base_url() ;?>admin/dailySlip/dailySlip" class="btn btn-success btn-sm">Cancel</a>
+								<button type="submit" class="btn btn-primary pull-right">Add Daily Slip </button>
 							</form>
 						  </div><!-- /.box-body -->
 					</div><!--box end-->
@@ -79,3 +115,32 @@
       </div><!-- /.content-wrapper -->
 		
      <?php $this->load->view('admin/layout/footer.php');?>
+	 <script>
+	 $(document).ready(function(){
+		$('#routeId').change(function(){
+				var routeId = $(this).val();
+				var innerHTML ='';
+				if(routeId){
+					$.ajax( 
+						url: '<?php echo base_url() ;?>admin/dailySlip/getBusTimings',
+						data: {routeId: routeId},
+						success: function(data) {
+							innerHTML += '<tr>';
+							innerHTML +=  '<td>Start Time</td>';
+							innerHTML +=  '<td>Start Time</td>';
+							innerHTML +=  '<td><input type="text" name="actSourceTime[]"  class="form-control input-sm"/></td>';
+							innerHTML +=  '<td><input type="text" name="actDestTime[]"  class="form-control input-sm"/></td>';
+							innerHTML +=  '<td>100 km</td>';
+							innerHTML +=  '<td><input type="text" name="actKm[]"  class="form-control input-sm"/></td>';
+							innerHTML +=  '</tr>';
+						},
+						error: function() {
+							 alert('No Timings found');
+						}
+					   });
+				}
+				$('#bustiming').html(innerHTML);
+		});
+	 });
+			
+	 </script>
