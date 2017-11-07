@@ -87,9 +87,10 @@ class Tickets extends CI_Controller {
 				}
 				 else {
 					$data = array(
-						'error_message' => 'Error in updating ticket'
+						'error_message' => 'Error in updating ticket',
+						'result' =>  $this->tickets_model->getTicket($data['tickets_Id'])
 					);
-					$this->load->view('admin/ticket/editTicket', $data);
+					$this->load->view('admin/tickets/editTicket', $data);
 				}
 		
 	}

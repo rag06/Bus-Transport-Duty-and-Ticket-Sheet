@@ -27,7 +27,7 @@
 						</div><!-- /.box-header -->
 						  <div class="box-body">
 							<form method="post" action="<?php echo base_url() ;?>admin/tickets/tickets/updateTicket">
-								<input type="hidden" name="tickets_Id" value="<?php echo$result[0]['tickets_Id'];?>" />
+								<input type="hidden" name="ticketId" value="<?php echo$result[0]['tickets_Id'];?>" />
 								 <?php
 								echo "<div class='error_msg'>";
 								if (isset($error_message)) {
@@ -68,7 +68,7 @@
 											}?>
 								  </select>
 								</div>
-								<a href="<?php echo base_url() ;?>/admin/tickets/tickets" class="btn btn-success btn-sm">Cancel</a>
+								<a href="<?php echo base_url() ;?>admin/tickets/tickets" class="btn btn-success btn-sm">Cancel</a>
 								<button type="submit" class="btn btn-primary pull-right">Save Changes </button>
 							</form>
 						  </div><!-- /.box-body -->

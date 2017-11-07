@@ -31,7 +31,6 @@
 								  <th style="width: 10px">#</th>
 								  <th>Route Number</th>
 								  <th>Conductor Employee Id</th>
-								  <th>TotalIncome</th>
 								  <th>Bus Number</th>
 								  <th>Date</th>
 								  <th>Actions</th>
@@ -46,7 +45,6 @@
 									  <td><?php echo $i;?>.</td>
 									  <td><?php echo $routes[$row->conductor_daysSlip_RoutesId][0]['Bus_Routes_Number'];?></td>
 									  <td><?php echo $employees[$row->conductor_daysSlip_RoutesId][0]['Employee_Number'];?></td>
-									  <td><?php echo $row->conductor_daysslip_TotalIncome;?></td>
 									  <td><?php echo $row->conductor_daysSlip_BusNumber;?></td>
 									  <td><?php echo $row->conductor_daysslip_date;?></td>
 									  <td>

@@ -21,15 +21,33 @@ Class DailySlip_Model extends CI_Model {
 	
 	public function getDailySlip($id) {
 		
-		$this->db->select('*');
+		/* $this->db->select('*');
 		$this->db->from('conductor_daysslip');
-		$this->db->join('conductor_daysslip_details','conductor_daysslip.conductor_daysSlip_Id = conductor_daysslip_details.conductor_daysslip_details_SlipId');
+		
 		$this->db->where('conductor_daysslip.conductor_daysSlip_Id =',$id);
 		$query = $this->db->get();
 		$data=array();
 		$data['result']=$query->result();
 		$data['records']=$query->num_rows();
-		return $data;
+		return $data; */
+		$query=$this->db->query("SELECT * FROM conductor_daysslip  WHERE conductor_daysSlip_Id = $id");
+				return $query->result_array();
+		
+	}
+	
+	public function getDailySlipDetails($id) {
+		
+		/* $this->db->select('*');
+		$this->db->from('conductor_daysslip');
+		
+		$this->db->where('conductor_daysslip.conductor_daysSlip_Id =',$id);
+		$query = $this->db->get();
+		$data=array();
+		$data['result']=$query->result();
+		$data['records']=$query->num_rows();
+		return $data; */
+		$query=$this->db->query("SELECT * FROM conductor_daysslip_details  WHERE conductor_daysslip_details_SlipId = $id");
+				return $query->result_array();
 		
 	}
 	
@@ -37,7 +55,7 @@ Class DailySlip_Model extends CI_Model {
 		
 		$this->db->select('*');
 		$this->db->from('conductor_daysslip');
-		$this->db->join('conductor_daysslip_details','conductor_daysslip.conductor_daysSlip_Id = conductor_daysslip_details.conductor_daysslip_details_SlipId');
+		//$this->db->join('conductor_daysslip_details','conductor_daysslip.conductor_daysSlip_Id = conductor_daysslip_details.conductor_daysslip_details_SlipId');
 		$query = $this->db->get();
 		$data=array();
 		$data['result']=$query->result();
@@ -64,11 +82,11 @@ Class DailySlip_Model extends CI_Model {
 	public function updateDailySlip($data)
 	{			
 		
-		$this->db->where('conductor_daysSlip_Id', $data['conductor_daysSlip_Id']);
+		$this->db->where('conductor_daysSlip_Id', $data['header']['conductor_daysSlip_Id']);
 		$this->db->update('conductor_daysslip' ,$data['header']);
 		
 		foreach($data['details'] as $value){
-			$this->db->where('conductor_daysslip_details_SlipId', $value['conductor_daysslip_details_SlipId']);
+			$this->db->where('conductor_daysslip_details_Id', $value['conductor_daysslip_details_Id']);
 			$this->db->update('conductor_daysslip_details' ,$value);
 		}
 		

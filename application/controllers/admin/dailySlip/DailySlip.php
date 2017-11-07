@@ -31,9 +31,9 @@ class DailySlip extends CI_Controller {
 		$data['employees'] = array();
 		foreach ($data['result']['result'] as $row){
 			$routeRow= $this->bus_model->getBusRoute($row->conductor_daysSlip_RoutesId);
-			$empRow= $this->emp_model->getEmployee($row->conductor_daysSlip_RoutesId);
+			$empRow= $this->emp_model->getEmployee($row->conductor_daysSlip_ConductorEmpId);
 			$data['routes'][$routeRow[0]['Bus_Routes_Id']] = $routeRow;
-			$data['employees'][$routeRow[0]['Employee_Id']] = $empRow;
+			$data['employees'][$empRow[0]['Employee_Id']] = $empRow;
 			
 		}
 		$this->load->view('admin/dailySlip/index',$data);
@@ -97,18 +97,19 @@ class DailySlip extends CI_Controller {
 				'conductor_daysslip_details_ActualKm' => $this->input->post('actKm')
 				);
 				$data['details'] = array();
-				$total_rows = count($tempDetails['conductor_daysslip_details_SlipId']);
+				$total_rows = count($tempDetails['conductor_daysslip_details_ActSourceTime']);
 				 if ($total_rows > 0)
 					{
-						for ($i=1; $i<=$total_rows; $i++)
+						for ($i=0; $i<$total_rows; $i++)
 						{
 							$temp=array();
 							$temp['conductor_daysslip_details_ActSourceTime'] = $tempDetails['conductor_daysslip_details_ActSourceTime'][$i];
 							$temp['conductor_daysslip_details_ActDestTime'] = $tempDetails['conductor_daysslip_details_ActDestTime'][$i];
 							$temp['conductor_daysslip_details_ActualKm'] = $tempDetails['conductor_daysslip_details_ActualKm'][$i];
+							array_push($data['details'],$temp);
 						}
 					}
-				 
+				//print_r($tempDetails);die;
 				$result = $this->dailyslip_model->addDailySlip($data);
 				if ($result == TRUE) {
 					redirect('admin/dailySlip/dailySlip');
@@ -128,6 +129,11 @@ class DailySlip extends CI_Controller {
 			redirect('admin/login/index');
 		}
 		$data['result'] = $this->dailyslip_model->getDailySlip($id);
+		$data['details'] = $this->dailyslip_model->getDailySlipDetails($id);
+		$data['actdetails'] = $this->bus_model->getBusTimingByRoute($data['result'][0]['conductor_daysSlip_RoutesId']);
+		$data['route'] = $this->bus_model->getBusRoute($data['result'][0]['conductor_daysSlip_RoutesId']);
+		$data['employees'] = $this->emp_model->listEmployees();
+		$data['routes'] = $this->bus_model->listBusRoutes();
 		$this->load->view('admin/dailySlip/editDailySlip',$data);
 		
 	}
@@ -159,28 +165,29 @@ class DailySlip extends CI_Controller {
 				$total_rows = count($tempDetails['conductor_daysslip_details_Id']);
 				 if ($total_rows > 0)
 					{
-						for ($i=1; $i<=$total_rows; $i++)
+						for ($i=0; $i<$total_rows; $i++)
 						{
 							$temp=array();
 							$temp['conductor_daysslip_details_Id'] = $tempDetails['conductor_daysslip_details_Id'][$i];
-							$temp['conductor_daysslip_details_SlipId'] = $tempDetails['conductor_daysslip_details_SlipId'][$i];
+							$temp['conductor_daysslip_details_SlipId'] = $data['header']['conductor_daysSlip_Id'];
 							$temp['conductor_daysslip_details_ActSourceTime'] = $tempDetails['conductor_daysslip_details_ActSourceTime'][$i];
 							$temp['conductor_daysslip_details_ActDestTime'] = $tempDetails['conductor_daysslip_details_ActDestTime'][$i];
 							$temp['conductor_daysslip_details_ActualKm'] = $tempDetails['conductor_daysslip_details_ActualKm'][$i];
+							array_push($data['details'],$temp);
 						}
 					}
 				 
 				
 				$result = $this->dailyslip_model->updateDailySlip($data);
-				if ($result == TRUE) {
+				
 					redirect('admin/dailySlip/dailySlip');
-				}
+				/* }
 				 else {
 					$data = array(
 						'error_message' => 'Error in updating dailySlip'
 					);
 					$this->load->view('admin/dailySlip/editDailySlip', $data);
-				}
+				} */
 		
 	}
 	
