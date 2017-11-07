@@ -121,25 +121,33 @@
 				var routeId = $(this).val();
 				var innerHTML ='';
 				if(routeId){
-					$.ajax( 
-						url: '<?php echo base_url() ;?>admin/dailySlip/getBusTimings',
+					$.ajax( {
+						url: '<?php echo base_url() ;?>admin/dailySlip/dailySlip/getBusTimings',
 						data: {routeId: routeId},
 						success: function(data) {
-							innerHTML += '<tr>';
-							innerHTML +=  '<td>Start Time</td>';
-							innerHTML +=  '<td>Start Time</td>';
-							innerHTML +=  '<td><input type="text" name="actSourceTime[]"  class="form-control input-sm"/></td>';
-							innerHTML +=  '<td><input type="text" name="actDestTime[]"  class="form-control input-sm"/></td>';
-							innerHTML +=  '<td>100 km</td>';
-							innerHTML +=  '<td><input type="text" name="actKm[]"  class="form-control input-sm"/></td>';
-							innerHTML +=  '</tr>';
+						console.log(data);
+						data = $.parseJSON(data)
+							if(data.status == true){
+								for(var i in data.data ){
+									innerHTML += '<tr>';
+									innerHTML +=  '<td>'+data.data[i].bus_timing_StartTime+'</td>';
+									innerHTML +=  '<td>'+data.data[i].bus_timing_DestinationTime+'</td>';
+									innerHTML +=  '<td><input type="text" name="actSourceTime[]"  class="form-control input-sm"/></td>';
+									innerHTML +=  '<td><input type="text" name="actDestTime[]"  class="form-control input-sm"/></td>';
+									innerHTML +=  '<td>'+data.route[0].Bus_Routes_Number+'</td>';
+									innerHTML +=  '<td><input type="text" name="actKm[]"  class="form-control input-sm"/></td>';
+									innerHTML +=  '</tr>';
+								}
+								
+								$('#bustiming').html(innerHTML);
+							}
 						},
 						error: function() {
 							 alert('No Timings found');
 						}
 					   });
+					   
 				}
-				$('#bustiming').html(innerHTML);
 		});
 	 });
 			

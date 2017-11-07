@@ -39,6 +39,31 @@ class DailySlip extends CI_Controller {
 		$this->load->view('admin/dailySlip/index',$data);
 	}
 	
+	public function getBusTimings(){
+		$routeId = $_GET['routeId'];
+		if(!empty($routeId)){
+			$busTimings = $this->bus_model->getBusTimingByRoute($routeId);
+			if(count($busTimings)>0)
+			{
+				$response= array();
+				$response['status']= true;
+				$response['data']= $busTimings;
+				$response['route'] = $this->bus_model->getBusRoute($routeId);
+				
+			}else{
+				$response= array();
+				$response['status']= false;
+				$response['errorMessage']= "No Values Found";
+			}
+		}else{
+			$response= array();
+			$response['status']= false;
+			$response['errorMessage']= "No Parameters";
+			
+		}
+		echo json_encode($response);
+	}
+	
 	public function addDailySlip()
 	{
 		if(!isset($this->session->userdata['logged_in'])){

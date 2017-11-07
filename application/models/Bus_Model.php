@@ -97,6 +97,11 @@ Class Bus_Model extends CI_Model {
 				return $query->result_array();
 	}
 	
+	public function getBusTimingByRoute($id)
+	{			$query=$this->db->query("SELECT * FROM bus_timing   WHERE bus_timing_routeId = $id");
+				return $query->result_array();
+	}
+	
 	public function updateBusTiming($data)
 	{			
 		$this->db->where('bus_timing_Id', $data['bus_timing_Id']);
