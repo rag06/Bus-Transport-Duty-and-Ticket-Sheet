@@ -17,6 +17,8 @@ class DailySlip extends CI_Controller {
 
 		// Load database
 		$this->load->model('DailySlip_Model', 'dailyslip_model');
+		$this->load->model('Bus_Model', 'bus_model');
+		$this->load->model('Employee_Model', 'emp_model');
 	}
 	
 	public function index()
@@ -25,6 +27,15 @@ class DailySlip extends CI_Controller {
 			redirect('admin/login/login/index');
 		}
 		$data['result'] = $this->dailyslip_model->listDailySlip();
+		$data['routes'] = array();
+		$data['employees'] = array();
+		foreach ($data['result']['result'] as $row){
+			$routeRow= $this->bus_model->getBusRoute($row->conductor_daysSlip_RoutesId);
+			$empRow= $this->emp_model->getEmployee($row->conductor_daysSlip_RoutesId);
+			$data['routes'][$routeRow[0]['Bus_Routes_Id']] = $routeRow;
+			$data['employees'][$routeRow[0]['Employee_Id']] = $empRow;
+			
+		}
 		$this->load->view('admin/dailySlip/index',$data);
 	}
 	
@@ -53,7 +64,7 @@ class DailySlip extends CI_Controller {
 					
 				);
 				
-				$tempDetails = array(,
+				$tempDetails = array(
 				'conductor_daysslip_details_ActSourceTime' => $this->input->post('actSourceTime'),
 				'conductor_daysslip_details_ActDestTime' => $this->input->post('actDestTime'),
 				'conductor_daysslip_details_ActualKm' => $this->input->post('actKm')
@@ -98,7 +109,6 @@ class DailySlip extends CI_Controller {
 	{
 				$data = array();
 				
-				
 				$data['header']= array(
 					'conductor_daysSlip_Id' => $this->input->post('slipId'),
 					'conductor_daysSlip_ConductorEmpId' => $this->input->post('conductorEmpId'),
@@ -112,7 +122,7 @@ class DailySlip extends CI_Controller {
 					
 				);
 				
-				$tempDetails = array(,
+				$tempDetails = array(
 				'conductor_daysslip_details_Id' => $this->input->post('slipDetailsId'),
 				'conductor_daysslip_details_SlipId' => $this->input->post('slipId'),
 				'conductor_daysslip_details_ActSourceTime' => $this->input->post('actSourceTime'),

@@ -63,8 +63,6 @@ Class DailySlip_Model extends CI_Model {
 	
 	public function updateDailySlip($data)
 	{			
-		$this->db->insert('conductor_daysslip', );
-		
 		
 		$this->db->where('conductor_daysSlip_Id', $data['conductor_daysSlip_Id']);
 		$this->db->update('conductor_daysslip' ,$data['header']);
