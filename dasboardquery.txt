@@ -1,0 +1,29 @@
+Sales Per month per year
+
+SELECT YEAR(  `cashDeposit_slip_Date` ) AS SalesYear, MONTH(  `cashDeposit_slip_Date` ) AS SalesMonth, SUM( cashDeposit_slip_details_CalculatedAmount ) AS TotalSales
+FROM cashdeposit_slip c, cashdeposit_slip_details d
+WHERE c.`cashDeposit_slip_Id` = d.cashDeposit_slip_details_SlipId
+GROUP BY YEAR(  `cashDeposit_slip_Date` ) , MONTH(  `cashDeposit_slip_Date` ) 
+ORDER BY YEAR(  `cashDeposit_slip_Date` ) , MONTH(  `cashDeposit_slip_Date` ) 
+
+Sales per route Per month per year
+SELECT YEAR(  `cashDeposit_slip_Date` ) AS SalesYear, MONTH(  `cashDeposit_slip_Date` ) AS SalesMonth, cashDeposit_slip_RouteId, SUM( cashDeposit_slip_details_CalculatedAmount ) AS TotalSales
+FROM cashdeposit_slip c, cashdeposit_slip_details d
+WHERE c.`cashDeposit_slip_Id` = d.cashDeposit_slip_details_SlipId
+GROUP BY c.cashDeposit_slip_RouteId, YEAR(  `cashDeposit_slip_Date` ) , MONTH(  `cashDeposit_slip_Date` ) 
+ORDER BY YEAR(  `cashDeposit_slip_Date` ) , MONTH(  `cashDeposit_slip_Date` ) 
+
+
+Sales Per Ticket Per month
+SELECT YEAR(  `cashDeposit_slip_Date` ) AS SalesYear, MONTH(  `cashDeposit_slip_Date` ) AS SalesMonth,  `cashDeposit_slip_details_TicketId` , SUM( cashDeposit_slip_details_CalculatedAmount ) AS TotalSales
+FROM cashdeposit_slip c, cashdeposit_slip_details d
+WHERE c.`cashDeposit_slip_Id` = d.cashDeposit_slip_details_SlipId
+GROUP BY  `cashDeposit_slip_details_TicketId` , YEAR(  `cashDeposit_slip_Date` ) , MONTH(  `cashDeposit_slip_Date` ) 
+ORDER BY cashDeposit_slip_details_TicketId, YEAR(  `cashDeposit_slip_Date` ) , MONTH(  `cashDeposit_slip_Date` ) 
+LIMIT 0 , 30
+
+
+Count of employees group by type
+
+SELECT COUNT(`Employee_Id`) FROM `employees` GROUP BY `Employee_Type`
+

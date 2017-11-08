@@ -5,9 +5,9 @@
         <!-- Logo -->
         <a href="<?php echo base_url();?>" class="logo">
           <!-- mini logo for sidebar mini 50x50 pixels -->
-          <span class="logo-mini"><b>A</b>dmin</span>
+          <span class="logo-mini"><b>KDMT</b></span>
           <!-- logo for regular state and mobile devices -->
-          <span class="logo-lg"><b>Admin</b>Panel</span>
+          <span class="logo-lg"><b>KDMT</b>Panel</span>
         </a>
 
         <!-- Header Navbar -->

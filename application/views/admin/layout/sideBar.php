@@ -9,8 +9,8 @@
 			<li class="treeview">
               <a href="#"><i class="fa fa-link"></i> <span>Cash Deposit Slip </span> <i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu">
-                <li><a href="<?php echo base_url()?>admin/">Create a Cash Deposit Slip</a></li>
-                <li><a href="<?php echo base_url()?>admin/">Manage Cash Deposit Slip</a></li>
+                <li><a href="<?php echo base_url()?>admin/cashDepositSlip/cashDepositSlip/addCashDepositSlip">Create a Cash Deposit Slip</a></li>
+                <li><a href="<?php echo base_url()?>admin/cashDepositSlip/cashDepositSlip/index">Manage Cash Deposit Slip</a></li>
               </ul>
             </li>
 			<li class="treeview">

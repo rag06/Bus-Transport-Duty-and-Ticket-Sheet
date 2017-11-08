@@ -28,7 +28,7 @@ Class CashDepositSlip_Model extends CI_Model {
 	
 	public function getCashDepositSlipDetails($id) {
 		
-		$query=$this->db->query("SELECT * FROM cashdeposit_slip_details  WHERE cashDeposit_slip_details_Id = $id");
+		$query=$this->db->query("SELECT * FROM cashdeposit_slip_details  WHERE cashDeposit_slip_details_SlipId = $id");
 				return $query->result_array();
 		
 	}
