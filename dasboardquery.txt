@@ -14,7 +14,7 @@ GROUP BY c.cashDeposit_slip_RouteId, YEAR(  `cashDeposit_slip_Date` ) , MONTH(  
 ORDER BY YEAR(  `cashDeposit_slip_Date` ) , MONTH(  `cashDeposit_slip_Date` ) 
 
 
-Sales Per Ticket Per month
+Sales Per Ticket per year Per month
 SELECT YEAR(  `cashDeposit_slip_Date` ) AS SalesYear, MONTH(  `cashDeposit_slip_Date` ) AS SalesMonth,  `cashDeposit_slip_details_TicketId` , SUM( cashDeposit_slip_details_CalculatedAmount ) AS TotalSales
 FROM cashdeposit_slip c, cashdeposit_slip_details d
 WHERE c.`cashDeposit_slip_Id` = d.cashDeposit_slip_details_SlipId
