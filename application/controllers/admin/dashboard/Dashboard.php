@@ -10,6 +10,8 @@ class Dashboard extends CI_Controller {
 
 		// Load database
 		$this->load->model('Dashboard_Model', 'dashboard_model');
+		$this->load->model('Tickets_Model', 'tickets_model');
+		$this->load->model('Bus_Model', 'bus_model');
 	}
 	
 	public function index()
@@ -24,6 +26,21 @@ class Dashboard extends CI_Controller {
 		$data['employees'] = $this->dashboard_model->getCountOfEmployeesPerType();
 		$data['adminusers'] = $this->dashboard_model->getCountOfAdminUsers();
 		$data['routecount'] = $this->dashboard_model->getCountOfBusRoutes();
+		$data['noOfBusPerRoute'] = $this->dashboard_model->getCountOfNoOfBusPerBusRoutes();
+		
+		$tempTickets=$this->tickets_model->listTickets();
+		$tempRoutes=$this->bus_model->listBusRoutes();
+		$tempArray=array();
+		foreach($tempTickets['result'] as $tickets){
+			$tempArray[$tickets->tickets_Id] = $tickets;
+		}
+		
+		$data['ticketsData'] = $tempArray;
+		$tempArray=array();
+		foreach($tempRoutes['result'] as $routes){
+			$tempArray[$routes->Bus_Routes_Id] = $routes;
+		}
+		$data['routesData'] = $tempArray;
 		$this->load->view('admin/dashboard/dashboard',$data);
 	}
 }

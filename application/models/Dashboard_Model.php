@@ -31,6 +31,10 @@ Class Dashboard_Model extends CI_Model {
 	{			$query=$this->db->query("SELECT COUNT(Bus_Routes_Id) AS VAL  FROM `bus_routes`");
 				return $query->result_array();
 	}
+	public function getCountOfNoOfBusPerBusRoutes()
+	{			$query=$this->db->query("SELECT COUNT(  `bus_timing_Id` ) AS COUNT, bus_timing_routeId FROM  `bus_timing` GROUP BY  `bus_timing_routeId` ");
+				return $query->result_array();
+	}
 	
 }
 ?>

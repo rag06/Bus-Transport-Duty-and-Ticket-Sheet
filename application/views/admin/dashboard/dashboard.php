@@ -111,6 +111,154 @@
 				  </div>
 				  <!-- /.box -->
 				</div>
+				<div class="col-lg-4 col-md-4">
+				<!-- DONUT CHART -->
+				  <div class="box box-primary">
+					<div class="box-header with-border">
+					  <h3 class="box-title">No. of Bus Per Route</h3>
+
+					  <div class="box-tools pull-right">
+						<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+						</button>
+						<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+					  </div>
+					</div>
+					<div class="box-body">
+					  <canvas id="pieChartforBus" style="height:250px"></canvas>
+					</div>
+					<!-- /.box-body -->
+				  </div>
+				  <!-- /.box -->
+				</div>
+			  </div>
+			  <div class="row">
+				<div class="col-lg-4 col-md-4">
+				  <!-- PRODUCT LIST -->
+				  <div class="box box-primary">
+					<div class="box-header with-border">
+					  <h3 class="box-title">Sales per Year Per Month</h3>
+					  <div class="box-tools pull-right">
+						<button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+						<button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+					  </div>
+					</div><!-- /.box-header -->
+					<div class="box-body">
+					  <table class="table datatable">
+						<thead>
+							<tr>
+								<th>Year</th>
+								<th>Month</th>
+								<th>Amount</th>
+							</tr>
+						</thead>
+						<tbody>
+							<?php 
+								$i=0;
+								foreach($sales as $sale){
+									$i++;
+									if($i == 3)
+										break;
+									echo '<tr>
+											<td>'.$sale['SalesYear'].'</td>
+											<td>'.$sale['SalesMonth'].'</td>
+											<td> Rs. '.$sale['TotalSales'].'</td>
+										</tr>';
+								}
+								?>
+						</tbody>
+					  </table>
+					</div><!-- /.box-body -->
+					<div class="box-footer text-center">
+					  <a href="#" class="uppercase">View All</a>
+					</div><!-- /.box-footer -->
+				  </div><!-- /.box -->
+				</div>
+				<div class="col-lg-4 col-md-4">
+				  <!-- PRODUCT LIST -->
+				  <div class="box box-primary">
+					<div class="box-header with-border">
+					  <h3 class="box-title">Sales per Ticket per Year Per Month</h3>
+					  <div class="box-tools pull-right">
+						<button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+						<button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+					  </div>
+					</div><!-- /.box-header -->
+					<div class="box-body">
+					  <table class="table datatable">
+						<thead>
+							<tr>
+								<th>Ticket</th>
+								<th>Year</th>
+								<th>Month</th>
+								<th>Amount</th>
+							</tr>
+						</thead>
+						<tbody>
+							<?php 
+								$i=0;
+								foreach($tickets as $ticket){
+									$i++;
+									if($i == 3)
+										break;
+									echo '<tr>
+											<td>'.$ticketsData[$ticket['cashDeposit_slip_details_TicketId']]->tickets_Price.'</td>
+											<td>'.$ticket['SalesYear'].'</td>
+											<td>'.$ticket['SalesMonth'].'</td>
+											<td> Rs. '.$ticket['TotalSales'].'</td>
+										</tr>';
+								}
+								?>
+						</tbody>
+					  </table>
+					</div><!-- /.box-body -->
+					<div class="box-footer text-center">
+					  <a href="#" class="uppercase">View All</a>
+					</div><!-- /.box-footer -->
+				  </div><!-- /.box -->
+				</div>
+				<div class="col-lg-4 col-md-4">
+				  <!-- PRODUCT LIST -->
+				  <div class="box box-primary">
+					<div class="box-header with-border">
+					  <h3 class="box-title">Sales per Route per Year Per Month</h3>
+					  <div class="box-tools pull-right">
+						<button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+						<button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+					  </div>
+					</div><!-- /.box-header -->
+					<div class="box-body">
+					  <table class="table datatable">
+						<thead>
+							<tr>
+								<th>Route</th>
+								<th>Year</th>
+								<th>Month</th>
+								<th>Amount</th>
+							</tr>
+						</thead>
+						<tbody>
+							<?php 
+								$i=0;
+								foreach($routes as $route){
+									$i++;
+									if($i == 3)
+										break;
+									echo '<tr>
+											<td>'.$routesData[$route['cashDeposit_slip_RouteId']]->Bus_Routes_Number.'</td>
+											<td>'.$route['SalesYear'].'</td>
+											<td>'.$route['SalesMonth'].'</td>
+											<td> Rs. '.$route['TotalSales'].'</td>
+										</tr>';
+								}
+								?>
+						</tbody>
+					  </table>
+					</div><!-- /.box-body -->
+					<div class="box-footer text-center">
+					  <a href="#" class="uppercase">View All</a>
+					</div><!-- /.box-footer -->
+				  </div><!-- /.box -->
+				</div>
 			  </div>
           <!-- Your Page Content Here -->
 
@@ -129,7 +277,9 @@
 		//-------------
 		// Get context with jQuery - using jQuery's .get() method.
 		var pieChartCanvas = $("#pieChart").get(0).getContext("2d");
+		var pieChartforBus = $("#pieChartforBus").get(0).getContext("2d");
 		var pieChart = new Chart(pieChartCanvas);
+		var pieChartforBus = new Chart(pieChartforBus);
 		var PieData = [
 		<?php foreach($employees as $emp){
 			$color = sprintf('#%06X', mt_rand(0, 0xFFFFFF));
@@ -139,6 +289,18 @@
 			color: "<?php echo $color; ?>",
 			highlight: "<?php echo $color; ?>",
 			label: "<?php echo  $emp['Employee_Type'] == 1 ?  "Conductor" :  "Driver" ; ?>"
+		  },
+		  <?php } ?>
+		];
+		var pieChartforBusData = [
+		<?php 	foreach($noOfBusPerRoute as $noOfBus){
+			$color = sprintf('#%06X', mt_rand(0, 0xFFFFFF));
+		?>
+		  {
+			value: "<?php echo $noOfBus['COUNT']; ?>",
+			color: "<?php echo $color; ?>",
+			highlight: "<?php echo $color; ?>",
+			label: "Route-<?php echo  $routesData[$noOfBus['bus_timing_routeId']]->Bus_Routes_Number; ?>"
 		  },
 		  <?php } ?>
 		];
@@ -169,4 +331,5 @@
 		//Create pie or douhnut chart
 		// You can switch between pie and douhnut using the method below.
 		pieChart.Doughnut(PieData, pieOptions);
+		pieChartforBus.Doughnut(pieChartforBusData, pieOptions);
 	 </script>
