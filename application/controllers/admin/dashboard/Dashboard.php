@@ -18,9 +18,12 @@ class Dashboard extends CI_Controller {
 			redirect('admin/login/login/index');
 		}
 		$data['sales'] = $this->dashboard_model->getSalesPerYearPerMonth();
+		$data['currentDay'] = $this->dashboard_model->getSalesCurrentDay();
 		$data['routes'] = $this->dashboard_model->getSalesPerRoutePerYearPerMonth();
 		$data['tickets'] = $this->dashboard_model->getSalesPerTicketPerYearPerMonth();
 		$data['employees'] = $this->dashboard_model->getCountOfEmployeesPerType();
+		$data['adminusers'] = $this->dashboard_model->getCountOfAdminUsers();
+		$data['routecount'] = $this->dashboard_model->getCountOfBusRoutes();
 		$this->load->view('admin/dashboard/dashboard',$data);
 	}
 }
