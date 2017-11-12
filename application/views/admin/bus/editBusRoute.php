@@ -26,7 +26,7 @@
 						  <h3 class="box-title">Edit Bus Route </h3>
 						</div><!-- /.box-header -->
 						  <div class="box-body">
-							<form method="post" action="<?php echo base_url() ;?>/admin/bus/bus/updateBusRoute">
+							<form method="post"  name="editBusRoute"  action="<?php echo base_url() ;?>admin/bus/bus/updateBusRoute">
 								<input type="hidden" name="busRouteId" value="<?php echo$result[0]['Bus_Routes_Id'];?>" />
 								 <?php
 								echo "<div class='error_msg'>";
@@ -36,28 +36,18 @@
 								echo validation_errors();
 								echo "</div>";
 								?>
-								<div class="form-group">
-								  <label for="busRouteNo"> Bus Route No.</label>
-								  <input type="text" class="form-control" id="busRouteNo" name="busRouteNo" value="<?php echo$result[0]['Bus_Routes_Number'];?>">
-								</div>
-								<div class="form-group">
-								  <label for="busRouteName"> Bus Route Source</label>
-								  <input type="text" class="form-control" id="busRouteName" name="busRouteName" value="<?php echo$result[0]['Bus_Routes_Name'];?>">
-								</div>
-								<div class="form-group">
-								 <label for="busRouteStatus"> Status</label>
-								  <select class="form-control" name="busRouteStatus" id="busRouteStatus">
-									<?php if($result[0]['Bus_Routes_Status']==1){
-												echo'<option value="0">InActive</option>
-													<option value="1" selected>Active</option>';}
-											else{
-												echo'<option value="0" selected>InActive</option>
-													<option value="1">Active</option>';
-											}?>
-								  </select>
+								<div class="row">
+									<div class="form-group col-md-6">
+									  <label for="busRouteNo"> Bus Route No.</label>
+									  <input type="text" class="form-control" id="busRouteNo" name="busRouteNo" value="<?php echo$result[0]['Bus_Routes_Number'];?>">
+									</div>
+									<div class="form-group col-md-6">
+									  <label for="busRouteName"> Bus Route Source</label>
+									  <input type="text" class="form-control" id="busRouteName" name="busRouteName" value="<?php echo$result[0]['Bus_Routes_Name'];?>">
+									</div>
 								</div>
 							
-								<a href="<?php echo base_url() ;?>/admin/bus/bus/index" class="btn btn-success btn-sm">Cancel</a>
+								<a href="<?php echo base_url() ;?>admin/bus/bus/index" class="btn btn-success btn-sm">Cancel</a>
 								<button type="submit" class="btn admin-btn btn-primary pull-right">Save Changes </button>
 							</form>
 						  </div><!-- /.box-body -->
@@ -66,3 +56,30 @@
       </div><!-- /.content-wrapper -->
 		
      <?php $this->load->view('admin/layout/footer.php');?>
+	 <script>
+	 $(function() {
+	  $("form[name='editBusRoute']").validate({
+		// Specify validation rules
+		rules: {
+		  // The key name on the left side is the name attribute
+		  // of an input field. Validation rules are defined
+		  // on the right side
+		  busRouteNo: {
+			required:true,
+			digits: true
+		  },
+		  busRouteName: "required"
+		},
+		// Specify validation error messages
+		messages: {
+		  busRouteNo: "Please enter a valid Bus Route Number",
+		  busRouteName: "Please enter Bus Route Name"
+		},
+		// Make sure the form is submitted to the destination defined
+		// in the "action" attribute of the form when valid
+		submitHandler: function(form) {
+		  form.submit();
+		}
+	  });
+	});
+	 </script>

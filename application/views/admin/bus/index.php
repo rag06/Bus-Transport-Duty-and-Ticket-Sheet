@@ -22,7 +22,9 @@
         <section class="content">
 				 <div class="box box-primary">
 						<div class="box-header with-border">
-						  <h3 class="box-title">Bus Routes List</h3>
+						  <h3 class="box-title">Bus Routes List
+							<a class="btn btn-warning btn-sm " href="<?php echo base_url() ;?>admin/bus/bus/downloadBusRouteList" target="_blank">Export as PDF</a>
+						</h3>
 						</div><!-- /.box-header -->
 						  <div class="box-body">
 							<table id="webpagesList" class="table table-bordered table-hover">
@@ -31,7 +33,6 @@
 								  <th style="width: 10px">#</th>
 								  <th>Number</th>
 								  <th>Source</th>
-								  <th>Status</th>
 								  <th>Actions</th>
 								</tr>
 								</thead>
@@ -44,14 +45,6 @@
 									  <td><?php echo $i;?>.</td>
 									  <td><?php echo $row->Bus_Routes_Number;?></td>
 									  <td><?php echo $row->Bus_Routes_Name;?></td>
-									<td>
-									  <?php if($row->Bus_Routes_Status==1){
-												echo'<span class="badge bg-green"> Active </span>';
-											}else{
-													echo'<span class="badge bg-warning">InActive</span>';
-											}
-										?>
-									</td>
 									  <td>
 										<a href="<?php echo base_url() ;?>admin/bus/bus/editBusRoute/<?php echo $row->Bus_Routes_Id;?>" class="admin-btn btn  btn-info btn-sm" >Edit</a>
 										

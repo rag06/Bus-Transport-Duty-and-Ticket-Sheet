@@ -22,7 +22,9 @@
         <section class="content">
 				 <div class="box box-primary">
 						<div class="box-header with-border">
-						  <h3 class="box-title">Tickets List</h3>
+						  <h3 class="box-title">Tickets List
+							<a class="btn btn-warning btn-sm " href="<?php echo base_url() ;?>admin/tickets/tickets/downloadTicketList" target="_blank">Export as PDF</a>
+							</h3>
 						</div><!-- /.box-header -->
 						  <div class="box-body">
 							<table id="webpagesList" class="table table-bordered table-hover">
@@ -32,7 +34,6 @@
 								  <th>Price</th>
 								  <th>Extra Price</th>
 								  <th>Ticket Type</th>
-								  <th>Status</th>
 								  <th>Actions</th>
 								</tr>
 								</thead>
@@ -53,18 +54,10 @@
 											}
 										?>
 									</td>
-									<td>
-									  <?php if($row->tickets_Status==1){
-												echo'<span class="badge bg-green"> Active </span>';
-											}else{
-													echo'<span class="badge bg-warning">InActive</span>';
-											}
-										?>
-									</td>
 									  <td>
-										<a href="<?php echo base_url() ;?>/admin/tickets/tickets/editTicket/<?php echo $row->tickets_Id;?>" class="btn  btn-info btn-sm" >Edit</a>
+										<a href="<?php echo base_url() ;?>/admin/tickets/tickets/editTicket/<?php echo $row->tickets_Id;?>" class="btn admin-btn btn-info btn-sm" >Edit</a>
 										
-										<button onclick="deleteTicket(<?php echo $row->tickets_Id;?>)" class="btn  btn-danger btn-sm">Delete</button>
+										<button onclick="deleteTicket(<?php echo $row->tickets_Id;?>)" class="btn admin-btn  btn-danger btn-sm">Delete</button>
 									  </td>
 									</tr>
 										<?php $i++;}?>

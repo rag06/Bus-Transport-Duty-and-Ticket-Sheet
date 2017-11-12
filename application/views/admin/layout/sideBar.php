@@ -22,15 +22,6 @@
             </li>
 			<?php if($this->session->userdata['logged_in']['role']==1) {?>
 			<li class="treeview">
-              <a href="#"><i class="fa fa-link"></i> <span>Tickets Management</span> <i class="fa fa-angle-left pull-right"></i></a>
-              <ul class="treeview-menu">
-                <li><a href="<?php echo base_url()?>admin/tickets/tickets/addTicket">Create Tickets</a></li>
-                <li><a href="<?php echo base_url()?>admin/tickets/tickets">Manage Tickets</a></li>
-                <!--li><a href="<?php echo base_url()?>admin/tickets/Ticket_Register/addTicketRegister">Add Entry in Ticket Register</a></li>
-                <li><a href="<?php echo base_url()?>admin/tickets/Ticket_Register">Manage Ticket Register</a></li-->
-              </ul>
-            </li>
-			<li class="treeview">
               <a href="#"><i class="fa fa-link"></i> <span>Traffic Management</span> <i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu">
                 <li><a href="<?php echo base_url()?>admin/bus/bus/addBusRoute">Add Bus Route</a></li>
@@ -39,6 +30,15 @@
                 <li><a href="<?php echo base_url()?>admin/bus/Bus_Duty/index">Manage Bus Duty</a></li>
                 <li><a href="<?php echo base_url()?>admin/bus/Bus_Timing/addBusTiming">Add Bus Timing</a></li>
                 <li><a href="<?php echo base_url()?>admin/bus/Bus_Timing">Manage Bus Timing</a></li>
+              </ul>
+            </li>
+			<li class="treeview">
+              <a href="#"><i class="fa fa-link"></i> <span>Tickets Management</span> <i class="fa fa-angle-left pull-right"></i></a>
+              <ul class="treeview-menu">
+                <li><a href="<?php echo base_url()?>admin/tickets/tickets/addTicket">Create Tickets</a></li>
+                <li><a href="<?php echo base_url()?>admin/tickets/tickets">Manage Tickets</a></li>
+                <!--li><a href="<?php echo base_url()?>admin/tickets/Ticket_Register/addTicketRegister">Add Entry in Ticket Register</a></li>
+                <li><a href="<?php echo base_url()?>admin/tickets/Ticket_Register">Manage Ticket Register</a></li-->
               </ul>
             </li>
 			<li class="treeview">

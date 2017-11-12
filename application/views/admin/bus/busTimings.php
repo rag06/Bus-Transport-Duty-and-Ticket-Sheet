@@ -22,7 +22,9 @@
         <section class="content">
 				 <div class="box box-primary">
 						<div class="box-header with-border">
-						  <h3 class="box-title">Bus Timing  List</h3>
+						  <h3 class="box-title">Bus Timing  List
+							<a class="btn btn-warning btn-sm " href="<?php echo base_url() ;?>admin/bus/Bus_Timing/downloadBusTimingList" target="_blank">Export as PDF</a>
+							</h3>
 						</div><!-- /.box-header -->
 						  <div class="box-body">
 							<table id="webpagesList" class="table table-bordered table-hover">

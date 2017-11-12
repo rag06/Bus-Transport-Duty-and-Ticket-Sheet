@@ -81,7 +81,7 @@
 		},
 		// Specify validation error messages
 		messages: {
-		  empNo: "Please enter Employee Number",
+		  empNo: "Please enter a valid Employee Number",
 		  empName: "Please enter Employee Name",
 		  empType: "Please enter Employee Type"
 		},

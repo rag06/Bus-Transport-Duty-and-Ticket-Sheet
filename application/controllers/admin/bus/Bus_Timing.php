@@ -105,10 +105,11 @@ class Bus_Timing extends CI_Controller {
 					redirect('admin/bus/Bus_Timing');
 				}
 				 else {
+					 redirect('admin/bus/Bus_Timing');
 					$data = array(
 						'error_message' => 'Error in updating Bus Timing'
 					);
-					$data['result'] = $this->bus_model->getBusTiming($id);
+					$data['result'] = $this->bus_model->getBusTiming($this->input->post('busTimingId'));
 					$data['busRoutes'] = $this->bus_model->listBusRoutes();
 					$this->load->view('admin/bus/editBusTiming', $data);
 				}
@@ -128,5 +129,43 @@ class Bus_Timing extends CI_Controller {
 					$this->load->view('admin/bus/busTimings', $data);
 				}
 		
+	}
+	public function downloadBusTimingList(){
+		//load mPDF library
+		$this->load->library('m_pdf');
+		//now pass the data//
+		$this->data['title']="Bus Timing List";
+		$this->data['description']="Contains all the list of bus duty Timing";
+		//now pass the data //
+		
+		
+		$this->data['result'] = $this->bus_model->listBusTiming();
+		$this->data['routesData'] = $this->bus_model->listBusDuty();
+		 
+		$html=$this->load->view('admin/bus/pdf_output_busTiming',$this->data, true); //load the pdf_output.php by passing our data and get all data in $html varriable.
+		//this the the PDF filename that user will get to download
+		$pdfFilePath ="busTimingList-".time()."-download.pdf";
+		 
+		//actually, you can pass mPDF parameter on this load() function
+		$pdf = $this->m_pdf->load();
+		// Define the Header/Footer before writing anything so they appear on the first page
+		$pdf->SetHTMLHeader('
+		<div style=" font-weight: bold;height:50px;">
+			 <h1>KDMT Transport</h1>
+		</div>');
+		$pdf->SetHTMLFooter('
+		<table width="100%">
+			<tr>
+				<td width="33%">Generated On : {DATE j-m-Y}</td>
+				<td width="33%" align="center">{PAGENO}/{nbpg}</td>
+				<td width="33%" style="text-align: right;">KDMT document</td>
+			</tr>
+		</table>');
+		
+		//generate the PDF!
+		$pdf->WriteHTML($html,2);
+		//offer it to user via browser download! (The PDF won't be saved on your server HDD)
+		$pdf->Output($pdfFilePath, "D");
+			
 	}
 }

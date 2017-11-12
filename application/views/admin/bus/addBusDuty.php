@@ -26,7 +26,7 @@
 						  <h3 class="box-title">Add Bus Duty</h3>
 						</div><!-- /.box-header -->
 						  <div class="box-body">
-							<form method="post" action="<?php echo base_url() ;?>/admin/bus/Bus_Duty/insertBusDuty">
+							<form method="post" name="addBusDuty" action="<?php echo base_url() ;?>admin/bus/Bus_Duty/insertBusDuty">
 								 <?php
 								echo "<div class='error_msg'>";
 								if (isset($error_message)) {
@@ -35,17 +35,19 @@
 								echo validation_errors();
 								echo "</div>";
 								?>
-								<div class="form-group">
-								  <label for="busRouteId"> Bus Route</label>
-								  <select class="form-control" id="busRouteId" name="busRouteId" >
-									<?php foreach($busRoutes['result']  as $busRoutesRow){
-											echo '<option value="'.$busRoutesRow->Bus_Routes_Id .'">'.$busRoutesRow->Bus_Routes_Number .'('.$busRoutesRow->Bus_Routes_Name.')</option>';
-									}?>
-								  </select>
-								</div>
-								<div class="form-group">
-								  <label for="busDutyNumber">Bus Duty Number</label>
-								  <input type="text" class="form-control" id="busDutyNumber" name="busDutyNumber">
+								<div class="row">
+									<div class="form-group col-md-6">
+									  <label for="busRouteId"> Bus Route</label>
+									  <select class="form-control" id="busRouteId" name="busRouteId" >
+										<?php foreach($busRoutes['result']  as $busRoutesRow){
+												echo '<option value="'.$busRoutesRow->Bus_Routes_Id .'">'.$busRoutesRow->Bus_Routes_Number .'('.$busRoutesRow->Bus_Routes_Name.')</option>';
+										}?>
+									  </select>
+									</div>
+									<div class="form-group col-md-6">
+									  <label for="busDutyNumber">Bus Duty Number</label>
+									  <input type="text" class="form-control" id="busDutyNumber" name="busDutyNumber">
+									</div>
 								</div>
 								<a href="<?php echo base_url() ;?>admin/bus/Bus_Duty/index" class="btn btn-success btn-sm">Cancel</a>
 								<button type="submit" class="btn btn-primary pull-right">Save Changes </button>
@@ -56,3 +58,32 @@
       </div><!-- /.content-wrapper -->
 		
      <?php $this->load->view('admin/layout/footer.php');?>
+	 <script>
+	 $(function() {
+	  $("form[name='addBusDuty']").validate({
+		// Specify validation rules
+		rules: {
+		  // The key name on the left side is the name attribute
+		  // of an input field. Validation rules are defined
+		  // on the right side
+		  busRouteId: {
+			required:true
+		  },
+		  busDutyNumber: {
+			  required:true,
+			  digits: true
+		  }
+		},
+		// Specify validation error messages
+		messages: {
+		  busRouteId: "Please enter a valid Bus Route Number",
+		  busDutyNumber: "Please enter Bus Duty Number"
+		},
+		// Make sure the form is submitted to the destination defined
+		// in the "action" attribute of the form when valid
+		submitHandler: function(form) {
+		  form.submit();
+		}
+	  });
+	});
+	 </script>

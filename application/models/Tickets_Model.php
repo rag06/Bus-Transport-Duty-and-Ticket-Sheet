@@ -17,6 +17,7 @@ Class Tickets_Model extends CI_Model {
 		
 		$this->db->select('*');
 		$this->db->from('tickets');
+		$this->db->order_by('tickets_Price','asc');
 		$query = $this->db->get();
 		$data=array();
 		$data['result']=$query->result();

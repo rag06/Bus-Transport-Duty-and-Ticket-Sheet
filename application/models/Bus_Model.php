@@ -16,6 +16,7 @@ Class Bus_Model extends CI_Model {
 		
 		$this->db->select('*');
 		$this->db->from('bus_routes');
+		$this->db->order_by('Bus_Routes_Number','asc');
 		$query = $this->db->get();
 		$data=array();
 		$data['result']=$query->result();
@@ -72,7 +73,7 @@ Class Bus_Model extends CI_Model {
 		$this->db->select('*');
 		$this->db->from('bus_duty');
 		$this->db->join('bus_routes','bus_duty.bus_duty_RouteId = bus_routes.Bus_Routes_Id');
-		$this->db->order_by("bus_duty.bus_duty_CreatedOn", "desc");
+		$this->db->order_by("bus_routes.Bus_Routes_Number", "asc");
 		$query = $this->db->get();
 		$data=array();
 		$data['result']=$query->result();
