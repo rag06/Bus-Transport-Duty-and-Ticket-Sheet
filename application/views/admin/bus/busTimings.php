@@ -29,11 +29,12 @@
 								<thead>
 								<tr>
 								  <th style="width: 10px">#</th>
-								  <th>Route Number</th>
+								  <th>Duty Number</th>
+								  <th>Source</th>
+								  <th>Destination</th>
 								  <th>Start Time</th>
 								  <th>End Time</th>
-								  <th>Date Time</th>
-								  <th>Status</th>
+								  <th>Kilometers</th>
 								  <th>Actions</th>
 								</tr>
 								</thead>
@@ -44,22 +45,16 @@
 										?>
 									<tr>
 									  <td><?php echo $i;?>.</td>
-									  <td><?php echo $row->Bus_Routes_Number;?></td>
+									  <td><?php echo $routesData[$row->bus_timing_RouteId]->Bus_Routes_Number .' | '.$row->bus_duty_Number ;?></td>
+									  <td><?php echo $row->bus_timing_Source;?></td>
+									  <td><?php echo $row->bus_timing_Destination;?></td>
 									  <td><?php echo $row->bus_timing_StartTime;?></td>
 									  <td><?php echo $row->bus_timing_DestinationTime;?></td>
-									  <td><?php echo $row->bus_timing_CreatedOn;?></td>
-									<td>
-									  <?php if($row->bus_timing_Status==1){
-												echo'<span class="badge bg-green"> Active </span>';
-											}else{
-													echo'<span class="badge bg-warning">InActive</span>';
-											}
-										?>
-									</td>
+									  <td><?php echo $row->bus_timing_Kilometers;?></td>
 									  <td>
-										<a href="<?php echo base_url() ;?>/admin/bus/Bus_Timing/editBusTiming/<?php echo $row->bus_timing_Id;?>" class="btn  btn-info btn-sm" >Edit</a>
+										<a href="<?php echo base_url() ;?>/admin/bus/Bus_Timing/editBusTiming/<?php echo $row->bus_timing_Id;?>" class="btn   admin-btn btn-info btn-sm" >Edit</a>
 										
-										<button onclick="deleteBusTiming(<?php echo $row->bus_timing_Id;?>)" class="btn  btn-danger btn-sm">Delete</button>
+										<button onclick="deleteBusTiming(<?php echo $row->bus_timing_Id;?>)" class="btn admin-btn btn-danger btn-sm">Delete</button>
 									  </td>
 									</tr>
 										<?php $i++;}?>

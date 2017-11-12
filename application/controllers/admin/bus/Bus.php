@@ -41,9 +41,7 @@ class Bus extends CI_Controller {
 	{
 				$data = array(
 				'Bus_Routes_Number' => $this->input->post('busRouteNo'),
-				'Bus_Routes_Source' => $this->input->post('busRouteSource'),
-				'Bus_Routes_Destination' => $this->input->post('busRouteDest'),
-				'Bus_Routes_Kilometers' => $this->input->post('busRouteKM'),
+				'Bus_Routes_Name' => $this->input->post('busRouteName'),
 				'Bus_Routes_AddedDateandTime' => date('Y-m-d H:i:s'),
 				'Bus_Routes_CreatedBy' => $this->session->userdata['logged_in']['id'],
 				'Bus_Routes_Status' => $this->input->post('busRouteStatus'),
@@ -77,9 +75,7 @@ class Bus extends CI_Controller {
 				$data = array(
 				'Bus_Routes_Id' => $this->input->post('busRouteId'),
 				'Bus_Routes_Number' => $this->input->post('busRouteNo'),
-				'Bus_Routes_Source' => $this->input->post('busRouteSource'),
-				'Bus_Routes_Destination' => $this->input->post('busRouteDest'),
-				'Bus_Routes_Kilometers' => $this->input->post('busRouteKM'),
+				'Bus_Routes_Name' => $this->input->post('busRouteName'),
 				'Bus_Routes_AddedDateandTime' => date('Y-m-d H:i:s'),
 				'Bus_Routes_CreatedBy' => $this->session->userdata['logged_in']['id'],
 				'Bus_Routes_Status' => $this->input->post('busRouteStatus')

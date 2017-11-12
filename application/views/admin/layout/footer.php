@@ -19,11 +19,12 @@
     <script src="<?php echo base_url();?>html/admin/bootstrap/js/bootstrap.min.js"></script>
     <!-- AdminLTE App -->
     <script src="<?php echo base_url();?>html/admin/dist/js/app.min.js"></script>
+    <script src="<?php echo base_url();?>html/admin/dist/js/jquery.validate.js"></script>
     <!-- DataTables -->
     <script src="<?php echo base_url();?>html/admin/plugins/datatables/jquery.dataTables.min.js"></script>
     <script src="<?php echo base_url();?>html/admin/plugins/datatables/dataTables.bootstrap.min.js"></script>
     <!-- date-range-picker -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js"></script>
+    <script src="<?php echo base_url();?>html/admin/dist/js/moment.min.js"></script>
     <script src="<?php echo base_url();?>html/admin/plugins/daterangepicker/daterangepicker.js"></script>
     <!-- InputMask -->
     <script src="<?php echo base_url();?>html/admin/plugins/input-mask/jquery.inputmask.js"></script>

@@ -22,7 +22,9 @@
         <section class="content">
 				 <div class="box box-primary">
 						<div class="box-header with-border">
-						  <h3 class="box-title">Employees List</h3>
+						  <h3 class="box-title">Employees List 
+							<a class="btn btn-warning btn-sm " href="<?php echo base_url() ;?>admin/employees/employees/downloadEmployeeList" target="_blank">Export as PDF</a>
+						  </h3>
 						</div><!-- /.box-header -->
 						  <div class="box-body">
 							<table id="webpagesList" class="table table-bordered table-hover">
@@ -32,7 +34,6 @@
 								  <th>Employee_Number</th>
 								  <th>Name</th>
 								  <th>Type</th>
-								  <th>Status</th>
 								  <th>Actions</th>
 								</tr>
 								</thead>
@@ -45,7 +46,6 @@
 									  <td><?php echo $i;?>.</td>
 									  <td><?php echo $row->Employee_Number;?></td>
 									  <td><?php echo $row->Employee_Name;?></td>
-									  <td><?php echo $row->Employee_Type;?></td>
 									  <td>
 									  <?php if($row->Employee_Type==1){
 												echo 'Conductor';
@@ -54,18 +54,10 @@
 											}
 										?>
 									</td>
-									<td>
-									  <?php if($row->Employee_Status==1){
-												echo'<span class="badge bg-green"> Active </span>';
-											}else{
-													echo'<span class="badge bg-warning">InActive</span>';
-											}
-										?>
-									</td>
 									  <td>
-										<a href="<?php echo base_url() ;?>admin/employees/employees/editEmployee/<?php echo $row->Employee_Id;?>" class="btn  btn-info btn-sm" >Edit</a>
+										<a href="<?php echo base_url() ;?>admin/employees/employees/editEmployee/<?php echo $row->Employee_Id;?>" class="btn admin-btn  btn-info btn-sm" >Edit</a>
 										
-										<button onclick="deleteEmployee(<?php echo $row->Employee_Id;?>)" class="btn  btn-danger btn-sm">Delete</button>
+										<button onclick="deleteEmployee(<?php echo $row->Employee_Id;?>)" class="btn admin-btn  btn-danger btn-sm">Delete</button>
 									  </td>
 									</tr>
 										<?php $i++;}?>

@@ -31,8 +31,6 @@
 								  <th style="width: 10px">#</th>
 								  <th>Number</th>
 								  <th>Source</th>
-								  <th>Destination</th>
-								  <th>Kilometres</th>
 								  <th>Status</th>
 								  <th>Actions</th>
 								</tr>
@@ -45,9 +43,7 @@
 									<tr>
 									  <td><?php echo $i;?>.</td>
 									  <td><?php echo $row->Bus_Routes_Number;?></td>
-									  <td><?php echo $row->Bus_Routes_Source;?></td>
-									  <td><?php echo $row->Bus_Routes_Destination;?></td>
-									  <td><?php echo $row->Bus_Routes_Kilometers;?></td>
+									  <td><?php echo $row->Bus_Routes_Name;?></td>
 									<td>
 									  <?php if($row->Bus_Routes_Status==1){
 												echo'<span class="badge bg-green"> Active </span>';
@@ -57,9 +53,9 @@
 										?>
 									</td>
 									  <td>
-										<a href="<?php echo base_url() ;?>admin/bus/bus/editBusRoute/<?php echo $row->Bus_Routes_Id;?>" class="btn  btn-info btn-sm" >Edit</a>
+										<a href="<?php echo base_url() ;?>admin/bus/bus/editBusRoute/<?php echo $row->Bus_Routes_Id;?>" class="admin-btn btn  btn-info btn-sm" >Edit</a>
 										
-										<button onclick="deleteBusRoute(<?php echo $row->Bus_Routes_Id;?>)" class="btn  btn-danger btn-sm">Delete</button>
+										<button onclick="deleteBusRoute(<?php echo $row->Bus_Routes_Id;?>)" class="btn admin-btns btn-danger btn-sm">Delete</button>
 									  </td>
 									</tr>
 										<?php $i++;}?>

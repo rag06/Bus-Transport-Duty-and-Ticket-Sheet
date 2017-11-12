@@ -16,6 +16,7 @@ Class Employee_Model extends CI_Model {
 		
 		$this->db->select('*');
 		$this->db->from('employees');
+		$this->db->order_by('Employee_Number','asc');
 		$query = $this->db->get();
 		$data=array();
 		$data['result']=$query->result();

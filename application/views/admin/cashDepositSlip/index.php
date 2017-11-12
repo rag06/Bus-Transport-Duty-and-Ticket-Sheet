@@ -46,7 +46,7 @@
 									  <td><?php echo $i;?>.</td>
 									  <td><?php echo $row->cashDeposit_slip_Number;?></td>
 									  <td><?php echo $routes[$row->cashDeposit_slip_RouteId][0]['Bus_Routes_Number'];?></td>
-									  <td><?php echo $employees[$row->cashDeposit_slip_RouteId][0]['Employee_Number'];?></td>
+									  <td><?php echo $employees[$row->cashDeposit_slip_ConductorEmpId][0]['Employee_Number'];?></td>
 									  <td><?php echo $row->cashDeposit_slip_BusNumber;?></td>
 									  <td><?php echo $row->cashDeposit_slip_Date;?></td>
 									  <td>

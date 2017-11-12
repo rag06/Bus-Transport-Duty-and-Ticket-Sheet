@@ -44,7 +44,7 @@
 									<tr>
 									  <td><?php echo $i;?>.</td>
 									  <td><?php echo $routes[$row->conductor_daysSlip_RoutesId][0]['Bus_Routes_Number'];?></td>
-									  <td><?php echo $employees[$row->conductor_daysSlip_RoutesId][0]['Employee_Number'];?></td>
+									  <td><?php echo $employees[$row->conductor_daysSlip_ConductorEmpId][0]['Employee_Number'];?></td>
 									  <td><?php echo $row->conductor_daysSlip_BusNumber;?></td>
 									  <td><?php echo $row->conductor_daysslip_date;?></td>
 									  <td>

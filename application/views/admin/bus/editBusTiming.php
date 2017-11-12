@@ -37,15 +37,27 @@
 								echo "</div>";
 								?>
 								<div class="form-group">
-								  <label for="busRouteId"> Bus Route</label>
-								  <select class="form-control" id="busRouteId" name="busRouteId" >
-									<?php foreach($busRoutes['result']  as $busRoutesRow){
-											if($busRoutesRow->Bus_Routes_Id == $result[0]['bus_timing_routeId'] )
-												echo '<option value="'.$busRoutesRow->Bus_Routes_Id .'" selected>'.$busRoutesRow->Bus_Routes_Number .'( '. $busRoutesRow->Bus_Routes_Source .' -- '. $busRoutesRow->Bus_Routes_Destination .' )</option>';
+								  <label for="busDutyId"> Bus Route</label>
+								  <select class="form-control" id="busDutyId" name="busDutyId" >
+									<?php foreach($busDuty['result']  as $busDutyRow){
+											if($busDutyRow->bus_duty_Id == $result[0]['bus_timing_DutyId'] )
+												echo '<option value="'.$busDutyRow->bus_duty_Id .','.$busDutyRow->Bus_Routes_Id.'" selected>'.$busDutyRow->Bus_Routes_Number .'::'.$busDutyRow->bus_duty_Number .' ( '. $busDutyRow->Bus_Routes_Name .' )</option>';
 											else
-												echo '<option value="'.$busRoutesRow->Bus_Routes_Id .'">'.$busRoutesRow->Bus_Routes_Number .' ( '. $busRoutesRow->Bus_Routes_Source .' -- '. $busRoutesRow->Bus_Routes_Destination .' )</option>';
+												echo '<option value="'.$busDutyRow->bus_duty_Id .','.$busDutyRow->Bus_Routes_Id.'">'.$busDutyRow->Bus_Routes_Number .'::'.$busDutyRow->bus_duty_Number .' ( '. $busDutyRow->Bus_Routes_Name .' )</option>';
 									}?>
 								  </select>
+								</div>
+								<div class="form-group">
+								  <label for="busSource">Bus Start Point</label>
+								  <input type="text" class="form-control" id="busSource" name="busSource"  value="<?php echo$result[0]['bus_timing_Source'];?>">
+								</div>
+								<div class="form-group">
+								  <label for="busDest">Bus End Point</label>
+								  <input type="text" class="form-control" id="busDest" name="busDest"  value="<?php echo$result[0]['bus_timing_Destination'];?>">
+								</div>
+								<div class="form-group">
+								  <label for="busKilo"> Kilometers</label>
+								  <input type="text" class="form-control" id="busKilo" name="busKilo"  value="<?php echo$result[0]['bus_timing_Kilometers'];?>">
 								</div>
 								<div class="form-group">
 								  <label for="busStartTime">Bus Start Time</label>
@@ -54,18 +66,6 @@
 								<div class="form-group">
 								  <label for="busDestTime">Bus Destination Time</label>
 								  <input type="text" class="form-control" id="busDestTime" name="busDestTime" value="<?php echo$result[0]['bus_timing_DestinationTime'];?>">
-								</div>
-								<div class="form-group">
-								 <label for="busTimingStatus"> Status</label>
-								  <select class="form-control" name="busTimingStatus" id="busTimingStatus">
-									<?php if($result[0]['bus_timing_Status']==1){
-												echo'<option value="0">InActive</option>
-													<option value="1" selected>Active</option>';}
-											else{
-												echo'<option value="0" selected>InActive</option>
-													<option value="1">Active</option>';
-											}?>
-								  </select>
 								</div>
 							
 								<a href="<?php echo base_url() ;?>admin/bus/Bus_Timing/index" class="btn btn-success btn-sm">Cancel</a>

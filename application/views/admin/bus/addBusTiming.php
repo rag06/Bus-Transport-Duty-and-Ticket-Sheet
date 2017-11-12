@@ -36,12 +36,24 @@
 								echo "</div>";
 								?>
 								<div class="form-group">
-								  <label for="busRouteId"> Bus Route</label>
-								  <select class="form-control" id="busRouteId" name="busRouteId" >
-									<?php foreach($busRoutes['result']  as $busRoutesRow){
-											echo '<option value="'.$busRoutesRow->Bus_Routes_Id .'">'.$busRoutesRow->Bus_Routes_Number .' ( '. $busRoutesRow->Bus_Routes_Source .' -- '. $busRoutesRow->Bus_Routes_Destination .' )</option>';
+								  <label for="busDutyId"> Bus Route</label>
+								  <select class="form-control" id="busDutyId" name="busDutyId" >
+									<?php foreach($busDuty['result']  as $busDutyRow){
+											echo '<option value="'.$busDutyRow->bus_duty_Id .','.$busDutyRow->Bus_Routes_Id.'">'.$busDutyRow->Bus_Routes_Number .'::'.$busDutyRow->bus_duty_Number .' ( '. $busDutyRow->Bus_Routes_Name .' )</option>';
 									}?>
 								  </select>
+								</div>
+								<div class="form-group">
+								  <label for="busSource">Bus Start Point</label>
+								  <input type="text" class="form-control" id="busSource" name="busSource">
+								</div>
+								<div class="form-group">
+								  <label for="busDest">Bus End Point</label>
+								  <input type="text" class="form-control" id="busDest" name="busDest">
+								</div>
+								<div class="form-group">
+								  <label for="busKilo"> Kilometers</label>
+								  <input type="text" class="form-control" id="busKilo" name="busKilo">
 								</div>
 								<div class="form-group">
 								  <label for="busStartTime">Bus Start Time</label>
@@ -62,7 +74,7 @@
 								</div>
 							
 								<a href="<?php echo base_url() ;?>admin/bus/Bus_Timing/index" class="btn btn-success btn-sm">Cancel</a>
-								<button type="submit" class="btn btn-primary pull-right">Save Changes </button>
+								<button type="submit" class="btn btn-primary pull-right admin-btn">Save Changes </button>
 							</form>
 						  </div><!-- /.box-body -->
 					</div><!--box end-->

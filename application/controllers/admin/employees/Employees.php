@@ -43,8 +43,7 @@ class Employees extends CI_Controller {
 				'Employee_Number' => $this->input->post('empNo'),
 				'Employee_Type' => $this->input->post('empType'),
 				'Employee_Name' => $this->input->post('empName'),
-				'Employee_AddedDate' => date('Y-m-d H:i:s'),
-				'Employee_Status' => $this->input->post('empStatus')
+				'Employee_AddedDate' => date('Y-m-d H:i:s')
 				);
 				
 				$result = $this->emp_model->addEmployee($data);
@@ -76,8 +75,7 @@ class Employees extends CI_Controller {
 				'Employee_Id' => $this->input->post('empId'),
 				'Employee_Number' => $this->input->post('empNo'),
 				'Employee_Type' => $this->input->post('empType'),
-				'Employee_Name' => $this->input->post('empName'),
-				'Employee_Status' => $this->input->post('empStatus')
+				'Employee_Name' => $this->input->post('empName')
 				);
 				
 				$result = $this->emp_model->updateEmployee($data);
@@ -106,5 +104,45 @@ class Employees extends CI_Controller {
 					$this->load->view('admin/employee/index', $data);
 				}
 		
+	}
+	
+	public function downloadEmployeeList(){
+			
+		 
+		//load mPDF library
+		$this->load->library('m_pdf');
+		//now pass the data//
+		$this->data['title']="Employees List";
+		$this->data['description']="Contains all the list of employees";
+		//now pass the data //
+		
+		
+		$this->data['result'] = $this->emp_model->listEmployees();
+		 
+		$html=$this->load->view('admin/employee/pdf_output',$this->data, true); //load the pdf_output.php by passing our data and get all data in $html varriable.
+		//this the the PDF filename that user will get to download
+		$pdfFilePath ="employeeList-".time()."-download.pdf";
+		 
+		//actually, you can pass mPDF parameter on this load() function
+		$pdf = $this->m_pdf->load();
+		// Define the Header/Footer before writing anything so they appear on the first page
+		$pdf->SetHTMLHeader('
+		<div style=" font-weight: bold;height:50px;">
+			 <h1>KDMT Transport</h1>
+		</div>');
+		$pdf->SetHTMLFooter('
+		<table width="100%">
+			<tr>
+				<td width="33%">Generated On : {DATE j-m-Y}</td>
+				<td width="33%" align="center">{PAGENO}/{nbpg}</td>
+				<td width="33%" style="text-align: right;">KDMT document</td>
+			</tr>
+		</table>');
+		
+		//generate the PDF!
+		$pdf->WriteHTML($html,2);
+		//offer it to user via browser download! (The PDF won't be saved on your server HDD)
+		$pdf->Output($pdfFilePath, "D");
+			
 	}
 }

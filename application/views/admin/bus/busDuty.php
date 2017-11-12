@@ -9,12 +9,12 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
           <h1>
-            Bus Timing List
-            <small>Manage Your Bus Timing </small>
+            Bus Duty List
+            <small>Manage Your Bus Duty </small>
           </h1>
           <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-            <li class="active"><a href="#">Bus Timing  List</a></li>
+            <li class="active"><a href="#">Bus Duty  List</a></li>
           </ol>
         </section>
 
@@ -22,7 +22,7 @@
         <section class="content">
 				 <div class="box box-primary">
 						<div class="box-header with-border">
-						  <h3 class="box-title">Bus Timing  List</h3>
+						  <h3 class="box-title">Bus Duty  List</h3>
 						</div><!-- /.box-header -->
 						  <div class="box-body">
 							<table id="webpagesList" class="table table-bordered table-hover">
@@ -30,10 +30,8 @@
 								<tr>
 								  <th style="width: 10px">#</th>
 								  <th>Route Number</th>
-								  <th>Start Time</th>
-								  <th>End Time</th>
-								  <th>Date Time</th>
-								  <th>Status</th>
+								  <th>Duty Number</th>
+								  <th>Created On Date Time</th>
 								  <th>Actions</th>
 								</tr>
 								</thead>
@@ -44,22 +42,13 @@
 										?>
 									<tr>
 									  <td><?php echo $i;?>.</td>
-									  <td><?php echo $row->Bus_Routes_Number;?></td>
-									  <td><?php echo $row->bus_timing_StartTime;?></td>
-									  <td><?php echo $row->bus_timing_DestinationTime;?></td>
-									  <td><?php echo $row->bus_timing_CreatedOn;?></td>
-									<td>
-									  <?php if($row->bus_timing_Status==1){
-												echo'<span class="badge bg-green"> Active </span>';
-											}else{
-													echo'<span class="badge bg-warning">InActive</span>';
-											}
-										?>
-									</td>
+									  <td><?php echo $row->Bus_Routes_Number .' :: '. $row->Bus_Routes_Name;?></td>
+									  <td><?php echo $row->bus_duty_Number;?></td>
+									  <td><?php echo $row->bus_duty_CreatedOn;?></td>
 									  <td>
-										<a href="<?php echo base_url() ;?>/admin/bus/Bus_Timing/editBusTiming/<?php echo $row->bus_timing_Id;?>" class="btn  btn-info btn-sm" >Edit</a>
+										<a href="<?php echo base_url() ;?>/admin/bus/Bus_Duty/editBusDuty/<?php echo $row->bus_duty_Id;?>" class=" admin-btn btn  btn-info btn-sm" >Edit</a>
 										
-										<button onclick="deleteBusTiming(<?php echo $row->bus_timing_Id;?>)" class="btn  btn-danger btn-sm">Delete</button>
+										<button onclick="deleteBusDuty(<?php echo $row->bus_duty_Id;?>)" class="btn admin-btn  btn-danger btn-sm">Delete</button>
 									  </td>
 									</tr>
 										<?php $i++;}?>
@@ -70,7 +59,7 @@
 					</div><!--box end-->
 			</section><!-- /.content -->
       </div><!-- /.content-wrapper -->
-		 <div class="modal fade modal-danger" id="deleteBusTiming" >
+		 <div class="modal fade modal-danger" id="deleteBusDuty" >
               <div class="modal-dialog">
                 <div class="modal-content">
                   <div class="modal-header">
@@ -79,8 +68,8 @@
                   </div>
                   <div class="modal-body">
                     <p>Are You Sure You Want to Delete ??</p>
-					<form action="<?php echo base_url() ;?>/admin/bus/Bus_Timing/deleteBusTiming" method="post">
-						<input type="hidden" name="busTimingId" id="busTimingId"/>
+					<form action="<?php echo base_url() ;?>/admin/bus/Bus_Duty/deleteBusDuty" method="post">
+						<input type="hidden" name="busDutyId" id="busDutyId"/>
 						<input type="submit" class="btn btn-outline" value="Yes">
 					</form>
                   </div>
@@ -95,9 +84,9 @@
 	 
 	<!-- admin manage page-->
 	<script>
-		function deleteBusTiming(id){
-			$('#busTimingId').val(id);
-			$("#deleteBusTiming").modal();
+		function deleteBusDuty(id){
+			$('#busDutyId').val(id);
+			$("#deleteBusDuty").modal();
 			
 		}
 	</script>

@@ -40,16 +40,8 @@
 								  <input type="text" class="form-control" id="busRouteNo" name="busRouteNo" >
 								</div>
 								<div class="form-group">
-								  <label for="busRouteSource"> Bus Route Source</label>
-								  <input type="text" class="form-control" id="busRouteSource" name="busRouteSource" >
-								</div>
-								<div class="form-group">
-								  <label for="busRouteDest"> Bus Route Destination</label>
-								  <input type="text" class="form-control" id="busRouteDest" name="busRouteDest">
-								</div>
-								<div class="form-group">
-								  <label for="busRouteKM"> Bus Route Kilometres .</label>
-								  <input type="text" class="form-control" id="busRouteKM" name="busRouteKM">
+								  <label for="busRouteName"> Bus Route Name</label>
+								  <input type="text" class="form-control" id="busRouteName" name="busRouteName" >
 								</div>
 								<div class="form-group">
 								 <label for="busRouteStatus"> Status</label>
@@ -62,7 +54,7 @@
 								</div>
 							
 								<a href="<?php echo base_url() ;?>/admin/bus/bus/index" class="btn btn-success btn-sm">Cancel</a>
-								<button type="submit" class="btn btn-primary pull-right">Save Changes </button>
+								<button type="submit" class="btn admin-btn btn-primary pull-right">Save Changes </button>
 							</form>
 						  </div><!-- /.box-body -->
 					</div><!--box end-->

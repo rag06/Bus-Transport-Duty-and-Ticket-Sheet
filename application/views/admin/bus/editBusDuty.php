@@ -9,12 +9,12 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
           <h1>
-            Edit Bus Timings
-            <small>Update Your Bus Timing</small>
+            Edit Bus Duty
+            <small>Update Your Bus Duty</small>
           </h1>
           <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-            <li class="active"><a href="<?php echo base_url() ;?>admin/bus/Bus_Timing/index">Manage Bus Timings</a></li>
+            <li class="active"><a href="<?php echo base_url() ;?>admin/bus/Bus_Duty/index">Manage Bus Duty</a></li>
             <li class="active"><a href="#">Edit Bus Timing</a></li>
           </ol>
         </section>
@@ -23,11 +23,11 @@
         <section class="content">
 				 <div class="box box-primary">
 						<div class="box-header with-border">
-						  <h3 class="box-title">Edit Bus Timing</h3>
+						  <h3 class="box-title">Edit Bus Duty</h3>
 						</div><!-- /.box-header -->
 						  <div class="box-body">
-							<form method="post" action="<?php echo base_url() ;?>/admin/bus/Bus_Timing/updateBusTiming">
-								<input type="hidden" name="busTimingId" value="<?php echo$result[0]['bus_timing_Id'];?>" />
+							<form method="post" action="<?php echo base_url() ;?>admin/bus/Bus_Duty/updateBusDuty">
+								<input type="hidden" name="busTimingId" value="<?php echo$result[0]['bus_duty_Id'];?>" />
 								 <?php
 								echo "<div class='error_msg'>";
 								if (isset($error_message)) {
@@ -48,28 +48,12 @@
 								  </select>
 								</div>
 								<div class="form-group">
-								  <label for="busStartTime">Bus Start Time</label>
-								  <input type="text" class="form-control" id="busStartTime" name="busStartTime" value="<?php echo$result[0]['bus_timing_StartTime'];?>">
-								</div>
-								<div class="form-group">
-								  <label for="busDestTime">Bus Destination Time</label>
-								  <input type="text" class="form-control" id="busDestTime" name="busDestTime" value="<?php echo$result[0]['bus_timing_DestinationTime'];?>">
-								</div>
-								<div class="form-group">
-								 <label for="busTimingStatus"> Status</label>
-								  <select class="form-control" name="busTimingStatus" id="busTimingStatus">
-									<?php if($result[0]['bus_timing_Status']==1){
-												echo'<option value="0">InActive</option>
-													<option value="1" selected>Active</option>';}
-											else{
-												echo'<option value="0" selected>InActive</option>
-													<option value="1">Active</option>';
-											}?>
-								  </select>
+								  <label for="busDutyNumber">Bus Duty Number</label>
+								  <input type="text" class="form-control" id="busDutyNumber" name="busDutyNumber" value="<?php echo$result[0]['bus_duty_Number'];?>">
 								</div>
 							
-								<a href="<?php echo base_url() ;?>admin/bus/Bus_Timing/index" class="btn btn-success btn-sm">Cancel</a>
-								<button type="submit" class="btn btn-primary pull-right">Save Changes </button>
+								<a href="<?php echo base_url() ;?>admin/bus/Bus_Duty/index" class="btn btn-success btn-sm">Cancel</a>
+								<button type="submit" class="btn admin-btn btn-primary pull-right">Save Changes </button>
 							</form>
 						  </div><!-- /.box-body -->
 					</div><!--box end-->
