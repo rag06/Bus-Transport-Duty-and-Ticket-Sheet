@@ -28,12 +28,12 @@ class CashDepositSlip extends CI_Controller {
 			redirect('admin/login/login/index');
 		}
 		$data['result'] = $this->cashdepositslip_model->listCashDepositSlip();
-		$data['routes'] = array();
+		$data['duty'] = array();
 		$data['employees'] = array();
 		foreach ($data['result']['result'] as $row){
-			$routeRow= $this->bus_model->getBusRoute($row->cashDeposit_slip_RouteId);
+			$routeRow= $this->bus_model->getBusDuty($row->cashDeposit_slip_DutyId);
 			$empRow= $this->emp_model->getEmployee($row->cashDeposit_slip_ConductorEmpId);
-			$data['routes'][$routeRow[0]['Bus_Routes_Id']] = $routeRow;
+			$data['duty'][$routeRow[0]['bus_duty_Id']] = $routeRow;
 			$data['employees'][$empRow[0]['Employee_Id']] = $empRow;
 			
 		}
@@ -47,8 +47,10 @@ class CashDepositSlip extends CI_Controller {
 			redirect('admin/login/index');
 		}
 		$data['employees'] = $this->emp_model->listEmployees();
-		$data['routes'] = $this->bus_model->listBusRoutes();
+		$data['duty'] = $this->bus_model->listBusDuty();
+		$data['busList'] = $this->bus_model->listBus();
 		$data['tickets'] = $this->tickets_model->listTickets();
+		$data['waybillno'] = $this->cashdepositslip_model->getCashDepositSlipNextNumber();
 		
 		$this->load->view('admin/cashDepositSlip/addCashDepositSlip',$data);
 		
@@ -61,7 +63,7 @@ class CashDepositSlip extends CI_Controller {
 				$data['header']= array(
 					'cashDeposit_slip_Number' => $this->input->post('slipNo'),
 					'cashDeposit_slip_ConductorEmpId' => $this->input->post('conductorEmpId'),
-					'cashDeposit_slip_RouteId' => $this->input->post('routeId'),
+					'cashDeposit_slip_DutyId' => $this->input->post('routeId'),
 					'cashDeposit_slip_BusNumber' => $this->input->post('busNumber'),
 					'cashDeposit_slip_DriverEmpId' => $this->input->post('driverEmpId'),
 					'cashDeposit_slip_Date' => $this->input->post('slipDate'),
@@ -115,9 +117,9 @@ class CashDepositSlip extends CI_Controller {
 		}
 		$data['result'] = $this->cashdepositslip_model->getCashDepositSlip($id);
 		$data['details'] = $this->cashdepositslip_model->getCashDepositSlipDetails($id);
-		$data['route'] = $this->bus_model->getBusRoute($data['result'][0]['cashDeposit_slip_RouteId']);
+		$data['currentduty'] = $this->bus_model->getBusDuty($data['result'][0]['cashDeposit_slip_DutyId']);
 		$data['employees'] = $this->emp_model->listEmployees();
-		$data['routes'] = $this->bus_model->listBusRoutes();
+		$data['duty'] = $this->bus_model->listBusDuty();
 		
 		$tempTickets=$this->tickets_model->listTickets();
 		$tempArray=array();
@@ -137,7 +139,7 @@ class CashDepositSlip extends CI_Controller {
 					'cashDeposit_slip_Id' => $this->input->post('slipId'),
 					'cashDeposit_slip_Number' => $this->input->post('slipNo'),
 					'cashDeposit_slip_ConductorEmpId' => $this->input->post('conductorEmpId'),
-					'cashDeposit_slip_RouteId' => $this->input->post('routeId'),
+					'cashDeposit_slip_DutyId' => $this->input->post('routeId'),
 					'cashDeposit_slip_BusNumber' => $this->input->post('busNumber'),
 					'cashDeposit_slip_DriverEmpId' => $this->input->post('driverEmpId'),
 					'cashDeposit_slip_Date' => $this->input->post('slipDate'),

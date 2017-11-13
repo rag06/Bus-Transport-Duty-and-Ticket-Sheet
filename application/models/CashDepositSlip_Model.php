@@ -19,6 +19,13 @@ Class CashDepositSlip_Model extends CI_Model {
 		}
 	}
 	
+	public function getCashDepositSlipNextNumber() {
+		
+		$query=$this->db->query("SELECT MAX(`cashDeposit_slip_Number` ) +1 AS WaybillNum FROM cashdeposit_slip");
+				return $query->result_array();
+		
+	}
+	
 	public function getCashDepositSlip($id) {
 		
 		$query=$this->db->query("SELECT * FROM cashdeposit_slip  WHERE cashDeposit_slip_Id = $id");

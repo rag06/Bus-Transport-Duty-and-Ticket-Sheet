@@ -45,14 +45,14 @@
 									<tr>
 									  <td><?php echo $i;?>.</td>
 									  <td><?php echo $row->cashDeposit_slip_Number;?></td>
-									  <td><?php echo $routes[$row->cashDeposit_slip_RouteId][0]['Bus_Routes_Number'];?></td>
+									  <td><?php echo $duty[$row->cashDeposit_slip_DutyId][0]['Bus_Routes_Number'];?></td>
 									  <td><?php echo $employees[$row->cashDeposit_slip_ConductorEmpId][0]['Employee_Number'];?></td>
 									  <td><?php echo $row->cashDeposit_slip_BusNumber;?></td>
 									  <td><?php echo $row->cashDeposit_slip_Date;?></td>
 									  <td>
-										<a href="<?php echo base_url() ;?>admin/cashDepositSlip/cashDepositSlip/editCashDepositSlip/<?php echo $row->cashDeposit_slip_Id;?>" class="btn  btn-info btn-sm" >Edit</a>
+										<a href="<?php echo base_url() ;?>admin/cashDepositSlip/cashDepositSlip/editCashDepositSlip/<?php echo $row->cashDeposit_slip_Id;?>" class="btn admin-btn btn-info btn-sm" >Edit</a>
 										
-										<button onclick="deleteCashDepositSlip(<?php echo $row->cashDeposit_slip_Id;?>)" class="btn  btn-danger btn-sm">Delete</button>
+										<button onclick="deleteCashDepositSlip(<?php echo $row->cashDeposit_slip_Id;?>)" class="btn admin-btn  btn-danger btn-sm">Delete</button>
 									  </td>
 									</tr>
 										<?php $i++;}?>

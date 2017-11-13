@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 3.5.1
+-- version 3.2.4
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Nov 12, 2017 at 08:08 AM
--- Server version: 5.5.24-log
--- PHP Version: 5.4.3
+-- Generation Time: Nov 13, 2017 at 11:22 AM
+-- Server version: 5.5.34
+-- PHP Version: 5.3.1
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
-SET time_zone = "+00:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -70,7 +69,26 @@ CREATE TABLE IF NOT EXISTS `bus_duty` (
 --
 
 INSERT INTO `bus_duty` (`bus_duty_Id`, `bus_duty_RouteId`, `bus_duty_Number`, `bus_duty_CreatedOn`, `bus_duty_AddedBy`) VALUES
-(1, 1, 1, '2017-11-12 04:31:01', 1);
+(1, 1, 1, '2017-11-12 10:01:01', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bus_list`
+--
+
+CREATE TABLE IF NOT EXISTS `bus_list` (
+  `bus_number` bigint(20) NOT NULL,
+  UNIQUE KEY `bus_number` (`bus_number`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `bus_list`
+--
+
+INSERT INTO `bus_list` (`bus_number`) VALUES
+(1149),
+(1278);
 
 -- --------------------------------------------------------
 
@@ -93,8 +111,8 @@ CREATE TABLE IF NOT EXISTS `bus_routes` (
 --
 
 INSERT INTO `bus_routes` (`Bus_Routes_Id`, `Bus_Routes_Number`, `Bus_Routes_Name`, `Bus_Routes_Status`, `Bus_Routes_AddedDateandTime`, `Bus_Routes_CreatedBy`) VALUES
-(1, 35, 'Bhiwandi', 1, '2017-11-12 04:39:06', 1),
-(2, 45, 'Kalyan', 1, '2017-11-11 05:47:10', 1);
+(1, 35, 'Bhiwandi', 1, '2017-11-12 10:09:06', 1),
+(2, 45, 'Kalyan', 1, '2017-11-11 11:17:10', 1);
 
 -- --------------------------------------------------------
 
@@ -124,7 +142,7 @@ CREATE TABLE IF NOT EXISTS `bus_timing` (
 --
 
 INSERT INTO `bus_timing` (`bus_timing_Id`, `bus_timing_DutyId`, `bus_timing_RouteId`, `bus_timing_Source`, `bus_timing_Destination`, `bus_timing_Kilometers`, `bus_timing_StartTime`, `bus_timing_DestinationTime`, `bus_timing_CreatedOn`, `bus_timing_AddedBy`, `bus_timing_Status`) VALUES
-(1, 1, 1, 'Kalyan', 'Bhiwandi', '11', '22:00:00', '22:30:00', '2017-11-12 04:58:05', 1, 1);
+(1, 1, 1, 'Kalyan', 'Bhiwandi', '11', '22:00:00', '22:30:00', '2017-11-12 10:28:05', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -145,14 +163,14 @@ CREATE TABLE IF NOT EXISTS `cashdeposit_slip` (
   PRIMARY KEY (`cashDeposit_slip_Id`),
   KEY `cashDeposit_slip_ConductorEmpId` (`cashDeposit_slip_ConductorEmpId`),
   KEY `cashDeposit_slip_DriverEmpId` (`cashDeposit_slip_DriverEmpId`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `cashdeposit_slip`
 --
 
 INSERT INTO `cashdeposit_slip` (`cashDeposit_slip_Id`, `cashDeposit_slip_Number`, `cashDeposit_slip_ConductorEmpId`, `cashDeposit_slip_Date`, `cashDeposit_slip_DutyId`, `cashDeposit_slip_BusNumber`, `cashDeposit_slip_DriverEmpId`, `cashDeposit_slip_AddedDateTime`, `cashDeposit_slip_AddedBy`) VALUES
-(1, 526659, 6, '2017-11-11', 1, '1171', 7, '2017-11-11 06:13:24', 1);
+(1, 526659, 6, '2017-11-11', 1, '1171', 7, '2017-11-11 11:43:24', 1);
 
 -- --------------------------------------------------------
 
@@ -170,7 +188,7 @@ CREATE TABLE IF NOT EXISTS `cashdeposit_slip_details` (
   `cashDeposit_slip_details_ActualTicketsSold` int(12) DEFAULT NULL,
   `cashDeposit_slip_details_CalculatedAmount` decimal(10,2) DEFAULT NULL,
   PRIMARY KEY (`cashDeposit_slip_details_Id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=16 ;
 
 --
 -- Dumping data for table `cashdeposit_slip_details`
@@ -212,7 +230,7 @@ CREATE TABLE IF NOT EXISTS `conductor_daysslip` (
 --
 
 INSERT INTO `conductor_daysslip` (`conductor_daysSlip_Id`, `conductor_daysSlip_ConductorEmpId`, `conductor_daysSlip_DutyId`, `conductor_daysSlip_BusNumber`, `conductor_daysSlip_DriveEmpId`, `conductor_daysslip_date`, `conductor_daysSlip_AddedDateTime`, `conductor_daysSlip_AddedBy`) VALUES
-(1, 6, 1, 1171, 7, '2017-11-10', '2017-11-11 05:52:58', 1);
+(1, 6, 1, 1171, 7, '2017-11-10', '2017-11-11 11:22:58', 1);
 
 -- --------------------------------------------------------
 
@@ -257,10 +275,10 @@ CREATE TABLE IF NOT EXISTS `employees` (
 --
 
 INSERT INTO `employees` (`Employee_Id`, `Employee_Number`, `Employee_Type`, `Employee_Name`, `Employee_Status`, `Employee_AddedDate`) VALUES
-(4, 5001, 1, 'Ashok Bbhusare', 1, '2017-11-11 04:33:17'),
-(5, 3002, 0, 'Bhau Aherkar', 1, '2017-11-11 04:33:46'),
-(6, 5158, 1, 'Sham phiske', 1, '2017-11-11 05:31:46'),
-(7, 3188, 0, 'Shankar Mule', 1, '2017-11-11 05:32:27');
+(4, 5001, 1, 'Ashok Bbhusare', 1, '2017-11-11 10:03:17'),
+(5, 3002, 0, 'Bhau Aherkar', 1, '2017-11-11 10:03:46'),
+(6, 5158, 1, 'Sham phiske', 1, '2017-11-11 11:01:46'),
+(7, 3188, 0, 'Shankar Mule', 1, '2017-11-11 11:02:27');
 
 -- --------------------------------------------------------
 
@@ -284,12 +302,12 @@ CREATE TABLE IF NOT EXISTS `tickets` (
 --
 
 INSERT INTO `tickets` (`tickets_Id`, `tickets_Price`, `tickets_ExtraPrice`, `tickets_Type`, `tickets_CreatedOn`, `tickets_CreatedBy`, `tickets_Status`) VALUES
-(1, '3.00', '0.00', 1, '2017-11-11 05:48:57', 1, '1'),
-(2, '4.85', '0.15', 0, '2017-11-11 05:49:24', 1, '1'),
-(3, '9.85', '0.15', 0, '2017-11-11 05:49:42', 1, '1'),
-(4, '6.00', '0.00', 0, '2017-11-11 05:50:08', 1, '1'),
-(5, '9.00', '0.00', 0, '2017-11-11 05:50:23', 1, '1'),
-(6, '14.00', '0.00', 0, '2017-11-11 05:50:34', 1, '1');
+(1, '3.00', '0.00', 1, '2017-11-11 11:18:57', 1, '1'),
+(2, '4.85', '0.15', 0, '2017-11-11 11:19:24', 1, '1'),
+(3, '9.85', '0.15', 0, '2017-11-11 11:19:42', 1, '1'),
+(4, '6.00', '0.00', 0, '2017-11-11 11:20:08', 1, '1'),
+(5, '9.00', '0.00', 0, '2017-11-11 11:20:23', 1, '1'),
+(6, '14.00', '0.00', 0, '2017-11-11 11:20:34', 1, '1');
 
 -- --------------------------------------------------------
 
@@ -308,6 +326,11 @@ CREATE TABLE IF NOT EXISTS `tickets_employee` (
   `tickets_employee_CreatedOn` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`tickets_employee_Id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+--
+-- Dumping data for table `tickets_employee`
+--
+
 
 -- --------------------------------------------------------
 

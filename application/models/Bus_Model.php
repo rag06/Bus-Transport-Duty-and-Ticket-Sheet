@@ -94,7 +94,7 @@ Class Bus_Model extends CI_Model {
 	}
 	
 	public function getBusDuty($id)
-	{			$query=$this->db->query("SELECT * FROM bus_duty  WHERE bus_duty_Id = $id");
+	{			$query=$this->db->query("SELECT * FROM bus_duty d ,bus_routes b WHERE b.Bus_Routes_Id = d.bus_duty_RouteId AND d.bus_duty_Id = $id");
 				return $query->result_array();
 	}
 	
@@ -175,6 +175,22 @@ Class Bus_Model extends CI_Model {
 		
 			return false;
 		
+		
+	}
+	
+	
+	/******************* Bus List ************************/
+	
+	public function listBus() {
+		
+		$this->db->select('*');
+		$this->db->from('bus_list');
+		$this->db->order_by('bus_number','asc');
+		$query = $this->db->get();
+		$data=array();
+		$data['result']=$query->result();
+		$data['records']=$query->num_rows();
+		return $data;
 		
 	}
 }

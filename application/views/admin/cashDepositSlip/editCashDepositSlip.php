@@ -60,19 +60,19 @@
 										  <select class="form-control" id="routeId" name="routeId" required>
 											<option value="">Select Route</option>
 										  <?php 
-												foreach($routes['result'] as $route){
-													if($route->Bus_Routes_Id == $result[0]['cashDeposit_slip_RouteId']){
-													 echo '<option value="'.$route->Bus_Routes_Id.'" selected>'.$route->Bus_Routes_Number.' ( '.$route->Bus_Routes_Source.' - '.$route->Bus_Routes_Destination.' )</option>';
+												foreach($duty['result'] as $dutyrrow){
+													if($dutyrrow->bus_duty_Id == $result[0]['cashDeposit_slip_DutyId']){
+													  echo '<option value="'.$dutyrow->bus_duty_Id.'" selected >'.$dutyrow->Bus_Routes_Number.'|'.$dutyrow->bus_duty_Number.' ('.$dutyrow->Bus_Routes_Name.')</option>';
 													} else{
-														 echo '<option value="'.$route->Bus_Routes_Id.'" >'.$route->Bus_Routes_Number.' ( '.$route->Bus_Routes_Source.' - '.$route->Bus_Routes_Destination.' )</option>';
+														  echo '<option value="'.$dutyrow->bus_duty_Id.'" >'.$dutyrow->Bus_Routes_Number.'|'.$dutyrow->bus_duty_Number.' ('.$dutyrow->Bus_Routes_Name.')</option>';
 													}
 												}
 											?>
 											</select>
 										</div>
 										<div class="form-group col-md-3">
-										  <label for="slipNo">Slip Number</label>
-										  <input type="text" class="form-control" id="slipNo" name="slipNo" placeholder="Enter slip Number"  value="<?php echo $result[0]['cashDeposit_slip_Number']; ?>">
+										  <label for="slipNo">Waybill Number</label>
+										  <input type="text" class="form-control" id="slipNo" name="slipNo" placeholder="Enter Waybill Number"  value="<?php echo $result[0]['cashDeposit_slip_Number']; ?>">
 										</div>
 									</div>
 									<div class="">
