@@ -9,12 +9,12 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
           <h1>
-            Cash Deposit Slip List
-            <small>Manage Your Cash Deposit Slip</small>
+            Waybill Slip List
+            <small>Manage Your Waybill Slip</small>
           </h1>
           <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-            <li class="active"><a href="#">Cash Deposit Slip List</a></li>
+            <li class="active"><a href="#">Waybill Slip List</a></li>
           </ol>
         </section>
 
@@ -22,7 +22,7 @@
         <section class="content">
 				 <div class="box box-primary">
 						<div class="box-header with-border">
-						  <h3 class="box-title">Cash Deposit Slip List</h3>
+						  <h3 class="box-title">Waybill Slip List</h3>
 						</div><!-- /.box-header -->
 						  <div class="box-body">
 							<table id="webpagesList" class="table table-bordered table-hover">
@@ -50,6 +50,7 @@
 									  <td><?php echo $row->cashDeposit_slip_BusNumber;?></td>
 									  <td><?php echo $row->cashDeposit_slip_Date;?></td>
 									  <td>
+										<a href="<?php echo base_url() ;?>admin/cashDepositSlip/cashDepositSlip/viewCashDepositSlip/<?php echo $row->cashDeposit_slip_Id;?>" class="btn  btn-success btn-sm" >View</a>
 										<a href="<?php echo base_url() ;?>admin/cashDepositSlip/cashDepositSlip/editCashDepositSlip/<?php echo $row->cashDeposit_slip_Id;?>" class="btn admin-btn btn-info btn-sm" >Edit</a>
 										
 										<button onclick="deleteCashDepositSlip(<?php echo $row->cashDeposit_slip_Id;?>)" class="btn admin-btn  btn-danger btn-sm">Delete</button>

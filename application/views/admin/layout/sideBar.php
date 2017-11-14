@@ -11,6 +11,7 @@
               <ul class="treeview-menu">
                 <li><a href="<?php echo base_url()?>admin/cashDepositSlip/cashDepositSlip/addCashDepositSlip">Create a Waybill Slip</a></li>
                 <li><a href="<?php echo base_url()?>admin/cashDepositSlip/cashDepositSlip/index">Manage Waybill Slip</a></li>
+                <li><a href="<?php echo base_url()?>admin/cashDepositSlip/cashDepositSlip/reports">Reports Waybill Slip</a></li>
               </ul>
             </li>
 			<li class="treeview">

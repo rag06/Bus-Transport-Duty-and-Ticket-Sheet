@@ -9,13 +9,13 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
           <h1>
-            Add Cash Deposit Slip
-            <small>Create Your Cash Deposit Slip</small>
+            Add Waybill Slip
+            <small>Create Your Waybill Slip</small>
           </h1>
           <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-            <li class="active"><a href="<?php echo base_url() ;?>admin/cashDepositSlip/cashDepositSlip/index">Manage Cash Deposit Slip</a></li>
-            <li class="active"><a href="#">Create Cash Deposit Slip</a></li>
+            <li class="active"><a href="<?php echo base_url() ;?>admin/cashDepositSlip/cashDepositSlip/index">Manage Waybill Slip</a></li>
+            <li class="active"><a href="#">Create Waybill Slip</a></li>
           </ol>
         </section>
 
@@ -23,7 +23,7 @@
         <section class="content">
 				 <div class="box box-primary">
 						<div class="box-header with-border">
-						  <h3 class="box-title">Add New  Cash Deposit Slip :</h3>
+						  <h3 class="box-title">Add New Waybill Slip :</h3>
 						</div><!-- /.box-header -->
 						  <div class="box-body">
 							<form method="post" name="addWaybill" action="<?php echo base_url() ;?>admin/cashDepositSlip/cashDepositSlip/insertCashDepositSlip">
@@ -229,7 +229,10 @@
 		  slipNo: "required",
 		  driverEmpId: "required",
 		  busNumber: "required",
-		  slipDate: "required",
+		  slipDate: {
+			required:true,
+			date: true
+		  }
 		},
 		// Specify validation error messages
 		messages: {

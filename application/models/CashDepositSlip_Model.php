@@ -44,6 +44,7 @@ Class CashDepositSlip_Model extends CI_Model {
 		
 		$this->db->select('*');
 		$this->db->from('cashdeposit_slip');
+		$this->db->order_by('cashDeposit_slip_Date','desc');
 		$query = $this->db->get();
 		$data=array();
 		$data['result']=$query->result();
