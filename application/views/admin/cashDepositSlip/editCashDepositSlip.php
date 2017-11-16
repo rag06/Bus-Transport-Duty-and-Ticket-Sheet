@@ -41,7 +41,7 @@
 									<div class="">
 										<div class="form-group col-md-6">
 										  <label for="conductorEmpId">Conductor</label>
-										  <select class="form-control" id="conductorEmpId" name="conductorEmpId">
+										  <select class="form-control" id="conductorEmpId" name="conductorEmpId" readonly>
 												<?php 
 												foreach($employees['result'] as $emp){
 													if($emp->Employee_Type == 1){
@@ -58,7 +58,7 @@
 										</div>
 										<div class="form-group  col-md-3">
 										  <label for="routeId">Route</label>
-										  <select class="form-control" id="routeId" name="routeId" required>
+										  <select class="form-control" id="routeId" name="routeId" required  readonly>
 											<option value="">Select Route</option>
 										  <?php 
 												foreach($duty['result'] as $dutyrow){
@@ -73,7 +73,7 @@
 										</div>
 										<div class="form-group col-md-3">
 										  <label for="slipNo">Waybill Number</label>
-										  <input type="text" class="form-control" id="slipNo" name="slipNo" placeholder="Enter Waybill Number"  value="<?php echo $result[0]['cashDeposit_slip_Number']; ?>">
+										  <input type="text" class="form-control" id="slipNo" name="slipNo" placeholder="Enter Waybill Number"  value="<?php echo $result[0]['cashDeposit_slip_Number']; ?>"  readonly>
 										</div>
 									</div>
 									<div class="">
@@ -97,7 +97,7 @@
 										</div>
 										<div class="form-group col-md-3">
 										  <label for="busNumber">Bus Number</label>
-										  <select type="text" class="form-control" id="busNumber" name="busNumber" >
+										  <select type="text" class="form-control" id="busNumber" name="busNumber"  readonly>
 										  <?php 
 												foreach($busList['result'] as $busrow){
 													if($busrow->bus_number == $result[0]['cashDeposit_slip_BusNumber']){
@@ -114,7 +114,7 @@
 										
 										<div class="form-group col-md-3">
 										  <label for="slipDate">Slip Date</label>
-										  <input type="text" class="form-control" id="slipDate" name="slipDate" placeholder="yyyy-mm-dd"  value="<?php echo $result[0]['cashDeposit_slip_Date']; ?>">
+										  <input type="text" class="form-control" id="slipDate" name="slipDate" placeholder="yyyy-mm-dd"  value="<?php echo $result[0]['cashDeposit_slip_Date']; ?>"  readonly>
 										</div>
 									</div>
 								</fieldset>

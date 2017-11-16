@@ -26,7 +26,7 @@
 						  <h3 class="box-title">Add New  Daily Slip :</h3>
 						</div><!-- /.box-header -->
 						  <div class="box-body">
-							<form method="post" action="<?php echo base_url() ;?>/admin/dailySlip/dailySlip/insertDailySlip">
+							<form method="post" name="addDutySlip" action="<?php echo base_url() ;?>/admin/dailySlip/dailySlip/insertDailySlip">
 								 <?php
 								echo "<div class='error_msg'>";
 								if (isset($error_message)) {
@@ -50,12 +50,12 @@
 										  </select>
 										</div>
 										<div class="form-group  col-md-6">
-										  <label for="routeId">Route</label>
+										  <label for="routeId">Duty Number</label>
 										  <select class="form-control" id="routeId" name="routeId" required>
-											<option value="">Select Route</option>
+											<option value="">Select Duty Number</option>
 										  <?php 
-												foreach($routes['result'] as $route){
-													 echo '<option value="'.$route->Bus_Routes_Id.'" >'.$route->Bus_Routes_Number.' ( '.$route->Bus_Routes_Source.' - '.$route->Bus_Routes_Destination.' )</option>';
+												foreach($duty['result'] as $dutyRow){
+													 echo '<option value="'.$dutyRow->bus_duty_Id.'" >'.$dutyRow->Bus_Routes_Number	.' | '.$dutyRow->bus_duty_Number.' ( '.$dutyRow->Bus_Routes_Name.' )</option>';
 												}
 											?>
 											</select>
@@ -76,12 +76,19 @@
 										</div>
 										<div class="form-group col-md-3">
 										  <label for="busNumber">Bus Number</label>
-										  <input type="text" class="form-control" id="busNumber" name="busNumber" placeholder="Enter Bus Number">
+										   <select class="form-control" id="busNumber" name="busNumber" placeholder="Enter Bus Number">
+												<option value="">Select a Bus </option>
+											  <?php 
+												foreach($busList['result'] as $busrow){
+													 echo '<option value="'.$busrow->bus_number.'" >'.$busrow->bus_number.'</option>';
+												}
+											?>
+										  </select>
 										</div>
 										
 										<div class="form-group col-md-3">
 										  <label for="dailslipDate">Slip Date</label>
-										  <input type="text" class="form-control" id="dailslipDate" name="dailslipDate" placeholder="yyyy-mm-dd">
+										  <input type="text" class="form-control" id="dailslipDate" name="dailslipDate" placeholder="yyyy-mm-dd"  value="<?php echo date("Y-m-d");?>"/>
 										</div>
 									</div>
 								</fieldset>
@@ -91,12 +98,16 @@
 										<table class="table dataTables">
 											<thead>
 												<tr>
-													<th>Start Time</th>
-													<th>End Time</th>
-													<th>Actual Start Time</th>
-													<th>Actual End Time</th>
-													<th>Kilometres</th>
-													<th>Actual Kilometres</th>
+													<th>Source</th>
+													<th>Destination</th>
+													<th style="width:50px;">Start Time</th>
+													<th style="width:50px;">End Time</th>
+													<th style="width:100px;">Actual Start Time</th>
+													<th style="width:100px;">Actual End Time</th>
+													<th style="width:50px;">Kilometres</th>
+													<th style="width:50px;">Actual Kilometres</th>
+													<th>Cancel</th>
+													<th>Comments</th>
 												</tr>
 											</thead>
 											<tbody id="bustiming">
@@ -118,25 +129,34 @@
 	 <script>
 	 $(document).ready(function(){
 		$('#routeId').change(function(){
-				var routeId = $(this).val();
+				var dutyId = $(this).val();
 				var innerHTML ='';
-				if(routeId){
+				if(dutyId){
 					$.ajax( {
 						url: '<?php echo base_url() ;?>admin/dailySlip/dailySlip/getBusTimings',
-						data: {routeId: routeId},
+						data: {dutyId: dutyId},
 						success: function(data) {
-						console.log(data);
 						data = $.parseJSON(data)
 							if(data.status == true){
-								for(var i in data.data ){
+								if(data.data.length>0){
+									for(var i in data.data ){
+										innerHTML += '<tr>';
+										innerHTML +=  '<td>'+data.data[i].bus_timing_Source+'</td>';
+										innerHTML +=  '<td>'+data.data[i].bus_timing_Destination+'</td>';
+										innerHTML +=  '<td>'+data.data[i].bus_timing_StartTime+'</td>';
+										innerHTML +=  '<td>'+data.data[i].bus_timing_DestinationTime+'</td>';
+										innerHTML +=  '<td><input type="time" name="actSourceTime[]"  class="form-control input-sm" value="'+data.data[i].bus_timing_StartTime+'"/></td>';
+										innerHTML +=  '<td><input type="time" name="actDestTime[]"  class="form-control input-sm"/ value="'+data.data[i].bus_timing_DestinationTime+'"></td>';
+										innerHTML +=  '<td>'+data.data[i].bus_timing_Kilometers+'</td>';
+										innerHTML +=  '<td><input type="text" name="actKm[]"  class="form-control input-sm"/></td>';
+										innerHTML +=  '<td><select name="busIsCancel[]"  class="form-control input-sm"><option value="0" selected>No</option><option value="1">Yes</option></select></td>';
+										innerHTML +=  '<td><textarea name="comments[]"  class="form-control input-sm"></textarea></td>';
+										innerHTML +=  '</tr>';
+									}
+								}else{
 									innerHTML += '<tr>';
-									innerHTML +=  '<td>'+data.data[i].bus_timing_StartTime+'</td>';
-									innerHTML +=  '<td>'+data.data[i].bus_timing_DestinationTime+'</td>';
-									innerHTML +=  '<td><input type="text" name="actSourceTime[]"  class="form-control input-sm"/></td>';
-									innerHTML +=  '<td><input type="text" name="actDestTime[]"  class="form-control input-sm"/></td>';
-									innerHTML +=  '<td>'+data.route[0].Bus_Routes_Number+'</td>';
-									innerHTML +=  '<td><input type="text" name="actKm[]"  class="form-control input-sm"/></td>';
-									innerHTML +=  '</tr>';
+										innerHTML +=  '<td> No Bus Timing  Found</td>';
+										innerHTML +=  '</tr>';
 								}
 								
 								$('#bustiming').html(innerHTML);
@@ -147,8 +167,45 @@
 						}
 					   });
 					   
+				}else{
+					$('#bustiming').html('');
 				}
 		});
 	 });
 			
+	 </script>
+	   <script>
+	 $(function() {
+	  $("form[name='addDutySlip']").validate({
+		// Specify validation rules
+		rules: {
+		  // The key name on the left side is the name attribute
+		  // of an input field. Validation rules are defined
+		  // on the right side
+		  conductorEmpId: {
+			required:true
+		  },
+		  routeId: "required",
+		  driverEmpId: "required",
+		  busNumber: "required",
+		  dailslipDate: {
+			required:true,
+			date: true
+		  }
+		},
+		// Specify validation error messages
+		messages: {
+		  conductorEmpId: "Please select a valid Condutor",
+		  routeId: "Please select a valid  Duty ",
+		  driverEmpId: "Please select a valid Driver",
+		  busNumber: "Please enter a valid Bus Number",
+		  dailslipDate: "Please enter a valid Slip Date"
+		},
+		// Make sure the form is submitted to the destination defined
+		// in the "action" attribute of the form when valid
+		submitHandler: function(form) {
+		  form.submit();
+		}
+	  });
+	});
 	 </script>

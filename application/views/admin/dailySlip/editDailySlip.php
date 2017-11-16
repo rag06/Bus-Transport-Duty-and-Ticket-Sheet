@@ -26,7 +26,7 @@
 						  <h3 class="box-title">Edit Daily Slip :</h3>
 						</div><!-- /.box-header -->
 						  <div class="box-body">
-							<form method="post" action="<?php echo base_url() ;?>/admin/dailySlip/dailySlip/updateDailySlip">
+							<form method="post" name="editDutySlip" action="<?php echo base_url() ;?>/admin/dailySlip/dailySlip/updateDailySlip">
 								<input type="hidden" name="slipId"  value="<?php echo $result[0]['conductor_daysSlip_Id']; ?>"/>
 								 <?php
 								echo "<div class='error_msg'>";
@@ -57,15 +57,15 @@
 										  </select>
 										</div>
 										<div class="form-group  col-md-6">
-										  <label for="routeId">Route</label>
-										  <select class="form-control" id="routeId" name="routeId" required readonly>
-											<option value="">Select Route</option>
+										  <label for="routeId">Duty Number</label>
+										  <select class="form-control" id="routeId" name="routeId" required disabled>
+											<option value="">Select Duty Number</option>
 										  <?php 
-												foreach($routes['result'] as $route){
-													if($route->Bus_Routes_Id == $result[0]['conductor_daysSlip_RoutesId']){
-													 echo '<option value="'.$route->Bus_Routes_Id.'" selected>'.$route->Bus_Routes_Number.' ( '.$route->Bus_Routes_Source.' - '.$route->Bus_Routes_Destination.' )</option>';
+												foreach($duty['result'] as $dutyRow){
+													if($dutyRow->bus_duty_Id == $result[0]['conductor_daysSlip_DutyId']){
+													  echo '<option value="'.$dutyRow->bus_duty_Id.'" selected>'.$dutyRow->Bus_Routes_Number	.' | '.$dutyRow->bus_duty_Number.' ( '.$dutyRow->Bus_Routes_Name.' )</option>';
 													} else{
-														 echo '<option value="'.$route->Bus_Routes_Id.'" >'.$route->Bus_Routes_Number.' ( '.$route->Bus_Routes_Source.' - '.$route->Bus_Routes_Destination.' )</option>';
+														  echo '<option value="'.$dutyRow->bus_duty_Id.'" >'.$dutyRow->Bus_Routes_Number	.' | '.$dutyRow->bus_duty_Number.' ( '.$dutyRow->Bus_Routes_Name.' )</option>';
 													}
 												}
 											?>
@@ -93,7 +93,19 @@
 										</div>
 										<div class="form-group col-md-3">
 										  <label for="busNumber">Bus Number</label>
-										  <input type="text" class="form-control" id="busNumber" name="busNumber" placeholder="Enter Bus Number" value="<?php echo $result[0]['conductor_daysSlip_BusNumber']; ?>">
+										   <select class="form-control" id="busNumber" name="busNumber" placeholder="Enter Bus Number">
+												<option value="">Select a Bus </option>
+											  <?php 
+												foreach($busList['result'] as $busrow){
+													if($busrow->bus_number == $result[0]['conductor_daysSlip_BusNumber']){
+													 echo '<option value="'.$busrow->bus_number.'" selected>'.$busrow->bus_number.'</option>';
+													}
+													else{
+														echo '<option value="'.$busrow->bus_number.'" >'.$busrow->bus_number.'</option>';
+													}
+												}
+											?>
+										  </select>
 										</div>
 										
 										<div class="form-group col-md-3">
@@ -108,12 +120,16 @@
 										<table class="table dataTables">
 											<thead>
 												<tr>
-													<th>Start Time</th>
-													<th>End Time</th>
-													<th>Actual Start Time</th>
-													<th>Actual End Time</th>
-													<th>Kilometres</th>
-													<th>Actual Kilometres</th>
+													<th>Source</th>
+													<th>Destination</th>
+													<th style="width:50px;">Start Time</th>
+													<th style="width:50px;">End Time</th>
+													<th style="width:100px;">Actual Start Time</th>
+													<th style="width:100px;">Actual End Time</th>
+													<th style="width:50px;">Kilometres</th>
+													<th style="width:50px;">Actual Kilometres</th>
+													<th>Cancel</th>
+													<th>Comments</th>
 												</tr>
 											</thead>
 											<tbody id="bustiming">
@@ -122,13 +138,31 @@
 													foreach($details as $key => $row){
 													$innerHTML .= '<tr>';
 													$innerHTML .= '<input type="hidden" name="slipDetailsId[]" value="'.$row['conductor_daysslip_details_Id'].'"/ >';
+													$innerHTML .=  '<td>'.$actdetails[$key]['bus_timing_Source'].'</td>';
+													$innerHTML .=  '<td>'.$actdetails[$key]['bus_timing_Destination'].'</td>';
 													$innerHTML .=  '<td>'.$actdetails[$key]['bus_timing_StartTime'].'</td>';
 													$innerHTML .=  '<td>'.$actdetails[$key]['bus_timing_DestinationTime'].'</td>';
-													$innerHTML .=  '<td>'.$actdetails[$key]['bus_timing_DestinationTime'].'</td>';
-													$innerHTML .=  '<td><input type="text" name="actSourceTime[]"  class="form-control input-sm" value="'.$row['conductor_daysslip_details_ActSourceTime'].'"/></td>';
-													$innerHTML .=  '<td><input type="text" name="actDestTime[]"  class="form-control input-sm"  value="'.$row['conductor_daysslip_details_ActDestTime'].'"/></td>';
-													$innerHTML .=  '<td>'.$route->Bus_Routes_Kilometers.'</td>';
+													$innerHTML .=  '<td><input type="time" name="actSourceTime[]"  class="form-control input-sm" value="'.$row['conductor_daysslip_details_ActSourceTime'].'"/></td>';
+													$innerHTML .=  '<td><input type="time" name="actDestTime[]"  class="form-control input-sm"  value="'.$row['conductor_daysslip_details_ActDestTime'].'"/></td>';
+													$innerHTML .=  '<td>'.$actdetails[$key]['bus_timing_Kilometers'].'</td>';
 													$innerHTML .=  '<td><input type="text" name="actKm[]"  class="form-control input-sm"  value="'.$row['conductor_daysslip_details_ActualKm'].'"/></td>';
+													$innerHTML .=  '<td>
+																		<select name="busIsCancel[]"  class="form-control input-sm">
+																		<option value="0" ';
+														if($row['conductor_daysslip_details_cancel']==0)
+															$innerHTML .= 'selected';
+														
+													$innerHTML .=  '>No</option>
+																<option value="1" ';
+														if($row['conductor_daysslip_details_cancel']==1)
+															$innerHTML .= 'selected';
+																
+																
+													$innerHTML .=  '>Yes</option>
+																		</select>
+																	</td>';
+													$innerHTML .=  '<td><textarea name="comments[]"  class="form-control input-sm">'.$row['conductor_daysslip_details_comments'].'</textarea></td>';
+										
 													$innerHTML .=  '</tr>';
 													}
 													echo $innerHTML;
@@ -141,7 +175,7 @@
 								
 								
 								<a href="<?php echo base_url() ;?>admin/dailySlip/dailySlip" class="btn btn-success btn-sm">Cancel</a>
-								<button type="submit" class="btn btn-primary pull-right">Add Daily Slip </button>
+								<button type="submit" class="btn btn-primary pull-right">Update Daily Slip </button>
 							</form>
 						  </div><!-- /.box-body -->
 					</div><!--box end-->
@@ -149,41 +183,38 @@
       </div><!-- /.content-wrapper -->
 		
      <?php $this->load->view('admin/layout/footer.php');?>
-	 <script>
-	 $(document).ready(function(){
-		$('#routeId').change(function(){
-				var routeId = $(this).val();
-				var innerHTML ='';
-				if(routeId){
-					$.ajax( {
-						url: '<?php echo base_url() ;?>admin/dailySlip/dailySlip/getBusTimings',
-						data: {routeId: routeId},
-						success: function(data) {
-						console.log(data);
-						data = $.parseJSON(data)
-							if(data.status == true){
-								for(var i in data.data ){
-									innerHTML += '<tr>';
-									innerHTML +=  '<td>'+data.data[i].bus_timing_StartTime+'</td>';
-									innerHTML +=  '<td>'+data.data[i].bus_timing_DestinationTime+'</td>';
-									innerHTML +=  '<td><input type="text" name="actSourceTime[]"  class="form-control input-sm"/></td>';
-									innerHTML +=  '<td><input type="text" name="actDestTime[]"  class="form-control input-sm"/></td>';
-									innerHTML +=  '<td>'+data.route[0].Bus_Routes_Kilometers+'</td>';
-									innerHTML +=  '<td><input type="text" name="actKm[]"  class="form-control input-sm"/></td>';
-									innerHTML +=  '</tr>';
-								}
-								
-								$('#bustiming').html(innerHTML);
-							}
-						},
-						error: function() {
-							 alert('No Timings found');
-						}
-					   });
-					   
-				}
-		});
-
-	 });
-			
+	   <script>
+	 $(function() {
+	  $("form[name='editDutySlip']").validate({
+		// Specify validation rules
+		rules: {
+		  // The key name on the left side is the name attribute
+		  // of an input field. Validation rules are defined
+		  // on the right side
+		  conductorEmpId: {
+			required:true
+		  },
+		  routeId: "required",
+		  driverEmpId: "required",
+		  busNumber: "required",
+		  dailslipDate: {
+			required:true,
+			date: true
+		  }
+		},
+		// Specify validation error messages
+		messages: {
+		  conductorEmpId: "Please select a valid Condutor",
+		  routeId: "Please select a valid  Duty ",
+		  driverEmpId: "Please select a valid Driver",
+		  busNumber: "Please enter a valid Bus Number",
+		  dailslipDate: "Please enter a valid Slip Date"
+		},
+		// Make sure the form is submitted to the destination defined
+		// in the "action" attribute of the form when valid
+		submitHandler: function(form) {
+		  form.submit();
+		}
+	  });
+	});
 	 </script>

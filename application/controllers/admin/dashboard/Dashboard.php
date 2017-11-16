@@ -21,7 +21,7 @@ class Dashboard extends CI_Controller {
 		}
 		$data['sales'] = $this->dashboard_model->getSalesPerYearPerMonth();
 		$data['currentDay'] = $this->dashboard_model->getSalesCurrentDay();
-		$data['routes'] = $this->dashboard_model->getSalesPerDutyPerYearPerMonth();
+		$data['duty'] = $this->dashboard_model->getSalesPerDutyPerYearPerMonth();
 		$data['tickets'] = $this->dashboard_model->getSalesPerTicketPerYearPerMonth();
 		$data['employees'] = $this->dashboard_model->getCountOfEmployeesPerType();
 		$data['adminusers'] = $this->dashboard_model->getCountOfAdminUsers();
@@ -29,7 +29,7 @@ class Dashboard extends CI_Controller {
 		$data['noOfBusPerRoute'] = $this->dashboard_model->getCountOfNoOfBusPerBusRoutes();
 		
 		$tempTickets=$this->tickets_model->listTickets();
-		$tempRoutes=$this->bus_model->listBusRoutes();
+		$tempDuty=$this->bus_model->listBusDuty();
 		$tempArray=array();
 		foreach($tempTickets['result'] as $tickets){
 			$tempArray[$tickets->tickets_Id] = $tickets;
@@ -37,10 +37,10 @@ class Dashboard extends CI_Controller {
 		
 		$data['ticketsData'] = $tempArray;
 		$tempArray=array();
-		foreach($tempRoutes['result'] as $routes){
-			$tempArray[$routes->Bus_Routes_Id] = $routes;
+		foreach($tempDuty['result'] as $duty){
+			$tempArray[$duty->bus_duty_Id] = $duty;
 		}
-		$data['routesData'] = $tempArray;
+		$data['dutyData'] = $tempArray;
 		$this->load->view('admin/dashboard/dashboard',$data);
 	}
 }

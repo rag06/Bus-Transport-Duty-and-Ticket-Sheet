@@ -220,7 +220,7 @@
 				  <!-- PRODUCT LIST -->
 				  <div class="box box-primary">
 					<div class="box-header with-border">
-					  <h3 class="box-title">Sales per Route per Year Per Month</h3>
+					  <h3 class="box-title">Sales per Duty per Year Per Month</h3>
 					  <div class="box-tools pull-right">
 						<button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
 						<button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
@@ -230,7 +230,7 @@
 					  <table class="table datatable">
 						<thead>
 							<tr>
-								<th>Route</th>
+								<th>Duty</th>
 								<th>Year</th>
 								<th>Month</th>
 								<th>Amount</th>
@@ -239,15 +239,15 @@
 						<tbody>
 							<?php 
 								$i=0;
-								foreach($routes as $route){
+								foreach($duty as $dutyRow){
 									$i++;
 									if($i == 3)
 										break;
 									echo '<tr>
-											<td>'.$routesData[$route['cashDeposit_slip_RouteId']]->Bus_Routes_Number.'</td>
-											<td>'.$route['SalesYear'].'</td>
-											<td>'.$route['SalesMonth'].'</td>
-											<td> Rs. '.$route['TotalSales'].'</td>
+											<td>'.$dutyData[$dutyRow['cashDeposit_slip_DutyId']]->Bus_Routes_Number.' | '.$dutyData[$dutyRow['cashDeposit_slip_DutyId']]->bus_duty_Id.'</td>
+											<td>'.$dutyRow['SalesYear'].'</td>
+											<td>'.$dutyRow['SalesMonth'].'</td>
+											<td> Rs. '.$dutyRow['TotalSales'].'</td>
 										</tr>';
 								}
 								?>
@@ -277,9 +277,7 @@
 		//-------------
 		// Get context with jQuery - using jQuery's .get() method.
 		var pieChartCanvas = $("#pieChart").get(0).getContext("2d");
-		var pieChartforBus = $("#pieChartforBus").get(0).getContext("2d");
 		var pieChart = new Chart(pieChartCanvas);
-		var pieChartforBus = new Chart(pieChartforBus);
 		var PieData = [
 		<?php foreach($employees as $emp){
 			$color = sprintf('#%06X', mt_rand(0, 0xFFFFFF));
@@ -289,18 +287,6 @@
 			color: "<?php echo $color; ?>",
 			highlight: "<?php echo $color; ?>",
 			label: "<?php echo  $emp['Employee_Type'] == 1 ?  "Conductor" :  "Driver" ; ?>"
-		  },
-		  <?php } ?>
-		];
-		var pieChartforBusData = [
-		<?php 	foreach($noOfBusPerRoute as $noOfBus){
-			$color = sprintf('#%06X', mt_rand(0, 0xFFFFFF));
-		?>
-		  {
-			value: "<?php echo $noOfBus['COUNT']; ?>",
-			color: "<?php echo $color; ?>",
-			highlight: "<?php echo $color; ?>",
-			label: "Route-<?php echo  $routesData[$noOfBus['bus_timing_routeId']]->Bus_Routes_Number; ?>"
 		  },
 		  <?php } ?>
 		];
@@ -331,5 +317,4 @@
 		//Create pie or douhnut chart
 		// You can switch between pie and douhnut using the method below.
 		pieChart.Doughnut(PieData, pieOptions);
-		pieChartforBus.Doughnut(pieChartforBusData, pieOptions);
 	 </script>

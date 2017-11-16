@@ -43,14 +43,15 @@
 										?>
 									<tr>
 									  <td><?php echo $i;?>.</td>
-									  <td><?php echo $routes[$row->conductor_daysSlip_RoutesId][0]['Bus_Routes_Number'];?></td>
+									  <td><?php echo $duty[$row->conductor_daysSlip_DutyId][0]['Bus_Routes_Number'];?> | <?php echo $duty[$row->conductor_daysSlip_DutyId][0]['bus_duty_Number'];?></td>
 									  <td><?php echo $employees[$row->conductor_daysSlip_ConductorEmpId][0]['Employee_Number'];?></td>
 									  <td><?php echo $row->conductor_daysSlip_BusNumber;?></td>
 									  <td><?php echo $row->conductor_daysslip_date;?></td>
 									  <td>
-										<a href="<?php echo base_url() ;?>admin/dailySlip/dailySlip/editDailySlip/<?php echo $row->conductor_daysSlip_Id;?>" class="btn  btn-info btn-sm" >Edit</a>
+										<a href="<?php echo base_url() ;?>admin/dailySlip/dailySlip/viewDailySlip/<?php echo $row->conductor_daysSlip_Id;?>" class="btn  btn-success btn-sm" >View</a>
+										<a href="<?php echo base_url() ;?>admin/dailySlip/dailySlip/editDailySlip/<?php echo $row->conductor_daysSlip_Id;?>" class="btn  btn-info admin-btn btn-sm" >Edit</a>
 										
-										<button onclick="deleteDailySlip(<?php echo $row->conductor_daysSlip_Id;?>)" class="btn  btn-danger btn-sm">Delete</button>
+										<button onclick="deleteDailySlip(<?php echo $row->conductor_daysSlip_Id;?>)" class="btn  admin-btn btn-danger btn-sm">Delete</button>
 									  </td>
 									</tr>
 										<?php $i++;}?>

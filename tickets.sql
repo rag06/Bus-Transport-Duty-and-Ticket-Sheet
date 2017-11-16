@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Nov 13, 2017 at 11:22 AM
+-- Generation Time: Nov 16, 2017 at 11:26 AM
 -- Server version: 5.5.34
 -- PHP Version: 5.3.1
 
@@ -163,14 +163,15 @@ CREATE TABLE IF NOT EXISTS `cashdeposit_slip` (
   PRIMARY KEY (`cashDeposit_slip_Id`),
   KEY `cashDeposit_slip_ConductorEmpId` (`cashDeposit_slip_ConductorEmpId`),
   KEY `cashDeposit_slip_DriverEmpId` (`cashDeposit_slip_DriverEmpId`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 --
 -- Dumping data for table `cashdeposit_slip`
 --
 
 INSERT INTO `cashdeposit_slip` (`cashDeposit_slip_Id`, `cashDeposit_slip_Number`, `cashDeposit_slip_ConductorEmpId`, `cashDeposit_slip_Date`, `cashDeposit_slip_DutyId`, `cashDeposit_slip_BusNumber`, `cashDeposit_slip_DriverEmpId`, `cashDeposit_slip_AddedDateTime`, `cashDeposit_slip_AddedBy`) VALUES
-(1, 526659, 6, '2017-11-11', 1, '1171', 7, '2017-11-11 11:43:24', 1);
+(1, 526659, 6, '2017-11-11', 1, '1171', 7, '2017-11-11 11:43:24', 1),
+(5, 526660, 4, '2017-11-16', 1, '1278', 5, '2017-11-14 09:57:21', 3);
 
 -- --------------------------------------------------------
 
@@ -188,7 +189,7 @@ CREATE TABLE IF NOT EXISTS `cashdeposit_slip_details` (
   `cashDeposit_slip_details_ActualTicketsSold` int(12) DEFAULT NULL,
   `cashDeposit_slip_details_CalculatedAmount` decimal(10,2) DEFAULT NULL,
   PRIMARY KEY (`cashDeposit_slip_details_Id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=16 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=34 ;
 
 --
 -- Dumping data for table `cashdeposit_slip_details`
@@ -203,7 +204,13 @@ INSERT INTO `cashdeposit_slip_details` (`cashDeposit_slip_details_Id`, `cashDepo
 (6, 1, 4, 23, 980600, 980678, 78, '468.00'),
 (7, 1, 5, 4, 522815, 522899, 85, '765.00'),
 (8, 1, 5, 4, 522900, 522911, 11, '99.00'),
-(9, 1, 6, 3, 79832, 79832, 0, '0.00');
+(9, 1, 6, 3, 79832, 79832, 0, '0.00'),
+(28, 5, 1, 5, 123, 220, 96, '288.00'),
+(29, 5, 2, 100, 152, 1222, 1069, '5345.00'),
+(30, 5, 4, 1, 12, 32, 20, '120.00'),
+(31, 5, 5, 11, 10, 20, 9, '81.00'),
+(32, 5, 3, 1, 1, 12, 10, '100.00'),
+(33, 5, 6, 0, 0, 0, 0, '0.00');
 
 -- --------------------------------------------------------
 
@@ -223,14 +230,14 @@ CREATE TABLE IF NOT EXISTS `conductor_daysslip` (
   PRIMARY KEY (`conductor_daysSlip_Id`),
   KEY `conductor_daysSlip_ConductorEmpId` (`conductor_daysSlip_ConductorEmpId`),
   KEY `conductor_daysSlip_DriveEmpId` (`conductor_daysSlip_DriveEmpId`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `conductor_daysslip`
 --
 
 INSERT INTO `conductor_daysslip` (`conductor_daysSlip_Id`, `conductor_daysSlip_ConductorEmpId`, `conductor_daysSlip_DutyId`, `conductor_daysSlip_BusNumber`, `conductor_daysSlip_DriveEmpId`, `conductor_daysslip_date`, `conductor_daysSlip_AddedDateTime`, `conductor_daysSlip_AddedBy`) VALUES
-(1, 6, 1, 1171, 7, '2017-11-10', '2017-11-11 11:22:58', 1);
+(2, 4, 1, 1149, 5, '2017-11-16', '2017-11-16 10:43:27', 1);
 
 -- --------------------------------------------------------
 
@@ -244,15 +251,17 @@ CREATE TABLE IF NOT EXISTS `conductor_daysslip_details` (
   `conductor_daysslip_details_ActSourceTime` time NOT NULL,
   `conductor_daysslip_details_ActDestTime` time NOT NULL,
   `conductor_daysslip_details_ActualKm` decimal(8,3) NOT NULL,
+  `conductor_daysslip_details_cancel` tinyint(1) NOT NULL DEFAULT '0',
+  `conductor_daysslip_details_comments` varchar(250) DEFAULT NULL,
   PRIMARY KEY (`conductor_daysslip_details_Id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `conductor_daysslip_details`
 --
 
-INSERT INTO `conductor_daysslip_details` (`conductor_daysslip_details_Id`, `conductor_daysslip_details_SlipId`, `conductor_daysslip_details_ActSourceTime`, `conductor_daysslip_details_ActDestTime`, `conductor_daysslip_details_ActualKm`) VALUES
-(1, 1, '00:00:00', '00:00:00', '0.000');
+INSERT INTO `conductor_daysslip_details` (`conductor_daysslip_details_Id`, `conductor_daysslip_details_SlipId`, `conductor_daysslip_details_ActSourceTime`, `conductor_daysslip_details_ActDestTime`, `conductor_daysslip_details_ActualKm`, `conductor_daysslip_details_cancel`, `conductor_daysslip_details_comments`) VALUES
+(2, 2, '00:00:00', '00:00:00', '0.000', 1, '12');
 
 -- --------------------------------------------------------
 
