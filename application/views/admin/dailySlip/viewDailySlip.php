@@ -159,10 +159,11 @@
 													$innerHTML .=  '<td>'.$row['conductor_daysslip_details_comments'].'</td>';
 										
 													$innerHTML .=  '</tr>';
+													$totalAckKM = $totalAckKM + $actdetails[$key]['bus_timing_Kilometers'];
+													$totalOPTKM = $totalOPTKM + $row['conductor_daysslip_details_ActualKm'];
 													}
 													echo $innerHTML;
-													$totalAckKM +=$actdetails[$key]['bus_timing_Kilometers'];
-													$totalOPTKM +=$row['conductor_daysslip_details_ActualKm'];
+													
 												?>
 												
 											</tbody>

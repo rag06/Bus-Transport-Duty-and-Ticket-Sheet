@@ -36,5 +36,17 @@ Class Dashboard_Model extends CI_Model {
 				return $query->result_array();
 	}
 	
+	public function getCountOfTodaysDutySlip(){
+		$query=$this->db->query("SELECT COUNT( conductor_daysslip_Id ) AS dutySlip FROM  `conductor_daysslip` WHERE DATE(  `conductor_daysslip_date` ) = DATE( NOW( ) ) ");
+				return $query->result_array();
+		
+	}
+	
+	public function getCountOfTodaysWayBillSlip(){
+		$query=$this->db->query("SELECT COUNT( `cashDeposit_slip_Id` ) AS WayBillSlip FROM  `cashdeposit_slip` WHERE DATE(  `cashDeposit_slip_Date` ) = DATE( NOW( ) ) ");
+				return $query->result_array();
+		
+	}
+	
 }
 ?>

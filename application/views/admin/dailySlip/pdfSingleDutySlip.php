@@ -100,10 +100,10 @@
 													$innerHTML .=  '<td style="border: 1px solid black;">'.$row['conductor_daysslip_details_comments'].'</td>';
 										
 													$innerHTML .=  '</tr>';
-													}
-													echo $innerHTML;
 													$totalAckKM +=$actdetails[$key]['bus_timing_Kilometers'];
 													$totalOPTKM +=$row['conductor_daysslip_details_ActualKm'];
+													}
+													echo $innerHTML;
 												?>
 												
 												<tr>

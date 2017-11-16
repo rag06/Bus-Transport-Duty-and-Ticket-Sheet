@@ -46,7 +46,7 @@
 					   $year = $now->format('Y');
 					  foreach($sales as $sale){
 								if($sale['SalesMonth'] == $month  && $sale['SalesYear']== $year ){
-									echo $sale['TotalSales'];
+									echo $sale['TotalSales']?  $sale['TotalSales'] :'0';
 								}
 					  } ?></h3>
 
@@ -63,7 +63,7 @@
 				  <!-- small box -->
 				  <div class="small-box bg-yellow">
 					<div class="inner">
-					  <h3><?php echo $adminusers[0]['VAL']; ?></h3>
+					  <h3><?php echo $adminusers[0]['VAL'] ? $adminusers[0]['VAL'] :'0'; ?></h3>
 
 					  <p>Admin User</p>
 					</div>
@@ -78,7 +78,7 @@
 				  <!-- small box -->
 				  <div class="small-box bg-red">
 					<div class="inner">
-					  <h3><?php echo $routecount[0]['VAL']; ?></h3>
+					  <h3><?php echo $routecount[0]['VAL']? $routecount[0]['VAL'] :'0'; ?></h3>
 
 					  <p>Total Routes</p>
 					</div>
@@ -115,7 +115,7 @@
 				<!-- DONUT CHART -->
 				  <div class="box box-primary">
 					<div class="box-header with-border">
-					  <h3 class="box-title">No. of Bus Per Route</h3>
+					  <h3 class="box-title">Todays Slip Record </h3>
 
 					  <div class="box-tools pull-right">
 						<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -124,11 +124,13 @@
 					  </div>
 					</div>
 					<div class="box-body">
-					  <canvas id="pieChartforBus" style="height:250px"></canvas>
+					  <canvas id="pieChartSlips" style="height:250px"></canvas>
 					</div>
 					<!-- /.box-body -->
 				  </div>
 				  <!-- /.box -->
+				</div>
+				<div class="col-lg-4 col-md-4">
 				</div>
 			  </div>
 			  <div class="row">
@@ -169,7 +171,7 @@
 					  </table>
 					</div><!-- /.box-body -->
 					<div class="box-footer text-center">
-					  <a href="#" class="uppercase">View All</a>
+					  <a href="<?php echo base_url();?>admin/dashboard/dashboard/downloadSalesPerMonthPerYear" class="uppercase">View All</a>
 					</div><!-- /.box-footer -->
 				  </div><!-- /.box -->
 				</div>
@@ -212,7 +214,7 @@
 					  </table>
 					</div><!-- /.box-body -->
 					<div class="box-footer text-center">
-					  <a href="#" class="uppercase">View All</a>
+					  <a href="<?php echo base_url();?>admin/dashboard/dashboard/downloadSalesPerTicketPerMonthPerYear" class="uppercase">View All</a>
 					</div><!-- /.box-footer -->
 				  </div><!-- /.box -->
 				</div>
@@ -255,7 +257,7 @@
 					  </table>
 					</div><!-- /.box-body -->
 					<div class="box-footer text-center">
-					  <a href="#" class="uppercase">View All</a>
+					  <a href="<?php echo base_url();?>admin/dashboard/dashboard/downloadSalesPerDutyPerMonthPerYear" class="uppercase">View All</a>
 					</div><!-- /.box-footer -->
 				  </div><!-- /.box -->
 				</div>
@@ -277,7 +279,9 @@
 		//-------------
 		// Get context with jQuery - using jQuery's .get() method.
 		var pieChartCanvas = $("#pieChart").get(0).getContext("2d");
+		var pieChartSlips = $("#pieChartSlips").get(0).getContext("2d");
 		var pieChart = new Chart(pieChartCanvas);
+		var pieChartSlips = new Chart(pieChartSlips);
 		var PieData = [
 		<?php foreach($employees as $emp){
 			$color = sprintf('#%06X', mt_rand(0, 0xFFFFFF));
@@ -289,6 +293,21 @@
 			label: "<?php echo  $emp['Employee_Type'] == 1 ?  "Conductor" :  "Driver" ; ?>"
 		  },
 		  <?php } ?>
+		];
+		var PieDataSlips = [
+		
+		  {
+			value: "<?php echo $dutyslipcount[0]['dutySlip']; ?>",
+			color: "#00a65a",
+			highlight: "#00a65a",
+			label: "Duty Slips"
+		  },
+		  {
+			value: "<?php echo $waybillcount[0]['WayBillSlip']; ?>",
+			color: "#00c0ef",
+			highlight: "#00c0ef",
+			label: "WayBill Slips"
+		  },
 		];
 		var pieOptions = {
 		  //Boolean - Whether we should show a stroke on each segment
@@ -311,10 +330,18 @@
 		  responsive: true,
 		  // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
 		  maintainAspectRatio: true,
+		legend: {
+		  display: true,
+		  position: 'bottom',
+		  labels: {
+			fontColor: "#000080",
+		  }
+		},
 		  //String - A legend template
 		  legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>"
 		};
 		//Create pie or douhnut chart
 		// You can switch between pie and douhnut using the method below.
 		pieChart.Doughnut(PieData, pieOptions);
+		pieChartSlips.Doughnut(PieDataSlips, pieOptions);
 	 </script>
