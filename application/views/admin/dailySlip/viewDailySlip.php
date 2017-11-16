@@ -133,7 +133,9 @@
 												</tr>
 											</thead>
 											<tbody id="bustiming">
-												<?php 
+												<?php  
+													$totalAckKM=0;
+													$totalOPTKM=0;
 													$innerHTML = '';
 													foreach($details as $key => $row){
 													$innerHTML .= '<tr>';
@@ -159,9 +161,19 @@
 													$innerHTML .=  '</tr>';
 													}
 													echo $innerHTML;
+													$totalAckKM +=$actdetails[$key]['bus_timing_Kilometers'];
+													$totalOPTKM +=$row['conductor_daysslip_details_ActualKm'];
 												?>
 												
 											</tbody>
+											<tfoot>
+												<tr>
+													<th colspan="6" ></th>
+													<th><?php echo $totalAckKM;?></th>
+													<th><?php echo $totalOPTKM;?></th>
+													<th colspan="2"></th>
+												<tr>
+											</tfoot>
 										<table>
 								</fieldset>
 								

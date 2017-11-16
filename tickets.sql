@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Nov 16, 2017 at 11:26 AM
+-- Generation Time: Nov 16, 2017 at 11:52 AM
 -- Server version: 5.5.34
 -- PHP Version: 5.3.1
 
@@ -126,7 +126,7 @@ CREATE TABLE IF NOT EXISTS `bus_timing` (
   `bus_timing_RouteId` int(12) NOT NULL,
   `bus_timing_Source` varchar(250) NOT NULL,
   `bus_timing_Destination` varchar(250) NOT NULL,
-  `bus_timing_Kilometers` varchar(250) NOT NULL,
+  `bus_timing_Kilometers` decimal(8,3) NOT NULL,
   `bus_timing_StartTime` time NOT NULL,
   `bus_timing_DestinationTime` time NOT NULL,
   `bus_timing_CreatedOn` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -142,7 +142,7 @@ CREATE TABLE IF NOT EXISTS `bus_timing` (
 --
 
 INSERT INTO `bus_timing` (`bus_timing_Id`, `bus_timing_DutyId`, `bus_timing_RouteId`, `bus_timing_Source`, `bus_timing_Destination`, `bus_timing_Kilometers`, `bus_timing_StartTime`, `bus_timing_DestinationTime`, `bus_timing_CreatedOn`, `bus_timing_AddedBy`, `bus_timing_Status`) VALUES
-(1, 1, 1, 'Kalyan', 'Bhiwandi', '11', '22:00:00', '22:30:00', '2017-11-12 10:28:05', 1, 1);
+(1, 1, 1, 'Kalyan', 'Bhiwandi', '11.000', '22:00:00', '22:30:00', '2017-11-12 10:28:05', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -379,8 +379,8 @@ ALTER TABLE `bus_duty`
 -- Constraints for table `bus_timing`
 --
 ALTER TABLE `bus_timing`
-  ADD CONSTRAINT `bus_timing_RouteId` FOREIGN KEY (`bus_timing_RouteId`) REFERENCES `bus_routes` (`Bus_Routes_Id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `bus_timing_DutyId` FOREIGN KEY (`bus_timing_DutyId`) REFERENCES `bus_duty` (`bus_duty_Id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `bus_timing_DutyId` FOREIGN KEY (`bus_timing_DutyId`) REFERENCES `bus_duty` (`bus_duty_Id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `bus_timing_RouteId` FOREIGN KEY (`bus_timing_RouteId`) REFERENCES `bus_routes` (`Bus_Routes_Id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `cashdeposit_slip`

@@ -27,3 +27,11 @@ Count of employees group by type
 
 SELECT COUNT(`Employee_Id`) FROM `employees` GROUP BY `Employee_Type`
 
+/*******************************************************************************************/
+
+# Custom Reports Waybill and Duty Slip.
+# dashboard View all Buttons
+# Waybill start Serial 
+# Export me Operation KM
+# Ticket Register
+

@@ -75,6 +75,8 @@
 													<th style="border: 1px solid black;">Comments</th>
 											</tr>
 												<?php 
+													$totalAckKM=0;
+													$totalOPTKM=0;
 													$innerHTML = '';
 													foreach($details as $key => $row){
 													$innerHTML .= '<tr>';
@@ -100,6 +102,15 @@
 													$innerHTML .=  '</tr>';
 													}
 													echo $innerHTML;
+													$totalAckKM +=$actdetails[$key]['bus_timing_Kilometers'];
+													$totalOPTKM +=$row['conductor_daysslip_details_ActualKm'];
 												?>
+												
+												<tr>
+													<th style="border: 1px solid black;" colspan="6" ></th>
+													<th style="border: 1px solid black;"><?php echo $totalAckKM;?></th>
+													<th style="border: 1px solid black;"><?php echo $totalOPTKM;?></th>
+													<th style="border: 1px solid black;" colspan="2"></th>
+												<tr>
 									</table>
 								
