@@ -289,4 +289,29 @@ class CashDepositSlip extends CI_Controller {
 			
 		$this->load->view('admin/cashDepositSlip/customReports',$data);
 	}
+	
+	public function getLastTicketSeries(){
+		$conductorId = $_GET['conductorId'];
+		if(!empty($conductorId)){
+			$ticketSeries = $this->cashdepositslip_model->getLastTicketSeries($conductorId);
+			if(count($ticketSeries)>0)
+			{
+				$response= array();
+				$response['status']= true;
+				$response['data']= $ticketSeries;
+				
+			}else{
+				$response= array();
+				$response['status']= false;
+				$response['errorMessage']= "No Values Found";
+			}
+		}else{
+			$response= array();
+			$response['status']= false;
+			$response['errorMessage']= "No Parameters";
+			
+		}
+		echo json_encode($response);
+	}
+	
 }

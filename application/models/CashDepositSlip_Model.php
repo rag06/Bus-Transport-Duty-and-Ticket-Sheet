@@ -39,6 +39,32 @@ Class CashDepositSlip_Model extends CI_Model {
 				return $query->result_array();
 		
 	}
+	public function getLastTicketSeries($id) {
+		
+		$finalObject =array();
+		
+		$query=$this->db->query("SELECT MAX(cashDeposit_slip_Number) AS WaybillNum , cashDeposit_slip_Id FROM cashdeposit_slip  WHERE cashDeposit_slip_ConductorEmpId = $id");
+		$temp = $query->result_array();
+		$slipID = $temp[0]['cashDeposit_slip_Id'];
+		if(!empty($slipID)){ 
+			$query=$this->db->query("SELECT MAX(`cashDeposit_slip_details_ticketSeries`) AS Series ,cashDeposit_slip_details_TicketId  FROM cashDeposit_slip_details  WHERE `cashDeposit_slip_details_SlipId`=".$slipID." GROUP BY `cashDeposit_slip_details_TicketId`");
+			$temp = $query->result_array();
+			foreach($temp as $temprow){
+				$query=$this->db->query("SELECT MAX(`cashDeposit_slip_details_TicketEndSerial`) AS EndSerial ,cashDeposit_slip_details_TicketId  FROM cashDeposit_slip_details  WHERE `cashDeposit_slip_details_SlipId`=$slipID AND cashDeposit_slip_details_ticketSeries =".$temprow['Series']." AND cashDeposit_slip_details_TicketId = ".$temprow['cashDeposit_slip_details_TicketId']." GROUP BY `cashDeposit_slip_details_TicketId` ORDER BY `cashDeposit_slip_details_TicketId`");
+				$finalObject[$temprow['cashDeposit_slip_details_TicketId']]=array();
+				$finalObject[$temprow['cashDeposit_slip_details_TicketId']]['ticketId']=$temprow['cashDeposit_slip_details_TicketId'];
+				$finalObject[$temprow['cashDeposit_slip_details_TicketId']]['series']=$temprow['Series'];
+				$temp = $query->result_array();
+				foreach($temp as $temprow){
+					$finalObject[$temprow['cashDeposit_slip_details_TicketId']]['endSerial']=$temprow['EndSerial'];
+				}
+			}
+			
+			
+		}
+		return $finalObject;
+		
+	}
 	
 	public function listCashDepositSlip() {
 		

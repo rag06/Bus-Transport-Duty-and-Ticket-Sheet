@@ -58,7 +58,7 @@
 										</div>
 										<div class="form-group  col-md-3">
 										  <label for="routeId">Route</label>
-										  <select class="form-control" id="routeId" name="routeId" required  readonly>
+										  <select class="form-control" id="routeId" name="routeId" required  >
 											<option value="">Select Route</option>
 										  <?php 
 												foreach($duty['result'] as $dutyrow){
@@ -73,7 +73,7 @@
 										</div>
 										<div class="form-group col-md-3">
 										  <label for="slipNo">Waybill Number</label>
-										  <input type="text" class="form-control" id="slipNo" name="slipNo" placeholder="Enter Waybill Number"  value="<?php echo $result[0]['cashDeposit_slip_Number']; ?>"  readonly>
+										  <input type="text" class="form-control" id="slipNo" name="slipNo" placeholder="Enter Waybill Number"  value="<?php echo $result[0]['cashDeposit_slip_Number']; ?>"  >
 										</div>
 									</div>
 									<div class="">
@@ -97,7 +97,7 @@
 										</div>
 										<div class="form-group col-md-3">
 										  <label for="busNumber">Bus Number</label>
-										  <select type="text" class="form-control" id="busNumber" name="busNumber"  readonly>
+										  <select type="text" class="form-control" id="busNumber" name="busNumber"  >
 										  <?php 
 												foreach($busList['result'] as $busrow){
 													if($busrow->bus_number == $result[0]['cashDeposit_slip_BusNumber']){

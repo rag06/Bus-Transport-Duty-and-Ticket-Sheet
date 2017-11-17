@@ -58,7 +58,7 @@
 										</div>
 										<div class="form-group  col-md-6">
 										  <label for="routeId">Duty Number</label>
-										  <select class="form-control" id="routeId" name="routeId" required disabled>
+										  <select class="form-control" id="routeId" name="routeId" required readonly>
 											<option value="">Select Duty Number</option>
 										  <?php 
 												foreach($duty['result'] as $dutyRow){

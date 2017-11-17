@@ -41,6 +41,7 @@
 										<div class="form-group col-md-6">
 										  <label for="conductorEmpId">Conductor</label>
 										  <select class="form-control" id="conductorEmpId" name="conductorEmpId">
+												<option value="">Select a Conductor </option>
 											<?php 
 												foreach($employees['result'] as $emp){
 													if($emp->Employee_Type == 1)
@@ -113,7 +114,7 @@
 											<tbody>
 												<?php 
 													foreach($tickets['result'] as $ticketRow){?>
-														<tr>
+														<tr id="ticketRow_<?php echo $ticketRow->tickets_Id ;?>">
 															<td style="text-align:center">
 																<input type="hidden"  name="ticketId[]" value="<?php echo $ticketRow->tickets_Id ;?>">
 																<input type="hidden" class="ticketRate" name="ticketvalue[]" value="<?php echo ($ticketRow->tickets_Price+$ticketRow->tickets_ExtraPrice) ;?>">
@@ -121,7 +122,7 @@
 																<a href="javascript:void(0);" class="cloneTicketRow"><i class="fa fa-plus-circle" aria-hidden="true"></i></a>
 																<a href="javascript:void(0);" class="removeCloneTicketRow" style="display:none"><i class="fa fa-minus-circle btn btn-sm btn-danger" aria-hidden="true"></i></a>
 															</td>
-															<td> <input type="text" class="form-control input-sm" name="ticketSeries[]" placeholder="Enter Series"></td>
+															<td> <input type="text" class="form-control ticketSeries input-sm" name="ticketSeries[]" placeholder="Enter Series"></td>
 															<td> <input type="text" class="form-control ticketStart input-sm"  name="ticketStartSerial[]" placeholder="Enter Start Serial"></td>
 															<td> <input type="text" class="form-control ticketEnd input-sm" name="ticketEndSerial[]" placeholder="Enter End Serial"></td>
 															<td> <input type="text" class="form-control  ticketQty input-sm" name="ticketsSold[]" placeholder="Enter Sold" value="0" /></td>
@@ -154,6 +155,38 @@
      <?php $this->load->view('admin/layout/footer.php');?>
 	 <script>
 		$(document).ready(function(){
+			$('#conductorEmpId').change(function(){
+				var conductorId = $('#conductorEmpId').val();
+				if(conductorId){
+					
+					$.ajax( {
+						url: '<?php echo base_url() ;?>admin/cashDepositSlip/cashDepositSlip/getLastTicketSeries',
+						data: {conductorId: conductorId},
+						success: function(data) {
+						data = $.parseJSON(data)
+							if(data.status == true){
+									for(var i in data.data ){
+										var $tr = $('#ticketRow_'+i);
+										$tr.find('.ticketSeries').val(data.data[i].series);
+										$tr.find('.ticketStart').val(data.data[i].endSerial);
+										$tr.find('.ticketEnd').val(data.data[i].endSerial);
+									}
+								
+							} else{
+								alert('No Series  found');
+								$('.ticketSeries').val('');
+								$('.ticketStart').val('');
+								$('.ticketEnd').val('');
+							}
+						},
+						error: function() {
+							 alert('No Series  found');
+						}
+					   });
+					   
+				}
+				
+			});
 			$('.cloneTicketRow').click(function(){
 				var $this     = $(this);
 				var $parentTR = $this.closest('tr');
