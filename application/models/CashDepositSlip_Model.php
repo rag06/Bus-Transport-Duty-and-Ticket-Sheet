@@ -78,6 +78,28 @@ Class CashDepositSlip_Model extends CI_Model {
 		return $data;
 		
 	}
+	public function listCashDepositSlipReports($conductor='',$dutyId='',$busNumber='',$startDate,$endDate) {
+		
+		$this->db->select('*');
+		$this->db->from('cashdeposit_slip');
+		$where = "";
+		$where .= "cashDeposit_slip_Date BETWEEN '".$startDate."' AND '".$endDate."'";
+		if(!empty($condutor))
+			$where .= " AND cashDeposit_slip_ConductorEmpId='".$conductor;
+		if(!empty($dutyId))
+			$where .= " AND cashDeposit_slip_DutyId='".$dutyId;
+		if(!empty($busNumber))
+			$where .= " AND cashDeposit_slip_BusNumber='".$busNumber;
+			
+		$this->db->where($where);
+		$this->db->order_by('cashDeposit_slip_Date','desc');
+		$query = $this->db->get();
+		$data=array();
+		$data['result']=$query->result_array();
+		$data['records']=$query->num_rows();
+		return $data;
+		
+	}
 	
 	public function deleteCashDepositSlip($id) {
 		

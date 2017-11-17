@@ -25,7 +25,7 @@
 						  <h3 class="box-title">Waybill Slip Reports</h3>
 						</div><!-- /.box-header -->
 						  <div class="box-body">
-							<form >
+							<form class="form" method="post" action="<?php echo base_url();?>admin/cashDepositSlip/cashDepositSlip/downloadcashDepositSlipReport" >
 								<div class="row">
 								<div class="col-md-3">
 									<div class="form-group">
@@ -43,8 +43,8 @@
 								</div>
 								<div class="col-md-3">
 									<div class="form-group">
-										  <label for="routeId">Duty Number</label>
-										  <select class="form-control" id="routeId" name="routeId" >
+										  <label for="dutyId">Duty Number</label>
+										  <select class="form-control" id="dutyId" name="dutyId" >
 											<option value="">Select Duty Number</option>
 										  <?php 
 												foreach($duty['result'] as $dutyrow){
@@ -73,12 +73,7 @@
 									<label>Date range:</label>
 
 									<div class="input-group">
-									  <button type="button" class="btn btn-default pull-right" id="daterange-btn">
-										<span>
-										  <i class="fa fa-calendar"></i> Date range picker
-										</span>
-										<i class="fa fa-caret-down"></i>
-									  </button>
+									  <input type="text" name="dateRange" class="btn btn-default pull-right" id="daterange-btn" placeholder="Select Date Range" required />
 									</div>
 								  </div>
 								  <!-- /.form group -->
@@ -107,11 +102,12 @@
 				'This Month': [moment().startOf('month'), moment().endOf('month')],
 				'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
 			  },
+			  format: "YYYY-MM-DD",
 			  startDate: moment().subtract(29, 'days'),
 			  endDate: moment()
 			},
 			function (start, end) {
-			  $('#daterange-btn span').html(start.format('YYYY-MM-DD') + ' - ' + end.format('YYYY-MM-DD'));
+			  $('#daterange-btn').val(start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
 			}
 		);
 	 </script>

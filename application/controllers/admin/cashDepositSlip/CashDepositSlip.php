@@ -283,11 +283,83 @@ class CashDepositSlip extends CI_Controller {
 		if(!isset($this->session->userdata['logged_in'])){
 			redirect('admin/login/login/index');
 		}
+		
 		$data['employees']=$this->emp_model->listEmployees();
 		$data['busList'] = $this->bus_model->listBus();
 		$data['duty'] = $this->bus_model->listBusDuty();
 			
 		$this->load->view('admin/cashDepositSlip/customReports',$data);
+	}
+	
+	
+	public function downloadcashDepositSlipReport(){
+			//print_r($_REQUEST); die;
+		//load mPDF library
+		$this->load->library('m_pdf');
+		//now pass the data//
+		$this->data['title']="WaybillSlip";
+		$this->data['description']="Contains Waybillslip";
+		//now pass the data //
+		if(isset($_REQUEST['dateRange']))
+			$daterange = explode(' to ',$_REQUEST['dateRange']);
+		
+		$this->data['result'] = $this->cashdepositslip_model->listCashDepositSlipReports($_REQUEST['conductorEmpId'],$_REQUEST['dutyId'],$_REQUEST['busNumber'],$daterange[0],$daterange[1]);
+		$this->data['details'] = array();
+		foreach($this->data['result']['result'] as $record)
+		{
+			$this->data['details'][$record['cashDeposit_slip_Id']]=array();
+			$this->data['details'][$record['cashDeposit_slip_Id']] = $this->cashdepositslip_model->getCashDepositSlipDetails($record['cashDeposit_slip_Id']);
+		}
+		$this->data['employees'] = $this->emp_model->listEmployees();
+		$this->data['duty'] = $this->bus_model->listBusDuty();
+		$this->data['busList'] = $this->bus_model->listBus();
+		
+		$tempTickets=$this->tickets_model->listTickets();
+		$tempArray=array();
+		foreach($tempTickets['result'] as $tickets){
+			$tempArray[$tickets->tickets_Id] = $tickets;
+		}
+		$this->data['tickets'] = $tempArray;
+		
+		$tempArray=array();
+		foreach($this->data['duty']['result'] as $dutyrow){
+			$tempArray[$dutyrow->bus_duty_Id] = $dutyrow;
+		}
+		$this->data['duty'] = $tempArray;
+		
+		$tempArray=array();
+		foreach($this->data['employees']['result'] as $employees){
+			$tempArray[$employees->Employee_Id] = $employees;
+		}
+		$this->data['employees'] = $tempArray;
+		
+		$html=$this->load->view('admin/cashDepositSlip/pdfCashDepositSlipReport',$this->data, true);
+		
+		
+		//this the the PDF filename that user will get to download
+		$pdfFilePath ="waybillReportsCustom-".time()."-download.pdf";
+		 
+		//actually, you can pass mPDF parameter on this load() function
+		$pdf = $this->m_pdf->load();
+		// Define the Header/Footer before writing anything so they appear on the first page
+		$pdf->SetHTMLHeader('
+		<div style=" font-weight: bold;height:50px;">
+			 <h1>KDMT Transport</h1>
+		</div>');
+		$pdf->SetHTMLFooter('
+		<table width="100%">
+			<tr>
+				<td width="33%">Generated On : {DATE j-m-Y}</td>
+				<td width="33%" align="center">{PAGENO}/{nbpg}</td>
+				<td width="33%" style="text-align: right;">KDMT document</td>
+			</tr>
+		</table>');
+		
+		//generate the PDF!
+		$pdf->WriteHTML($html,2);
+		//offer it to user via browser download! (The PDF won't be saved on your server HDD)
+		$pdf->Output($pdfFilePath, "D");
+			
 	}
 	
 	public function getLastTicketSeries(){

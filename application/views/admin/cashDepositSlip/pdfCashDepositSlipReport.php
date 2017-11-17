@@ -1,3 +1,4 @@
+<?php foreach($result['result'] as $resultRow) { ?>
 	<br/>
 			<br/>
 			<br/>
@@ -7,27 +8,17 @@
 										<td style="border: 1px solid black;">
 										  <label for="conductorEmpId">Conductor: </label>
 												<?php 
-												foreach($employees['result'] as $emp){
-													if($emp->Employee_Type == 1){
-														if($emp->Employee_Id == $result[0]['cashDeposit_slip_ConductorEmpId']){
-															echo '<span>'.$emp->Employee_Number.' ( '.$emp->Employee_Name.' )</span>';
-														}
-													}
-												}
+												echo '<span>'.$employees[$resultRow['cashDeposit_slip_ConductorEmpId']]->Employee_Number.' ( '.$employees[$resultRow['cashDeposit_slip_ConductorEmpId']]->Employee_Name.' )</span>';
 											?>
 										</td>
 										<td style="border: 1px solid black;" >
 										  <label for="routeId">Duty: </label>
 										  <?php 
-												foreach($duty['result'] as $dutyrow){
-													if($dutyrow->bus_duty_Id == $result[0]['cashDeposit_slip_DutyId']){
-													  echo '<span>'.$dutyrow->Bus_Routes_Number.'|'.$dutyrow->bus_duty_Number.' ('.$dutyrow->Bus_Routes_Name.')</span>';
-													}
-												}
+													  echo '<span>'.$duty[$resultRow['cashDeposit_slip_DutyId']]->Bus_Routes_Number.'|'.$duty[$resultRow['cashDeposit_slip_DutyId']]->bus_duty_Number.' ('.$duty[$resultRow['cashDeposit_slip_DutyId']]->Bus_Routes_Name.')</span>';
 											?>
 										</td>
 										<td style="border: 1px solid black;">
-										  <label for="slipNo">Waybill Number: </label><?php echo $result[0]['cashDeposit_slip_Number']; ?>
+										  <label for="slipNo">Waybill Number: </label><?php echo $resultRow['cashDeposit_slip_Number']; ?>
 										</td>
 									</tr>
 									<tr class="">
@@ -35,29 +26,17 @@
 										<td style="border: 1px solid black;">
 										  <label for="driverEmpId">Driver:  </label>
 										 <?php 
-												foreach($employees['result'] as $emp){
-													if($emp->Employee_Type == 0){
-														if($emp->Employee_Id == $result[0]['cashDeposit_slip_DriverEmpId']){
-															echo '<span>'.$emp->Employee_Number.' ( '.$emp->Employee_Name.' )</span>';
-														}
-													}
-												}
+															echo '<span>'.$employees[$resultRow['cashDeposit_slip_DriverEmpId']]->Employee_Number.' ( '.$employees[$resultRow['cashDeposit_slip_ConductorEmpId']]->Employee_Name.' )</span>';
 											?>
 										</td>
 										<td style="border: 1px solid black;">
 										  <label for="busNumber">Bus Number: </label>
-										  <?php 
-												foreach($busList['result'] as $busrow){
-													if($busrow->bus_number == $result[0]['cashDeposit_slip_BusNumber']){
-													 echo '<span>'.$busrow->bus_number.'</span>';
-													 }
-												}
-										  ?>
+										  <?php  echo '<span>'.$resultRow['cashDeposit_slip_BusNumber'].'</span>';?>
 										  
 										</td>
 										
 										<td style="border: 1px solid black;">
-										  <label for="slipDate">Slip Date: </label><?php echo $result[0]['cashDeposit_slip_Date']; ?>
+										  <label for="slipDate">Slip Date: </label><?php echo $resultRow['cashDeposit_slip_Date']; ?>
 										</td>
 									</tr>
 									</table>
@@ -73,7 +52,7 @@
 											</tr>
 											<?php
 												$grandTotal=0;
-												foreach($details as $detailsRow){?>
+												foreach($details[$resultRow['cashDeposit_slip_Id']] as $detailsRow){?>
 													<tr>
 														<td style="text-align:center;border: 1px solid black;">
 															
@@ -97,4 +76,5 @@
 												<th>Rs. <span id="totalAmout"><?php echo $grandTotal;?></span></th>
 											</tr>
 									</table>
-								
+									<pagebreak>
+<?php } ?>
