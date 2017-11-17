@@ -30,6 +30,5 @@ SELECT COUNT(`Employee_Id`) FROM `employees` GROUP BY `Employee_Type`
 /*******************************************************************************************/
 
 # Custom Reports Waybill and Duty Slip.
-# Waybill start Serial 
 # Ticket Register
 
