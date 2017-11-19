@@ -41,7 +41,7 @@
 									<div class="">
 										<div class="form-group col-md-6">
 										  <label for="conductorEmpId">Conductor</label>
-										  <select class="form-control" id="conductorEmpId" name="conductorEmpId">
+										  <select class="form-control select2" id="conductorEmpId" name="conductorEmpId">
 											<?php 
 												foreach($employees['result'] as $emp){
 													if($emp->Employee_Type == 1){
@@ -76,7 +76,7 @@
 									
 										<div class="form-group col-md-6">
 										  <label for="driverEmpId">Driver </label>
-										  <select class="form-control" id="driverEmpId" name="driverEmpId">
+										  <select class="form-control select2" id="driverEmpId" name="driverEmpId">
 										  <?php 
 												foreach($employees['result'] as $emp){
 													if($emp->Employee_Type == 0){
@@ -93,7 +93,7 @@
 										</div>
 										<div class="form-group col-md-3">
 										  <label for="busNumber">Bus Number</label>
-										   <select class="form-control" id="busNumber" name="busNumber" placeholder="Enter Bus Number">
+										   <select class="form-control select2" id="busNumber" name="busNumber" placeholder="Enter Bus Number">
 												<option value="">Select a Bus </option>
 											  <?php 
 												foreach($busList['result'] as $busrow){
@@ -110,7 +110,7 @@
 										
 										<div class="form-group col-md-3">
 										  <label for="dailslipDate">Slip Date</label>
-										  <input type="text" class="form-control" id="dailslipDate" name="dailslipDate" placeholder="yyyy-mm-dd"  value="<?php echo $result[0]['conductor_daysslip_date']; ?>">
+										  <input type="text" class="form-control input-date" id="dailslipDate" name="dailslipDate" placeholder="yyyy-mm-dd"  value="<?php echo $result[0]['conductor_daysslip_date']; ?>">
 										</div>
 									</div>
 								</fieldset>
@@ -129,6 +129,7 @@
 													<th style="width:50px;">Kilometres</th>
 													<th style="width:50px;">Actual Kilometres</th>
 													<th>Cancel</th>
+													<th>Reason</th>
 													<th>Comments</th>
 												</tr>
 											</thead>
@@ -161,6 +162,15 @@
 													$innerHTML .=  '>Yes</option>
 																		</select>
 																	</td>';
+													$innerHTML .=  '<td><select name="busIsCancelReason[]"  class="form-control input-sm"><option value="" >Select</option>';
+													foreach ($cancelReason as $reason){
+														if($reason == $row['conductor_daysslip_details_Reason']){
+															$innerHTML .=  	'<option value="'.$reason.'" selected >'.$reason.'</option>';
+														} else{
+															$innerHTML .=  	'<option value="'.$reason.'" >'.$reason.'</option>';
+														}
+													}
+													$innerHTML .= '</select></td>';
 													$innerHTML .=  '<td><textarea name="comments[]"  class="form-control input-sm">'.$row['conductor_daysslip_details_comments'].'</textarea></td>';
 										
 													$innerHTML .=  '</tr>';
@@ -216,5 +226,7 @@
 		  form.submit();
 		}
 	  });
+	  
+		
 	});
 	 </script>

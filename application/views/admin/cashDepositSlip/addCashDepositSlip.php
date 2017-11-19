@@ -40,7 +40,7 @@
 									<div class="">
 										<div class="form-group col-md-6">
 										  <label for="conductorEmpId">Conductor</label>
-										  <select class="form-control" id="conductorEmpId" name="conductorEmpId">
+										  <select class="form-control select2" id="conductorEmpId" name="conductorEmpId">
 												<option value="">Select a Conductor </option>
 											<?php 
 												foreach($employees['result'] as $emp){
@@ -52,7 +52,7 @@
 										</div>
 										<div class="form-group  col-md-3">
 										  <label for="routeId">Duty Number</label>
-										  <select class="form-control" id="routeId" name="routeId" required>
+										  <select class="form-control select2" id="routeId" name="routeId" required>
 											<option value="">Select Duty Number</option>
 										  <?php 
 												foreach($duty['result'] as $dutyrow){
@@ -70,7 +70,7 @@
 									
 										<div class="form-group col-md-6">
 										  <label for="driverEmpId">Driver </label>
-										  <select class="form-control" id="driverEmpId" name="driverEmpId">
+										  <select class="form-control select2" id="driverEmpId" name="driverEmpId">
 												<option value="">Select a Driver </option>
 										  <?php 
 												foreach($employees['result'] as $emp){
@@ -81,7 +81,7 @@
 											</select>
 										</div>
 										<div class="form-group col-md-3">
-										  <label for="busNumber">Bus Number</label>
+										  <label for="busNumber select2">Bus Number</label>
 										  <select class="form-control" id="busNumber" name="busNumber" placeholder="Enter Bus Number">
 												<option value="">Select a Bus </option>
 											  <?php 
@@ -94,7 +94,7 @@
 										
 										<div class="form-group col-md-3">
 										  <label for="slipDate">Slip Date</label>
-										  <input type="text" class="form-control" id="slipDate" name="slipDate" placeholder="yyyy-mm-dd" value="<?php echo date("Y-m-d");?>">
+										  <input type="text" class="form-control input-date" id="slipDate" name="slipDate" placeholder="yyyy-mm-dd" value="<?php echo date("Y-m-d");?>">
 										</div>
 									</div>
 								</fieldset>
@@ -108,6 +108,7 @@
 													<th>Ticket Series</th>
 													<th>Ticket Start Series</th>
 													<th>Ticket End Series</th>
+													<th>Ticket Series is Last</th>
 													<th>Tickets Sold</th>
 													<th>Amount</th>
 												</tr>
@@ -126,6 +127,12 @@
 															<td> <input type="text" class="form-control ticketSeries input-sm" name="ticketSeries[]" placeholder="Enter Series"></td>
 															<td> <input type="text" class="form-control ticketStart input-sm"  name="ticketStartSerial[]" placeholder="Enter Start Serial"></td>
 															<td> <input type="text" class="form-control ticketEnd input-sm" name="ticketEndSerial[]" placeholder="Enter End Serial"></td>
+															<td> 
+																<select class="form-control input-sm" name="ticketisEnd[]">
+																	<option value="0">No</option>
+																	<option value="1">Yes</option>
+																</select>
+															</td>
 															<td> <input type="text" class="form-control  ticketQty input-sm" name="ticketsSold[]" placeholder="Enter Sold" value="0" /></td>
 															<td> <input type="text" class="form-control ticketAmount input-sm" onblur="calcTotal()" name="amount[]" placeholder="Enter amount"value="0"></td>
 														</tr>
@@ -209,7 +216,7 @@
 				var start = $parentTR.find('.ticketStart').val();
 				var end = $parentTR.find('.ticketEnd').val();
 				var rate = $parentTR.find('.ticketRate').val();
-				var qty = (end)-(start-1);
+				var qty = (end)-(start);
 				if(qty>0){
 					$parentTR.find('.ticketQty').val(qty);
 					$parentTR.find('.ticketAmount').val(qty *rate );

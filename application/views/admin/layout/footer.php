@@ -31,10 +31,17 @@
     <script src="<?php echo base_url();?>html/admin/plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
     <script src="<?php echo base_url();?>html/admin/plugins/input-mask/jquery.inputmask.extensions.js"></script>
 	
+    <!-- Select2 -->
+    <script src="<?php echo base_url();?>html/admin/plugins/select2/select2.full.min.js"></script>
+	
 	<!-- webpages page-->
 	<script>
 		
 		$(function () {
+			
+        //Initialize Select2 Elements
+        $(".select2").select2();
+		
         $('#webpagesList').DataTable({
           "paging": true,
           "lengthChange": false,
@@ -44,6 +51,10 @@
           "autoWidth": true
         });
 		
+		
+	  
+        //Datemask yyyy-mm-dd
+        $(".input-date").inputmask("yyyy-mm-dd", {"placeholder": "yyyy-mm-dd"});
       });
 	</script>
 	<!-- admin manage page-->

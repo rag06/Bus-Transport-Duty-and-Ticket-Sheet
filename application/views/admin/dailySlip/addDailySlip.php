@@ -40,7 +40,7 @@
 									<div class="">
 										<div class="form-group col-md-6">
 										  <label for="conductorEmpId">Conductor</label>
-										  <select class="form-control" id="conductorEmpId" name="conductorEmpId">
+										  <select class="form-control select2" id="conductorEmpId" name="conductorEmpId">
 												<option value="">Select a Conductor </option>
 											<?php 
 												foreach($employees['result'] as $emp){
@@ -52,7 +52,7 @@
 										</div>
 										<div class="form-group  col-md-6">
 										  <label for="routeId">Duty Number</label>
-										  <select class="form-control" id="routeId" name="routeId" required>
+										  <select class="form-control select2" id="routeId" name="routeId" required>
 											<option value="">Select Duty Number</option>
 										  <?php 
 												foreach($duty['result'] as $dutyRow){
@@ -66,7 +66,7 @@
 									
 										<div class="form-group col-md-6">
 										  <label for="driverEmpId">Driver </label>
-										  <select class="form-control" id="driverEmpId" name="driverEmpId">
+										  <select class="form-control select2" id="driverEmpId" name="driverEmpId">
 												<option value="">Select a Driver </option>
 										  <?php 
 												foreach($employees['result'] as $emp){
@@ -78,7 +78,7 @@
 										</div>
 										<div class="form-group col-md-3">
 										  <label for="busNumber">Bus Number</label>
-										   <select class="form-control" id="busNumber" name="busNumber" placeholder="Enter Bus Number">
+										   <select class="form-control select2" id="busNumber" name="busNumber" placeholder="Enter Bus Number">
 												<option value="">Select a Bus </option>
 											  <?php 
 												foreach($busList['result'] as $busrow){
@@ -90,7 +90,7 @@
 										
 										<div class="form-group col-md-3">
 										  <label for="dailslipDate">Slip Date</label>
-										  <input type="text" class="form-control" id="dailslipDate" name="dailslipDate" placeholder="yyyy-mm-dd"  value="<?php echo date("Y-m-d");?>"/>
+										  <input type="text" class="form-control input-date" id="dailslipDate" name="dailslipDate" placeholder="yyyy-mm-dd"  value="<?php echo date("Y-m-d");?>"/>
 										</div>
 									</div>
 								</fieldset>
@@ -109,6 +109,7 @@
 													<th style="width:50px;">Kilometres</th>
 													<th style="width:50px;">Actual Kilometres</th>
 													<th>Cancel</th>
+													<th>Reason</th>
 													<th>Comments</th>
 												</tr>
 											</thead>
@@ -152,6 +153,7 @@
 										innerHTML +=  '<td>'+data.data[i].bus_timing_Kilometers+'</td>';
 										innerHTML +=  '<td><input type="text" name="actKm[]"  class="form-control input-sm"/></td>';
 										innerHTML +=  '<td><select name="busIsCancel[]"  class="form-control input-sm"><option value="0" selected>No</option><option value="1">Yes</option></select></td>';
+										innerHTML +=  '<td><select name="busIsCancelReason[]"  class="form-control input-sm"><option value="" selected>Select</option><option value="Cancel Trip" >Cancel Trip</option><option value="Driver">Driver</option><option value="Conductor">Conductor</option><option value="Workshop">Workshop</option><option value="Break Down">Break Down</option><option value="Accident">Accident</option><option value="Traffic">Traffic</option><option value="Sunday">Sunday</option><option value="Route Change">Route Change</option><option value="Schedule Sp">Schedule Sp</option></select></td>';
 										innerHTML +=  '<td><textarea name="comments[]"  class="form-control input-sm"></textarea></td>';
 										innerHTML +=  '</tr>';
 									}
@@ -180,6 +182,8 @@
 					$('#bustiming').html('');
 				}
 		});
+		
+		
 	 });
 			
 	 </script>

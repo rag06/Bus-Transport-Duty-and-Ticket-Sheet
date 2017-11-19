@@ -1,8 +1,5 @@
 <?php foreach($result['result'] as $resultRow) { ?>
 	<br/>
-			<br/>
-			<br/>
-			<br/>
 									<table  cellpadding="10" border="1px" style="width:100%;border:1px solid; border-collapse: collapse;margin:20px;">
 										<tr>
 										<td style="border: 1px solid black;">
@@ -52,7 +49,10 @@
 											</tr>
 											<?php
 												$grandTotal=0;
-												foreach($details[$resultRow['cashDeposit_slip_Id']] as $detailsRow){?>
+												$grandQty=0;
+												foreach($details[$resultRow['cashDeposit_slip_Id']] as $detailsRow){
+													?>
+													
 													<tr>
 														<td style="text-align:center;border: 1px solid black;">
 															
@@ -67,14 +67,15 @@
 													</tr>
 														
 											<?php 	$grandTotal = $grandTotal +$detailsRow['cashDeposit_slip_details_CalculatedAmount'] ;
+													$grandQty = $grandQty +$detailsRow['cashDeposit_slip_details_ActualTicketsSold']  ;
 														
 													}
 											?>
-											<tr>
-												<th colspan="4"></th>
-												<th>Total Amount</th>
-												<th>Rs. <span id="totalAmout"><?php echo $grandTotal;?></span></th>
-											</tr>
+												<tr>
+													<th  style="border: 1px solid black;" colspan="4"></th>
+													<th  style="border: 1px solid black;"> <span id="totalQty"><?php echo $grandQty;?></span></th>
+													<th  style="border: 1px solid black;">Rs. <span id="totalAmout"><?php echo $grandTotal;?></span></th>
+												</tr>
 									</table>
 									<pagebreak>
 <?php } ?>

@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="<?php echo base_url() ;?>html/admin/dist/css/font-awesome.min.css">
     <!-- Ionicons -->
     <link rel="stylesheet" href="<?php echo base_url() ;?>html/admin/dist/css/ionicons.min.css">
+    <!-- Select2 -->
+    <link rel="stylesheet" href="<?php echo base_url() ;?>html/admin/plugins/select2/select2.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="<?php echo base_url() ;?>html/admin/dist/css/AdminLTE.min.css">
     <!-- daterange picker -->

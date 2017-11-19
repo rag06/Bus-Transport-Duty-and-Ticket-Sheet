@@ -25,12 +25,12 @@
 						  <h3 class="box-title">Duty Slip Reports</h3>
 						</div><!-- /.box-header -->
 						  <div class="box-body">
-							<form >
+							<form class="form" method="post" action="<?php echo base_url();?>admin/dailySlip/dailySlip/downloadlistDutySlipReports" >
 								<div class="row">
 								<div class="col-md-3">
 									<div class="form-group">
 									  <label for="conductorEmpId">Conductor</label>
-									  <select class="form-control" id="conductorEmpId" name="conductorEmpId">
+									  <select class="form-control select2" id="conductorEmpId" name="conductorEmpId">
 											<option value="">Select Conductor Id</option>
 										<?php 
 											foreach($employees['result'] as $emp){
@@ -43,8 +43,8 @@
 								</div>
 								<div class="col-md-3">
 									<div class="form-group">
-										  <label for="routeId">Duty Number</label>
-										  <select class="form-control" id="routeId" name="routeId" >
+										  <label for="dutyId">Duty Number</label>
+										  <select class="form-control select2" id="dutyId" name="dutyId" >
 											<option value="">Select Duty Number</option>
 										  <?php 
 												foreach($duty['result'] as $dutyrow){
@@ -57,7 +57,7 @@
 								<div class="col-md-3">
 									<div class="form-group">
 										  <label for="busNumber">Bus Number</label>
-										  <select class="form-control" id="busNumber" name="busNumber" placeholder="Enter Bus Number">
+										  <select class="form-control select2" id="busNumber" name="busNumber" placeholder="Enter Bus Number">
 												<option value="">Select a Bus </option>
 											  <?php 
 												foreach($busList['result'] as $busrow){
@@ -71,14 +71,8 @@
 								  <!-- Date and time range -->
 								  <div class="form-group">
 									<label>Date range:</label>
-
 									<div class="input-group">
-									  <button type="button" class="btn btn-default pull-right" id="daterange-btn">
-										<span>
-										  <i class="fa fa-calendar"></i> Date range picker
-										</span>
-										<i class="fa fa-caret-down"></i>
-									  </button>
+									  <input type="text" name="dateRange" class="btn btn-default pull-right" id="daterange-btn" placeholder="Select Date Range" required />
 									</div>
 								  </div>
 								  <!-- /.form group -->
@@ -86,7 +80,31 @@
 								</div>
 								<div class="row">
 									<div class="col-md-3 pull-right">
-										<input type="submit" class="btn btn-info btn-sm  pull-right" value="Search"/>
+										<input type="submit" class="btn btn-info btn-sm  pull-right" value="Generate Report"/>
+									</div>
+								</div>
+							</form>
+						  </div><!-- /.box-body -->
+					</div><!--box end-->
+				 <div class="box box-primary">
+						<div class="box-header with-border">
+						  <h3 class="box-title">E.P.K.M. Report</h3>
+						</div><!-- /.box-header -->
+						  <div class="box-body">
+							<form class="form" method="post" action="<?php echo base_url();?>admin/dailySlip/dailySlip/downloadEPKMReports" >
+								<div class="row">
+								<div class="col-md-4">
+								  <!-- Date and time range -->
+								  <div class="form-group">
+									<label>Date range:</label>
+									  <input type="text" name="redate" class="form-control input-date" id="redate" placeholder="Select Date Range" value="<?php echo date("Y-m-d");?>" required />
+								  </div>
+								  <!-- /.form group -->
+								</div>
+								</div>
+								<div class="row">
+									<div class="col-md-3 pull-right">
+										<input type="submit" class="btn btn-info btn-sm  pull-right" value="Generate Report"/>
 									</div>
 								</div>
 							</form>
@@ -107,6 +125,7 @@
 				'This Month': [moment().startOf('month'), moment().endOf('month')],
 				'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
 			  },
+			  format: "YYYY-MM-DD",
 			  startDate: moment().subtract(29, 'days'),
 			  endDate: moment()
 			},

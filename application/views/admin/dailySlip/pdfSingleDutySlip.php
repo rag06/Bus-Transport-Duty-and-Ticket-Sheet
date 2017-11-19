@@ -1,7 +1,4 @@
 	<br/>
-			<br/>
-			<br/>
-			<br/>
 									<table  cellpadding="10" border="1px" style="width:100%;border:1px solid; border-collapse: collapse;margin:20px;">
 										<tr>
 										<td style="border: 1px solid black;">
@@ -72,6 +69,7 @@
 													<th style="border: 1px solid black;width:50px;">Kilometres</th>
 													<th style="border: 1px solid black;width:50px;">Actual Kilometres</th>
 													<th style="border: 1px solid black;">Cancel</th>
+													<th style="border: 1px solid black;">Reason</th>
 													<th style="border: 1px solid black;">Comments</th>
 											</tr>
 												<?php 
@@ -97,6 +95,7 @@
 																
 																
 													$innerHTML .= '</td>';
+													$innerHTML .=  '<td style="border: 1px solid black;">'.$row['conductor_daysslip_details_Reason'].'</td>';
 													$innerHTML .=  '<td style="border: 1px solid black;">'.$row['conductor_daysslip_details_comments'].'</td>';
 										
 													$innerHTML .=  '</tr>';
@@ -110,7 +109,7 @@
 													<th style="border: 1px solid black;" colspan="6" ></th>
 													<th style="border: 1px solid black;"><?php echo $totalAckKM;?></th>
 													<th style="border: 1px solid black;"><?php echo $totalOPTKM;?></th>
-													<th style="border: 1px solid black;" colspan="2"></th>
+													<th style="border: 1px solid black;" colspan="3"></th>
 												<tr>
 									</table>
 								

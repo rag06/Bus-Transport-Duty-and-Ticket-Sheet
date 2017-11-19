@@ -13,10 +13,10 @@ class M_pdf {
          
         if ($params == NULL)
         {
-            $param = '"en-GB-x","A4","","",10,10,10,10,6,3';          		
+            $param = '"en-GB-x","A4","","",10,10,20,20,5,5';          		
         }
          
         //return new mPDF($param);
-        return new mPDF();
+        return new mPDF($params);
     }
 }

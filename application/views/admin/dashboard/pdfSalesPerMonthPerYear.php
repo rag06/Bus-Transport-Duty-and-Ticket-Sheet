@@ -1,7 +1,4 @@
 	<br/>
-			<br/>
-			<br/>
-			<br/>
 									
 									<table  cellpadding="10" border="1px" style="width:100%;border:1px solid; border-collapse: collapse;margin:20px;">
 											<tr>

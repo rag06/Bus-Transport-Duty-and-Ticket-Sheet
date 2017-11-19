@@ -25,6 +25,10 @@ Class Tickets_Model extends CI_Model {
 		return $data;
 		
 	}
+	public function getTicketsQty(){
+		$query=$this->db->query("SELECT SUM(`TicketRegister_Qty`) AS QTY,TicketRegister_TicketId  as TicketId FROM `ticket_register` GROUP BY `TicketRegister_TicketId`");
+				return $query->result_array();
+	}
 	
 	public function deleteTicket($id) {
 		

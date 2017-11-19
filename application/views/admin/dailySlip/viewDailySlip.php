@@ -129,6 +129,7 @@
 													<th style="width:50px;">Kilometres</th>
 													<th style="width:50px;">Actual Kilometres</th>
 													<th>Cancel</th>
+													<th>Reason</th>
 													<th>Comments</th>
 												</tr>
 											</thead>
@@ -156,8 +157,12 @@
 																
 																
 													$innerHTML .= '</td>';
-													$innerHTML .=  '<td>'.$row['conductor_daysslip_details_comments'].'</td>';
-										
+													$innerHTML .=  '<td>';
+													(!empty($row['conductor_daysslip_details_Reason'])) ? $innerHTML .=$row['conductor_daysslip_details_Reason'] : $innerHTML .='-';
+													$innerHTML .='</td>';
+													$innerHTML .=  '<td>';
+													(!empty($row['conductor_daysslip_details_comments'])) ? $innerHTML .=$row['conductor_daysslip_details_comments'] : $innerHTML .='-';
+													$innerHTML .='</td>';
 													$innerHTML .=  '</tr>';
 													$totalAckKM = $totalAckKM + $actdetails[$key]['bus_timing_Kilometers'];
 													$totalOPTKM = $totalOPTKM + $row['conductor_daysslip_details_ActualKm'];
@@ -172,7 +177,7 @@
 													<th colspan="6" ></th>
 													<th><?php echo $totalAckKM;?></th>
 													<th><?php echo $totalOPTKM;?></th>
-													<th colspan="2"></th>
+													<th colspan="3"></th>
 												<tr>
 											</tfoot>
 										<table>

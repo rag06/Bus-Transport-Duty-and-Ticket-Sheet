@@ -40,8 +40,8 @@
               <ul class="treeview-menu">
                 <li><a href="<?php echo base_url()?>admin/tickets/tickets/addTicket">Create Tickets</a></li>
                 <li><a href="<?php echo base_url()?>admin/tickets/tickets">Manage Tickets</a></li>
-                <!--li><a href="<?php echo base_url()?>admin/tickets/Ticket_Register/addTicketRegister">Add Entry in Ticket Register</a></li>
-                <li><a href="<?php echo base_url()?>admin/tickets/Ticket_Register">Manage Ticket Register</a></li-->
+                <li><a href="<?php echo base_url()?>admin/tickets/Ticket_Register/addTicketRegister">Add Entry in Ticket Register</a></li>
+                <li><a href="<?php echo base_url()?>admin/tickets/Ticket_Register">Manage Ticket Register</a></li>
               </ul>
             </li>
 			<li class="treeview">

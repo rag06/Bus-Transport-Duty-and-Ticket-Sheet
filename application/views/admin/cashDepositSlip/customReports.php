@@ -30,7 +30,7 @@
 								<div class="col-md-3">
 									<div class="form-group">
 									  <label for="conductorEmpId">Conductor</label>
-									  <select class="form-control" id="conductorEmpId" name="conductorEmpId">
+									  <select class="form-control select2" id="conductorEmpId" name="conductorEmpId">
 											<option value="">Select Conductor Id</option>
 										<?php 
 											foreach($employees['result'] as $emp){
@@ -44,7 +44,7 @@
 								<div class="col-md-3">
 									<div class="form-group">
 										  <label for="dutyId">Duty Number</label>
-										  <select class="form-control" id="dutyId" name="dutyId" >
+										  <select class="form-control select2" id="dutyId" name="dutyId" >
 											<option value="">Select Duty Number</option>
 										  <?php 
 												foreach($duty['result'] as $dutyrow){
@@ -57,7 +57,7 @@
 								<div class="col-md-3">
 									<div class="form-group">
 										  <label for="busNumber">Bus Number</label>
-										  <select class="form-control" id="busNumber" name="busNumber" placeholder="Enter Bus Number">
+										  <select class="form-control select2" id="busNumber" name="busNumber" placeholder="Enter Bus Number">
 												<option value="">Select a Bus </option>
 											  <?php 
 												foreach($busList['result'] as $busrow){

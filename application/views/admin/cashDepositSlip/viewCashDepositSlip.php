@@ -135,6 +135,7 @@
 											<tbody>
 												<?php
 													$grandTotal=0;
+													$grandQty=0;
 													foreach($details as $detailsRow){?>
 														<tr>
 															<td style="text-align:center">
@@ -153,6 +154,7 @@
 														</tr>
 															
 												<?php 	$grandTotal = $grandTotal +$detailsRow['cashDeposit_slip_details_CalculatedAmount'] ;
+											$grandQty = $grandQty +$detailsRow['cashDeposit_slip_details_ActualTicketsSold']  ;
 															
 														}
 												?>
@@ -160,7 +162,7 @@
 											<tfoot>
 												<tr>
 													<th colspan="4"></th>
-													<th>Total Amount</th>
+													<th> <span id="totalQty"><?php echo $grandQty;?></span></th>
 													<th>Rs. <span id="totalAmout"><?php echo $grandTotal;?></span></th>
 												</tr>
 											</tfoot>

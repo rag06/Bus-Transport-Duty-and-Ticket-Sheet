@@ -131,6 +131,47 @@
 				  <!-- /.box -->
 				</div>
 				<div class="col-lg-4 col-md-4">
+				  <!-- PRODUCT LIST -->
+				  <div class="box box-primary">
+					<div class="box-header with-border">
+					  <h3 class="box-title">Sales per Conductor Per Month</h3>
+					  <div class="box-tools pull-right">
+						<button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+						<button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+					  </div>
+					</div><!-- /.box-header -->
+					<div class="box-body">
+					  <table class="table datatable">
+						<thead>
+							<tr>
+								<th>Conductor</th>
+								<th>Year</th>
+								<th>Month</th>
+								<th>Amount</th>
+							</tr>
+						</thead>
+						<tbody>
+							<?php 
+								$i=0;
+								foreach($conductor as $cond){
+									$i++;
+									if($i == 3)
+										break;
+									echo '<tr>
+											<td>'.$empData[$cond['cashDeposit_slip_ConductorEmpId']]->Employee_Number.'</td>
+											<td>'.$cond['SalesYear'].'</td>
+											<td>'.$cond['SalesMonth'].'</td>
+											<td> Rs. '.$cond['TotalSales'].'</td>
+										</tr>';
+								}
+								?>
+						</tbody>
+					  </table>
+					</div><!-- /.box-body -->
+					<div class="box-footer text-center">
+					  <a href="<?php echo base_url();?>admin/dashboard/dashboard/downloadSalesPerConductorPerMonthPerYear" class="uppercase">View All</a>
+					</div><!-- /.box-footer -->
+				  </div><!-- /.box -->
 				</div>
 			  </div>
 			  <div class="row">

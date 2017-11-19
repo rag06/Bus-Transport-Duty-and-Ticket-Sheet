@@ -96,6 +96,7 @@ class DailySlip extends CI_Controller {
 				'conductor_daysslip_details_ActDestTime' => $this->input->post('actDestTime'),
 				'conductor_daysslip_details_ActualKm' => $this->input->post('actKm'),
 				'conductor_daysslip_details_cancel' => $this->input->post('busIsCancel'),
+				'conductor_daysslip_details_Reason' => $this->input->post('busIsCancelReason'),
 				'conductor_daysslip_details_comments' => $this->input->post('comments')
 				);
 				$data['details'] = array();
@@ -110,6 +111,7 @@ class DailySlip extends CI_Controller {
 							$temp['conductor_daysslip_details_ActualKm'] = $tempDetails['conductor_daysslip_details_ActualKm'][$i];
 							$temp['conductor_daysslip_details_cancel'] = $tempDetails['conductor_daysslip_details_cancel'][$i];
 							$temp['conductor_daysslip_details_comments'] = $tempDetails['conductor_daysslip_details_comments'][$i];
+							$temp['conductor_daysslip_details_Reason'] = $tempDetails['conductor_daysslip_details_Reason'][$i];
 							array_push($data['details'],$temp);
 						}
 					}
@@ -138,6 +140,9 @@ class DailySlip extends CI_Controller {
 		$data['employees'] = $this->emp_model->listEmployees();
 		$data['duty'] = $this->bus_model->listBusDuty();
 		$data['busList'] = $this->bus_model->listBus();
+		$data['cancelReason'] = array();
+		
+		array_push($data['cancelReason'],"Cancel Trip","Driver","Conductor","Workshop","Break Down","Accident","Traffic","Sunday","Route Change","Schedule Sp");
 		
 		$this->load->view('admin/dailySlip/editDailySlip',$data);
 		
@@ -166,6 +171,7 @@ class DailySlip extends CI_Controller {
 				'conductor_daysslip_details_ActDestTime' => $this->input->post('actDestTime'),
 				'conductor_daysslip_details_ActualKm' => $this->input->post('actKm'),
 				'conductor_daysslip_details_cancel' => $this->input->post('busIsCancel'),
+				'conductor_daysslip_details_Reason' => $this->input->post('busIsCancelReason'),
 				'conductor_daysslip_details_comments' => $this->input->post('comments')
 				);
 				$data['details'] = array();
@@ -182,6 +188,7 @@ class DailySlip extends CI_Controller {
 							$temp['conductor_daysslip_details_ActualKm'] = $tempDetails['conductor_daysslip_details_ActualKm'][$i];
 							$temp['conductor_daysslip_details_cancel'] = $tempDetails['conductor_daysslip_details_cancel'][$i];
 							$temp['conductor_daysslip_details_comments'] = $tempDetails['conductor_daysslip_details_comments'][$i];
+							$temp['conductor_daysslip_details_Reason'] = $tempDetails['conductor_daysslip_details_Reason'][$i];
 							array_push($data['details'],$temp);
 						}
 					}
@@ -226,7 +233,6 @@ class DailySlip extends CI_Controller {
 		$data['employees'] = $this->emp_model->listEmployees();
 		$data['duty'] = $this->bus_model->listBusDuty();
 		$data['busList'] = $this->bus_model->listBus();
-		
 		$this->load->view('admin/dailySlip/viewDailySlip',$data);
 		
 	}
@@ -254,19 +260,6 @@ class DailySlip extends CI_Controller {
 		 
 		//actually, you can pass mPDF parameter on this load() function
 		$pdf = $this->m_pdf->load();
-		// Define the Header/Footer before writing anything so they appear on the first page
-		$pdf->SetHTMLHeader('
-		<div style=" font-weight: bold;height:50px;">
-			 <h1>KDMT Transport</h1>
-		</div>');
-		$pdf->SetHTMLFooter('
-		<table width="100%">
-			<tr>
-				<td width="33%">Generated On : {DATE j-m-Y}</td>
-				<td width="33%" align="center">{PAGENO}/{nbpg}</td>
-				<td width="33%" style="text-align: right;">KDMT document</td>
-			</tr>
-		</table>');
 		
 		//generate the PDF!
 		$pdf->WriteHTML($html,2);
@@ -284,6 +277,105 @@ class DailySlip extends CI_Controller {
 		$data['duty'] = $this->bus_model->listBusDuty();
 			
 		$this->load->view('admin/dailySlip/customReports',$data);
+	}
+	
+	
+	public function downloadlistDutySlipReports(){
+			//print_r($_REQUEST); die;
+		//load mPDF library
+		$this->load->library('m_pdf');
+		//now pass the data//
+		$this->data['title']="Duty Slip";
+		$this->data['description']="Contains Duty Slip";
+		//now pass the data //
+		if(isset($_REQUEST['dateRange']))
+			$daterange = explode(' - ',$_REQUEST['dateRange']);
+		
+		$this->data['result'] = $this->dailyslip_model->listDutySlipReports($_REQUEST['conductorEmpId'],$_REQUEST['dutyId'],$_REQUEST['busNumber'],$daterange[0],$daterange[1]);
+		
+		$this->data['details'] = array();
+		
+		$this->data['actdetails'] = array();
+		
+		foreach($this->data['result']['result'] as $record)
+		{
+			$this->data['details'][$record['conductor_daysSlip_Id']]=array();
+			$this->data['details'][$record['conductor_daysSlip_Id']] = $this->dailyslip_model->getDailySlipDetails($record['conductor_daysSlip_Id']);
+			
+			$this->data['actdetails'][$record['conductor_daysSlip_Id']]=array();
+			$this->data['actdetails'][$record['conductor_daysSlip_Id']] = $this->bus_model->getBusTimingByDuty($record['conductor_daysSlip_DutyId']);
+		}
+		
+		
+		$this->data['employees'] = $this->emp_model->listEmployees();
+		$this->data['duty'] = $this->bus_model->listBusDuty();
+		$this->data['busList'] = $this->bus_model->listBus();
+		
+		$tempArray=array();
+		foreach($this->data['duty']['result'] as $dutyrow){
+			$tempArray[$dutyrow->bus_duty_Id] = $dutyrow;
+		}
+		$this->data['duty'] = $tempArray;
+		
+		$tempArray=array();
+		foreach($this->data['employees']['result'] as $employees){
+			$tempArray[$employees->Employee_Id] = $employees;
+		}
+		$this->data['employees'] = $tempArray;
+		// echo'<pre>';
+		// print_r($this->data);die;
+		$html=$this->load->view('admin/dailySlip/pdfDutySlipReport',$this->data, true);
+		
+		
+		//this the the PDF filename that user will get to download
+		$pdfFilePath ="dutySlipReportsCustom-".time()."-download.pdf";
+		 
+		//actually, you can pass mPDF parameter on this load() function
+		$pdf = $this->m_pdf->load();
+		
+		//generate the PDF!
+		$pdf->WriteHTML($html,2);
+		//offer it to user via browser download! (The PDF won't be saved on your server HDD)
+		$pdf->Output($pdfFilePath, "D");
+			
+	}
+	public function downloadEPKMReports(){
+		//load mPDF library
+		$this->load->library('m_pdf');
+		//now pass the data//
+		$this->data['title']="EPKM Report";
+		$this->data['description']="Contains EPKM Report";
+		//now pass the data //
+		if(isset($_REQUEST['redate']))
+			$date = $_REQUEST['redate'];
+		
+		$this->data = $this->dailyslip_model->getEPKM($date);
+		$this->data['duty'] = $this->bus_model->listBusDuty();
+		 /* echo'<pre>';
+		 print_r($this->data);die; */
+		$html=$this->load->view('admin/dailySlip/pdfEPKMReport',$this->data, true);
+		
+		
+		//this the the PDF filename that user will get to download
+		$pdfFilePath ="epkmreports-".time()."-download.pdf";
+		 
+		//actually, you can pass mPDF parameter on this load() function
+		$pdf = $this->m_pdf->load();
+		
+		$pdf->AddPage('L', // L - landscape, P - portrait
+        "A4", '', '', '',
+        10, // margin_left
+        10, // margin right
+        20, // margin top
+        20, // margin bottom
+        5, // margin header
+        5); // margin footer);
+		
+		//generate the PDF!
+		$pdf->WriteHTML($html,2);
+		//offer it to user via browser download! (The PDF won't be saved on your server HDD)
+		$pdf->Output($pdfFilePath, "D");
+			
 	}
 	
 }

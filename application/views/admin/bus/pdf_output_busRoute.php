@@ -1,6 +1,4 @@
-			<br/>
-			<br/>
-			<br/>
+
 			<br/>
 						  <h3 class="box-title" style="margin:20px;">Bus Route List  </h3>
 							<table id="webpagesList" cellpadding="10" border="1px" style="width:100%;border:1px solid; border-collapse: collapse;margin:20px;">

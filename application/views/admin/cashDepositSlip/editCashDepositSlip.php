@@ -41,7 +41,7 @@
 									<div class="">
 										<div class="form-group col-md-6">
 										  <label for="conductorEmpId">Conductor</label>
-										  <select class="form-control" id="conductorEmpId" name="conductorEmpId" readonly>
+										  <select class="form-control select2" id="conductorEmpId" name="conductorEmpId" readonly>
 												<?php 
 												foreach($employees['result'] as $emp){
 													if($emp->Employee_Type == 1){
@@ -58,7 +58,7 @@
 										</div>
 										<div class="form-group  col-md-3">
 										  <label for="routeId">Route</label>
-										  <select class="form-control" id="routeId" name="routeId" required  >
+										  <select class="form-control select2" id="routeId" name="routeId" required  >
 											<option value="">Select Route</option>
 										  <?php 
 												foreach($duty['result'] as $dutyrow){
@@ -80,7 +80,7 @@
 									
 										<div class="form-group col-md-6">
 										  <label for="driverEmpId">Driver </label>
-										  <select class="form-control" id="driverEmpId" name="driverEmpId">
+										  <select class="form-control select2" id="driverEmpId" name="driverEmpId">
 										 <?php 
 												foreach($employees['result'] as $emp){
 													if($emp->Employee_Type == 0){
@@ -96,8 +96,8 @@
 											</select>
 										</div>
 										<div class="form-group col-md-3">
-										  <label for="busNumber">Bus Number</label>
-										  <select type="text" class="form-control" id="busNumber" name="busNumber"  >
+										  <label for="busNumber ">Bus Number</label>
+										  <select type="text" class="form-control select2" id="busNumber" name="busNumber"  >
 										  <?php 
 												foreach($busList['result'] as $busrow){
 													if($busrow->bus_number == $result[0]['cashDeposit_slip_BusNumber']){
@@ -114,7 +114,7 @@
 										
 										<div class="form-group col-md-3">
 										  <label for="slipDate">Slip Date</label>
-										  <input type="text" class="form-control" id="slipDate" name="slipDate" placeholder="yyyy-mm-dd"  value="<?php echo $result[0]['cashDeposit_slip_Date']; ?>"  readonly>
+										  <input type="text" class="form-control input-date" id="slipDate" name="slipDate" placeholder="yyyy-mm-dd"  value="<?php echo $result[0]['cashDeposit_slip_Date']; ?>"  readonly>
 										</div>
 									</div>
 								</fieldset>
@@ -128,6 +128,7 @@
 													<th>Ticket Series</th>
 													<th>Ticket Start Series</th>
 													<th>Ticket End Series</th>
+													<th>Ticket Series is Last</th>
 													<th>Tickets Sold</th>
 													<th>Amount</th>
 												</tr>
@@ -135,6 +136,7 @@
 											<tbody>
 												<?php
 													$grandTotal=0;
+													$grandQty=0;
 													foreach($details as $detailsRow){?>
 														<tr>
 															<td style="text-align:center">
@@ -148,11 +150,28 @@
 															<td> <input type="text" class="form-control input-sm" name="ticketSeries[]" placeholder="Enter Series"  value="<?php echo $detailsRow['cashDeposit_slip_details_ticketSeries'] ;?>"></td>
 															<td> <input type="text" class="form-control  ticketStart input-sm"  name="ticketStartSerial[]" placeholder="Enter Start Serial"  value="<?php echo $detailsRow['cashDeposit_slip_details_TicketStartSerial'] ;?>"></td>
 															<td> <input type="text" class="form-control  ticketEnd  input-sm" name="ticketEndSerial[]" placeholder="Enter End Serial"  value="<?php echo $detailsRow['cashDeposit_slip_details_TicketEndSerial'] ;?>"></td>
+															
+															<td> 
+																<select class="form-control input-sm" name="ticketisEnd[]">
+																<?php 
+																		if($detailsRow['cashDeposit_slip_details_isEnd'] ==1){
+																			echo '<option value="1" selected>Yes</option>
+																				  <option value="0">No</option>';
+																		}else{
+																			echo '<option value="1" >Yes</option>
+																				  <option value="0" selected>No</option>';
+																			
+																		}
+																?>
+																	
+																</select>
+															</td>
 															<td> <input type="text" class="form-control ticketQty input-sm"  name="ticketsSold[]" placeholder="Enter Sold"  value="<?php echo $detailsRow['cashDeposit_slip_details_ActualTicketsSold'] ;?>"></td>
 															<td> <input type="text" class="form-control ticketAmount input-sm" name="amount[]" placeholder="Enter amount"  value="<?php echo $detailsRow['cashDeposit_slip_details_CalculatedAmount'] ;?>"></td>
 														</tr>
 															
 												<?php 	$grandTotal = $grandTotal +$detailsRow['cashDeposit_slip_details_CalculatedAmount'] ;
+											$grandQty = $grandQty +$detailsRow['cashDeposit_slip_details_ActualTicketsSold']  ;
 															
 														}
 												?>
@@ -160,7 +179,7 @@
 											<tfoot>
 												<tr>
 													<th colspan="4"></th>
-													<th>Total Amount</th>
+													<th> <span id="totalQty"><?php echo $grandQty;?></span></th>
 													<th>Rs. <span id="totalAmout"><?php echo $grandTotal;?></span></th>
 												</tr>
 											</tfoot>
@@ -201,7 +220,7 @@
 				var start = $parentTR.find('.ticketStart').val();
 				var end = $parentTR.find('.ticketEnd').val();
 				var rate = $parentTR.find('.ticketRate').val();
-				var qty = (end-1)-start;
+				var qty = (end)-(start);
 				if(qty>0){
 					$parentTR.find('.ticketQty').val(qty);
 					$parentTR.find('.ticketAmount').val(qty *rate );
@@ -238,6 +257,18 @@
 			});
 
 			$("#totalAmout").text(sum); 
+			var qty=0;
+			$(".ticketQty").each(function() {
+				var val = $.trim( $(this).val() );
+
+				if ( val ) {
+					val = parseFloat( val.replace( /^\$/, "" ) );
+
+					qty += !isNaN( val ) ? val : 0;
+				}
+			});
+
+			$("#totalQty").text(qty); 
 		}
 	 </script>
 	  <script>

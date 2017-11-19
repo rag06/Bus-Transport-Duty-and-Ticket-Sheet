@@ -34,6 +34,7 @@
 								  <th>Price</th>
 								  <th>Extra Price</th>
 								  <th>Ticket Type</th>
+								  <th>Ticket Quantity</th>
 								  <th>Actions</th>
 								</tr>
 								</thead>
@@ -54,6 +55,31 @@
 											}
 										?>
 									</td>
+									  <td><?php
+												if(isset($ticketQty[$row->tickets_Id]) && isset($ticketSoldQty[$row->tickets_Id])) {
+													
+													echo ($ticketQty[$row->tickets_Id] - $ticketSoldQty[$row->tickets_Id]); 
+												}
+												else {
+													if(isset($ticketQty[$row->tickets_Id]) ) {
+													
+														echo ($ticketQty[$row->tickets_Id]); 
+													}
+													else {
+														if(isset($ticketSoldQty[$row->tickets_Id]) ) {
+														
+															echo (-$ticketSoldQty[$row->tickets_Id]); 
+														}
+														else {
+															echo '0';
+														}
+														
+													}
+													
+												}
+													
+												?>
+										</td>
 									  <td>
 										<a href="<?php echo base_url() ;?>/admin/tickets/tickets/editTicket/<?php echo $row->tickets_Id;?>" class="btn admin-btn btn-info btn-sm" >Edit</a>
 										

@@ -19,6 +19,12 @@ Class CashDepositSlip_Model extends CI_Model {
 		}
 	}
 	
+	public function getTicketsSold() {
+		
+		$query=$this->db->query("SELECT SUM(  `cashDeposit_slip_details_ActualTicketsSold` ) AS QTY,  `cashDeposit_slip_details_TicketId`  AS TicketId FROM  `cashdeposit_slip_details` GROUP BY  `cashDeposit_slip_details_TicketId` ");
+				return $query->result_array();
+		
+	}
 	public function getCashDepositSlipNextNumber() {
 		
 		$query=$this->db->query("SELECT MAX(`cashDeposit_slip_Number` ) +1 AS WaybillNum FROM cashdeposit_slip");

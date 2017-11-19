@@ -17,6 +17,7 @@ class Tickets extends CI_Controller {
 
 		// Load database
 		$this->load->model('Tickets_Model', 'tickets_model');
+		$this->load->model('CashDepositSlip_Model', 'cash_model');
 	}
 	
 	public function index()
@@ -25,6 +26,20 @@ class Tickets extends CI_Controller {
 			redirect('admin/login/login/index');
 		}
 		$data['result'] = $this->tickets_model->listTickets();
+		
+		$tempqty = $this->tickets_model->getTicketsQty();
+		$data['ticketQty'] = array();
+		foreach($tempqty as $qty)
+		{
+			$data['ticketQty'][$qty['TicketId']] = $qty['QTY'];
+		}
+		
+		$tempsoldqty = $this->cash_model->getTicketsSold();
+		$data['ticketSoldQty'] = array();
+		foreach($tempsoldqty as $qty)
+		{
+			$data['ticketSoldQty'][$qty['TicketId']] = $qty['QTY'];
+		}
 		$this->load->view('admin/tickets/index',$data);
 	}
 	
@@ -120,6 +135,19 @@ class Tickets extends CI_Controller {
 		
 		
 		$this->data['result'] = $this->tickets_model->listTickets();
+		
+		$tempqty = $this->tickets_model->getTicketsQty();
+		$tempsoldqty = $this->cash_model->getTicketsSold();
+		$data['ticketQty'] = array();
+		foreach($tempqty as $qty)
+		{
+			$this->data['ticketQty'][$qty['TicketId']] = $qty['QTY'];
+		}
+		$data['ticketSoldQty'] = array();
+		foreach($tempsoldqty as $qty)
+		{
+			$this->data['ticketSoldQty'][$qty['TicketId']] = $qty['QTY'];
+		}
 		 
 		$html=$this->load->view('admin/tickets/pdf_output',$this->data, true); //load the pdf_output.php by passing our data and get all data in $html varriable.
 		//this the the PDF filename that user will get to download
@@ -127,20 +155,6 @@ class Tickets extends CI_Controller {
 		 
 		//actually, you can pass mPDF parameter on this load() function
 		$pdf = $this->m_pdf->load();
-		// Define the Header/Footer before writing anything so they appear on the first page
-		$pdf->SetHTMLHeader('
-		<div style=" font-weight: bold;height:50px;">
-			 <h1>KDMT Transport</h1>
-		</div>');
-		$pdf->SetHTMLFooter('
-		<table width="100%">
-			<tr>
-				<td width="33%">Generated On : {DATE j-m-Y}</td>
-				<td width="33%" align="center">{PAGENO}/{nbpg}</td>
-				<td width="33%" style="text-align: right;">KDMT document</td>
-			</tr>
-		</table>');
-		
 		//generate the PDF!
 		$pdf->WriteHTML($html,2);
 		//offer it to user via browser download! (The PDF won't be saved on your server HDD)

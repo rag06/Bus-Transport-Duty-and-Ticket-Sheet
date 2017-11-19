@@ -126,20 +126,6 @@ class Bus extends CI_Controller {
 		 
 		//actually, you can pass mPDF parameter on this load() function
 		$pdf = $this->m_pdf->load();
-		// Define the Header/Footer before writing anything so they appear on the first page
-		$pdf->SetHTMLHeader('
-		<div style=" font-weight: bold;height:50px;">
-			 <h1>KDMT Transport</h1>
-		</div>');
-		$pdf->SetHTMLFooter('
-		<table width="100%">
-			<tr>
-				<td width="33%">Generated On : {DATE j-m-Y}</td>
-				<td width="33%" align="center">{PAGENO}/{nbpg}</td>
-				<td width="33%" style="text-align: right;">KDMT document</td>
-			</tr>
-		</table>');
-		
 		//generate the PDF!
 		$pdf->WriteHTML($html,2);
 		//offer it to user via browser download! (The PDF won't be saved on your server HDD)
