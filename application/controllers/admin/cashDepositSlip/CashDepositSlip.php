@@ -301,7 +301,7 @@ class CashDepositSlip extends CI_Controller {
 		$this->data['description']="Contains Waybillslip";
 		//now pass the data //
 		if(isset($_REQUEST['dateRange']))
-			$daterange = explode(' to ',$_REQUEST['dateRange']);
+			$daterange = explode(' - ',$_REQUEST['dateRange']);
 		
 		$this->data['result'] = $this->cashdepositslip_model->listCashDepositSlipReports($_REQUEST['conductorEmpId'],$_REQUEST['dutyId'],$_REQUEST['busNumber'],$daterange[0],$daterange[1]);
 		$this->data['details'] = array();
@@ -332,7 +332,6 @@ class CashDepositSlip extends CI_Controller {
 			$tempArray[$employees->Employee_Id] = $employees;
 		}
 		$this->data['employees'] = $tempArray;
-		
 		$html=$this->load->view('admin/cashDepositSlip/pdfCashDepositSlipReport',$this->data, true);
 		
 		

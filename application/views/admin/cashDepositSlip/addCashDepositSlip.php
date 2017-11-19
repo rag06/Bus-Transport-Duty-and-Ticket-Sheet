@@ -71,6 +71,7 @@
 										<div class="form-group col-md-6">
 										  <label for="driverEmpId">Driver </label>
 										  <select class="form-control" id="driverEmpId" name="driverEmpId">
+												<option value="">Select a Driver </option>
 										  <?php 
 												foreach($employees['result'] as $emp){
 													if($emp->Employee_Type == 0)
@@ -135,7 +136,7 @@
 											<tfoot>
 												<tr>
 													<th colspan="4"></th>
-													<th>Total Amount</th>
+													<th> <span id="totalQty">0</span></th>
 													<th>Rs. <span id="totalAmout">0</span></th>
 												</tr>
 											</tfoot>
@@ -208,7 +209,7 @@
 				var start = $parentTR.find('.ticketStart').val();
 				var end = $parentTR.find('.ticketEnd').val();
 				var rate = $parentTR.find('.ticketRate').val();
-				var qty = (end-1)-start;
+				var qty = (end)-(start-1);
 				if(qty>0){
 					$parentTR.find('.ticketQty').val(qty);
 					$parentTR.find('.ticketAmount').val(qty *rate );
@@ -244,7 +245,19 @@
 				}
 			});
 
-			$("#totalAmout").text(sum); 
+			$("#totalAmout").text(sum);
+			var qty=0;
+			$(".ticketQty").each(function() {
+				var val = $.trim( $(this).val() );
+
+				if ( val ) {
+					val = parseFloat( val.replace( /^\$/, "" ) );
+
+					qty += !isNaN( val ) ? val : 0;
+				}
+			});
+
+			$("#totalQty").text(qty); 
 		}
 	 </script>
 	  <script>

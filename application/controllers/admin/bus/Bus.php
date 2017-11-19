@@ -146,4 +146,45 @@ class Bus extends CI_Controller {
 		$pdf->Output($pdfFilePath, "D");
 			
 	}
+	
+	/***************** bus List ***************************/
+	public function bus()
+	{
+		if(!isset($this->session->userdata['logged_in'])){
+			redirect('admin/login/login/index');
+		}
+		$data['result'] = $this->bus_model->listBus();
+		$this->load->view('admin/bus/bus',$data);
+	}
+	
+	public function insertBus()
+	{
+				$data = array(
+				'bus_number' => $this->input->post('busNo'),
+				);
+				
+				$result = $this->bus_model->addBus($data);
+				if ($result == TRUE) {
+					redirect('admin/bus/bus/bus');
+				}
+				 else {
+						$this->load->view('admin/bus/bus', $data);
+				}
+		
+	}
+	
+	public function deleteBus() {
+				$id =$this->input->post('busNo');
+				$result = $this->bus_model->deleteBus($id);
+				if ($result == TRUE) {
+					redirect('admin/bus/bus/bus');
+				}
+				 else {
+					$data = array(
+						'error_message' => 'Error in deleting bus'
+					);
+					$this->load->view('admin/bus/bus', $data);
+				}
+		
+	}
 }

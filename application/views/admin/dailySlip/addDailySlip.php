@@ -41,6 +41,7 @@
 										<div class="form-group col-md-6">
 										  <label for="conductorEmpId">Conductor</label>
 										  <select class="form-control" id="conductorEmpId" name="conductorEmpId">
+												<option value="">Select a Conductor </option>
 											<?php 
 												foreach($employees['result'] as $emp){
 													if($emp->Employee_Type == 1)
@@ -66,6 +67,7 @@
 										<div class="form-group col-md-6">
 										  <label for="driverEmpId">Driver </label>
 										  <select class="form-control" id="driverEmpId" name="driverEmpId">
+												<option value="">Select a Driver </option>
 										  <?php 
 												foreach($employees['result'] as $emp){
 													if($emp->Employee_Type == 0)
@@ -154,13 +156,20 @@
 										innerHTML +=  '</tr>';
 									}
 								}else{
-									innerHTML += '<tr>';
+									innerHTML = '<tr>';
 										innerHTML +=  '<td> No Bus Timing  Found</td>';
 										innerHTML +=  '</tr>';
+										 alert('No Timings found');
 								}
 								
-								$('#bustiming').html(innerHTML);
+								
+							}else{
+										innerHTML = '<tr>';
+										innerHTML +=  '<td> No Bus Timing  Found</td>';
+										innerHTML +=  '</tr>';
+										 alert('No Timings found');
 							}
+							$('#bustiming').html(innerHTML);
 						},
 						error: function() {
 							 alert('No Timings found');

@@ -107,7 +107,7 @@
 			  endDate: moment()
 			},
 			function (start, end) {
-			  $('#daterange-btn').val(start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+			  $('#daterange-btn').val(start.format('YYYY-MM-DD') + ' - ' + end.format('YYYY-MM-DD'));
 			}
 		);
 	 </script>
