@@ -178,7 +178,7 @@
 											</tbody>
 											<tfoot>
 												<tr>
-													<th colspan="4"></th>
+													<th colspan="5"></th>
 													<th> <span id="totalQty"><?php echo $grandQty;?></span></th>
 													<th>Rs. <span id="totalAmout"><?php echo $grandTotal;?></span></th>
 												</tr>

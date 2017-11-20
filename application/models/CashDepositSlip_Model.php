@@ -49,14 +49,20 @@ Class CashDepositSlip_Model extends CI_Model {
 		
 		$finalObject =array();
 		
-		$query=$this->db->query("SELECT MAX(cashDeposit_slip_Number) AS WaybillNum , cashDeposit_slip_Id FROM cashdeposit_slip  WHERE cashDeposit_slip_ConductorEmpId = $id");
+		$query=$this->db->query("SELECT MAX(cashDeposit_slip_Number) AS WaybillNum  FROM cashdeposit_slip  WHERE cashDeposit_slip_ConductorEmpId = $id");
+		$temp = $query->result_array();
+		$waybill = $temp[0]['WaybillNum'];
+		$query=$this->db->query("SELECT  cashDeposit_slip_Id FROM cashdeposit_slip  WHERE cashDeposit_slip_Number = $waybill");
 		$temp = $query->result_array();
 		$slipID = $temp[0]['cashDeposit_slip_Id'];
 		if(!empty($slipID)){ 
-			$query = $this->db->query("SELECT * FROM `cashdeposit_slip_details` WHERE `cashDeposit_slip_details_SlipId` = $slipID AND `cashDeposit_slip_details_isEnd`!=1");
+			$query = $this->db->query("SELECT * FROM `cashdeposit_slip_details` WHERE `cashDeposit_slip_details_SlipId` = $slipID AND `cashDeposit_slip_details_isEnd`=0");
 			$temp = $query->result_array();
 			foreach($temp as $detail){
 				$finalObject[$detail['cashDeposit_slip_details_TicketId']]=array();
+			}
+			
+			foreach($temp as $detail){
 				array_push($finalObject[$detail['cashDeposit_slip_details_TicketId']],$detail);
 			}
 			

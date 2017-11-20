@@ -81,8 +81,8 @@
 											</select>
 										</div>
 										<div class="form-group col-md-3">
-										  <label for="busNumber select2">Bus Number</label>
-										  <select class="form-control" id="busNumber" name="busNumber" placeholder="Enter Bus Number">
+										  <label for="busNumber ">Bus Number</label>
+										  <select class="form-control select2" id="busNumber" name="busNumber" placeholder="Enter Bus Number">
 												<option value="">Select a Bus </option>
 											  <?php 
 												foreach($busList['result'] as $busrow){
@@ -113,36 +113,12 @@
 													<th>Amount</th>
 												</tr>
 											</thead>
-											<tbody>
-												<?php 
-													foreach($tickets['result'] as $ticketRow){?>
-														<tr id="ticketRow_<?php echo $ticketRow->tickets_Id ;?>">
-															<td style="text-align:center">
-																<input type="hidden"  name="ticketId[]" value="<?php echo $ticketRow->tickets_Id ;?>">
-																<input type="hidden" class="ticketRate" name="ticketvalue[]" value="<?php echo ($ticketRow->tickets_Price+$ticketRow->tickets_ExtraPrice) ;?>">
-																<span><?php echo $ticketRow->tickets_Price ;?></span> + <span><?php echo $ticketRow->tickets_ExtraPrice ;?></span><br/>
-																<a href="javascript:void(0);" class="cloneTicketRow"><i class="fa fa-plus-circle" aria-hidden="true"></i></a>
-																<a href="javascript:void(0);" class="removeCloneTicketRow" style="display:none"><i class="fa fa-minus-circle btn btn-sm btn-danger" aria-hidden="true"></i></a>
-															</td>
-															<td> <input type="text" class="form-control ticketSeries input-sm" name="ticketSeries[]" placeholder="Enter Series"></td>
-															<td> <input type="text" class="form-control ticketStart input-sm"  name="ticketStartSerial[]" placeholder="Enter Start Serial"></td>
-															<td> <input type="text" class="form-control ticketEnd input-sm" name="ticketEndSerial[]" placeholder="Enter End Serial"></td>
-															<td> 
-																<select class="form-control input-sm" name="ticketisEnd[]">
-																	<option value="0">No</option>
-																	<option value="1">Yes</option>
-																</select>
-															</td>
-															<td> <input type="text" class="form-control  ticketQty input-sm" name="ticketsSold[]" placeholder="Enter Sold" value="0" /></td>
-															<td> <input type="text" class="form-control ticketAmount input-sm" onblur="calcTotal()" name="amount[]" placeholder="Enter amount"value="0"></td>
-														</tr>
-													
-												<?php }
-												?>
+											<tbody id="ticketdetail">
+												
 											</tbody>
 											<tfoot>
 												<tr>
-													<th colspan="4"></th>
+													<th colspan="5"></th>
 													<th> <span id="totalQty">0</span></th>
 													<th>Rs. <span id="totalAmout">0</span></th>
 												</tr>
@@ -159,6 +135,33 @@
 					</div><!--box end-->
 			</section><!-- /.content -->
       </div><!-- /.content-wrapper -->
+	  <table id="clonetrticket" style="display:none">
+			<?php 
+			foreach($tickets['result'] as $ticketRow){?>
+				<tr id="ticketRow_<?php echo $ticketRow->tickets_Id ;?>">
+					<td style="text-align:center">
+						<input type="hidden"  name="ticketId[]" value="<?php echo $ticketRow->tickets_Id ;?>">
+						<input type="hidden" class="ticketRate" name="ticketvalue[]" value="<?php echo ($ticketRow->tickets_Price+$ticketRow->tickets_ExtraPrice) ;?>">
+						<span><?php echo $ticketRow->tickets_Price ;?></span> + <span><?php echo $ticketRow->tickets_ExtraPrice ;?></span><br/>
+						<a href="javascript:void(0);" class="cloneTicketRow"><i class="fa fa-plus-circle" aria-hidden="true"></i></a>
+						<a href="javascript:void(0);" class="removeCloneTicketRow" style="display:none"><i class="fa fa-minus-circle btn btn-sm btn-danger" aria-hidden="true"></i></a>
+					</td>
+					<td> <input type="text" class="form-control ticketSeries input-sm" name="ticketSeries[]" placeholder="Enter Series"></td>
+					<td> <input type="text" class="form-control ticketStart input-sm"  name="ticketStartSerial[]" placeholder="Enter Start Serial"></td>
+					<td> <input type="text" class="form-control ticketEnd input-sm" name="ticketEndSerial[]" placeholder="Enter End Serial"></td>
+					<td> 
+						<select class="form-control input-sm" name="ticketisEnd[]">
+							<option value="0">No</option>
+							<option value="1">Yes</option>
+						</select>
+					</td>
+					<td> <input type="text" class="form-control  ticketQty input-sm" name="ticketsSold[]" placeholder="Enter Sold" value="0" /></td>
+					<td> <input type="text" class="form-control ticketAmount input-sm" onblur="calcTotal()" name="amount[]" placeholder="Enter amount"value="0"></td>
+				</tr>
+			
+		<?php }
+		?>
+	  </table>
 		
      <?php $this->load->view('admin/layout/footer.php');?>
 	 <script>
@@ -175,10 +178,18 @@
 							if(data.status == true){
 									for(var i in data.data ){
 										for(var j in data.data[i] ){
-										var $tr = $('#ticketRow_'+i);
-										var series = data.data[i][j].cashDeposit_slip_details_ticketSeries;
-										$tr.find('.ticketSeries').val(parseInt(series).zeroPad(3));
-										$tr.find('.ticketStart').val(data.data[i][j].cashDeposit_slip_details_TicketEndSerial);
+											var $tr = $('#clonetrticket #ticketRow_'+i);
+												var $newTR = $tr.clone(true,true);
+												var series = data.data[i][j].cashDeposit_slip_details_ticketSeries;
+												$newTR.find('.ticketSeries').val(parseInt(series).zeroPad(3));
+												$newTR.find('.ticketStart').val(data.data[i][j].cashDeposit_slip_details_TicketEndSerial);
+											if(j>0){
+												
+													 $newTR.find('.cloneTicketRow').hide();
+													 $newTR.find('.removeCloneTicketRow').show();
+											}
+											
+											$('#ticketdetail').append($newTR);
 										}
 									}
 								
@@ -187,10 +198,12 @@
 								$('.ticketSeries').val('');
 								$('.ticketStart').val('');
 								$('.ticketEnd').val('');
+								$('#ticketdetail').html('');
 							}
 						},
 						error: function() {
 							 alert('No Series  found');
+								$('#ticketdetail').html('');
 						}
 					   });
 					   
@@ -203,6 +216,12 @@
 				 var $newTR = $parentTR.clone(true,true);
 				 $newTR.find('.cloneTicketRow').hide();
 				 $newTR.find('.removeCloneTicketRow').show();
+				 $newTR.find('.ticketSeries').val('');
+				 $newTR.find('.ticketStart').val('');
+				 $newTR.find('.ticketEnd').val('');
+				 
+				$newTR.find('.ticketQty').val(0);
+				$newTR.find('.ticketAmount').val(0);
 				$newTR.insertAfter($parentTR);
 			});
 			$('.removeCloneTicketRow').click(function(){
