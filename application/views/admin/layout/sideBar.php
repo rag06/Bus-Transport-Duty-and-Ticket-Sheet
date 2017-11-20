@@ -32,7 +32,7 @@
                 <li><a href="<?php echo base_url()?>admin/bus/Bus_Duty/index">Manage Bus Duty</a></li>
                 <li><a href="<?php echo base_url()?>admin/bus/Bus_Timing/addBusTiming">Add Bus Timing</a></li>
                 <li><a href="<?php echo base_url()?>admin/bus/Bus_Timing">Manage Bus Timing</a></li>
-                <li><a href="<?php echo base_url()?>admin/bus/bus/bus">Manage Bus List </a></li>
+                <li><a href="<?php echo base_url()?>admin/bus/bus/buslist">Manage Bus List </a></li>
               </ul>
             </li>
 			<li class="treeview">

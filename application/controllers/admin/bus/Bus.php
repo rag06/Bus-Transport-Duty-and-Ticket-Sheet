@@ -134,7 +134,7 @@ class Bus extends CI_Controller {
 	}
 	
 	/***************** bus List ***************************/
-	public function bus()
+	public function buslist()
 	{
 		if(!isset($this->session->userdata['logged_in'])){
 			redirect('admin/login/login/index');
@@ -151,7 +151,7 @@ class Bus extends CI_Controller {
 				
 				$result = $this->bus_model->addBus($data);
 				if ($result == TRUE) {
-					redirect('admin/bus/bus/bus');
+					redirect('admin/bus/bus/buslist');
 				}
 				 else {
 						$this->load->view('admin/bus/bus', $data);
@@ -163,7 +163,7 @@ class Bus extends CI_Controller {
 				$id =$this->input->post('busNo');
 				$result = $this->bus_model->deleteBus($id);
 				if ($result == TRUE) {
-					redirect('admin/bus/bus/bus');
+					redirect('admin/bus/bus/buslist');
 				}
 				 else {
 					$data = array(
