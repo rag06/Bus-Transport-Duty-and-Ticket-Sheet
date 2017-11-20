@@ -174,10 +174,12 @@
 						data = $.parseJSON(data)
 							if(data.status == true){
 									for(var i in data.data ){
+										for(var j in data.data[i] ){
 										var $tr = $('#ticketRow_'+i);
-										$tr.find('.ticketSeries').val(data.data[i].series);
-										$tr.find('.ticketStart').val(data.data[i].endSerial);
-										$tr.find('.ticketEnd').val(data.data[i].endSerial);
+										var series = data.data[i][j].cashDeposit_slip_details_ticketSeries;
+										$tr.find('.ticketSeries').val(parseInt(series).zeroPad(3));
+										$tr.find('.ticketStart').val(data.data[i][j].cashDeposit_slip_details_TicketEndSerial);
+										}
 									}
 								
 							} else{

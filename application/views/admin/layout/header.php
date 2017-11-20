@@ -22,6 +22,8 @@
     <link rel="stylesheet" href="<?php echo base_url() ;?>html/admin/plugins/datatables/dataTables.bootstrap.css">
    
     <link rel="stylesheet" href="<?php echo base_url() ;?>html/admin/dist/css/skins/skin-blue.min.css">
+    <!-- jQuery 2.1.4 -->
+    <script src="<?php echo base_url();?>html/admin/plugins/jQuery/jQuery-2.1.4.min.js"></script>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -49,6 +51,20 @@
 		}
 	</style>
 	<?php } ?>
-	
+	<script>
+	$(document).ready(function(){
+		Number.prototype.zeroPad = function(digits) {
+			  var loop = digits;
+			  var zeros = "";
+			  while (loop) {
+				zeros += "0";
+				loop--;
+			  }
+			  return (this.toString().length > digits) ?
+				this.toString() : (zeros + this).slice(-digits);
+			}
+			
+		});
+	</script>
   </head>
   
