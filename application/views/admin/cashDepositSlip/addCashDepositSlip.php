@@ -165,7 +165,18 @@
 		
      <?php $this->load->view('admin/layout/footer.php');?>
 	 <script>
+	 var newRows={};
 		$(document).ready(function(){
+			function generateEmptyRow(){
+				
+				  $('#ticketdetail').html('');
+				$( "#clonetrticket tr" ).each(function( index ) {
+				  var $curTr = $( this ).clone(true,true);
+				  $('#ticketdetail').append($curTr);
+				});
+			}
+			
+
 			$('#conductorEmpId').change(function(){
 				var conductorId = $('#conductorEmpId').val();
 				if(conductorId){
@@ -176,6 +187,8 @@
 						success: function(data) {
 						data = $.parseJSON(data)
 							if(data.status == true){
+								
+								$('#ticketdetail').html('');
 									for(var i in data.data ){
 										for(var j in data.data[i] ){
 											var $tr = $('#clonetrticket #ticketRow_'+i);
@@ -198,12 +211,12 @@
 								$('.ticketSeries').val('');
 								$('.ticketStart').val('');
 								$('.ticketEnd').val('');
-								$('#ticketdetail').html('');
+								generateEmptyRow();
 							}
 						},
 						error: function() {
 							 alert('No Series  found');
-								$('#ticketdetail').html('');
+								generateEmptyRow();
 						}
 					   });
 					   
