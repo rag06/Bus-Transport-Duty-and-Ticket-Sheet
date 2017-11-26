@@ -145,7 +145,7 @@
 													$innerHTML .=  '<td>'.$actdetails[$key]['bus_timing_DestinationTime'].'</td>';
 													$innerHTML .=  '<td><input type="time" name="actSourceTime[]"  class="form-control input-sm" value="'.$row['conductor_daysslip_details_ActSourceTime'].'"/></td>';
 													$innerHTML .=  '<td><input type="time" name="actDestTime[]"  class="form-control input-sm"  value="'.$row['conductor_daysslip_details_ActDestTime'].'"/></td>';
-													$innerHTML .=  '<td>'.$actdetails[$key]['bus_timing_Kilometers'].'</td>';
+													$innerHTML .=  '<td><input type="hidden" name="km[]"  class="form-control input-sm"/ value="'.$actdetails[$key]['bus_timing_Kilometers'].'">'.$actdetails[$key]['bus_timing_Kilometers'].'</td>';
 													$innerHTML .=  '<td><input type="text" name="actKm[]"  class="form-control input-sm"  value="'.$row['conductor_daysslip_details_ActualKm'].'"/></td>';
 													$innerHTML .=  '<td>
 																		<select name="busIsCancel[]"  class="form-control input-sm">

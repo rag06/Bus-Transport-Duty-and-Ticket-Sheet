@@ -107,7 +107,19 @@ Class DailySlip_Model extends CI_Model {
 	public function getEPKM($date){
 		$cancelReason = array();
 		$data =array();
-		array_push($cancelReason,"Cancel Trip","Driver","Conductor","Workshop","Break Down","Accident","Traffic","Sunday","Route Change","Schedule Sp");
+		array_push($cancelReason,"Driver","Conductor","Workshop","Break Down","Accident","Traffic","Sunday","Route Change","Schedule Sp");
+		
+		$query= "SELECT COUNT(`bus_duty_Id`) AS COUNT ,bus_duty_RouteId  AS DUTY FROM `bus_duty` GROUP BY `bus_duty_RouteId`";
+		
+		$result=$this->db->query($query);
+		$tempcount = $result->result_array();
+		$count = array();
+		foreach($tempcount as $row)
+		{
+			$count[$row['DUTY']]	= $row;
+		}
+		$data['dutycount'] =$count;
+		
 		/********* ALL SCHEDULE KM AND TRIPS PER DUTY***********/
 		$query= "SELECT SUM(`bus_timing_Kilometers`) AS KM, COUNT(bus_timing_Id) AS TRIP ,bus_timing_DutyId  AS DUTY FROM `bus_timing` GROUP BY `bus_timing_DutyId` ORDER BY `bus_timing_DutyId`";
 		
@@ -151,7 +163,7 @@ Class DailySlip_Model extends CI_Model {
 		
 			$cancelCount = array();
 		foreach($cancelReason as $reason){
-			$query= "SELECT SUM(  `conductor_daysslip_details_cancel` ) AS Cancel, conductor_daysSlip_DutyId AS DUTY FROM  `conductor_daysslip_details` c, conductor_daysslip d WHERE c.`conductor_daysslip_details_SlipId` = d.conductor_daysSlip_Id AND conductor_daysslip_date =  '".$date."' AND conductor_daysslip_details_Reason =  '".$reason."' GROUP BY conductor_daysSlip_DutyId";
+			$query= "SELECT SUM(  `conductor_daysslip_details_Diff` ) AS Cancel, conductor_daysSlip_DutyId AS DUTY FROM  `conductor_daysslip_details` c, conductor_daysslip d WHERE c.`conductor_daysslip_details_SlipId` = d.conductor_daysSlip_Id AND conductor_daysslip_date =  '".$date."' AND conductor_daysslip_details_Reason =  '".$reason."' AND conductor_daysslip_details_cancel=1 GROUP BY conductor_daysSlip_DutyId";
 			
 			$result=$this->db->query($query);
 			$tempactual = $result->result_array();
@@ -162,7 +174,7 @@ Class DailySlip_Model extends CI_Model {
 		}
 		
 		$data['cancelCount'] =$cancelCount;
-		
+/* 		echo '<pre>'; print_r($data);die; */
 		return $data;
 		
 	}

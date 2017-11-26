@@ -150,10 +150,10 @@
 										innerHTML +=  '<td>'+data.data[i].bus_timing_DestinationTime+'</td>';
 										innerHTML +=  '<td><input type="time" name="actSourceTime[]"  class="form-control input-sm" value="'+data.data[i].bus_timing_StartTime+'"/></td>';
 										innerHTML +=  '<td><input type="time" name="actDestTime[]"  class="form-control input-sm"/ value="'+data.data[i].bus_timing_DestinationTime+'"></td>';
-										innerHTML +=  '<td>'+data.data[i].bus_timing_Kilometers+'</td>';
+										innerHTML +=  '<td><input type="hidden" name="km[]"  class="form-control input-sm"/ value="'+data.data[i].bus_timing_Kilometers+'">'+data.data[i].bus_timing_Kilometers+'</td>';
 										innerHTML +=  '<td><input type="text" name="actKm[]"  class="form-control input-sm"/></td>';
 										innerHTML +=  '<td><select name="busIsCancel[]"  class="form-control input-sm"><option value="0" selected>No</option><option value="1">Yes</option></select></td>';
-										innerHTML +=  '<td><select name="busIsCancelReason[]"  class="form-control input-sm"><option value="" selected>Select</option><option value="Cancel Trip" >Cancel Trip</option><option value="Driver">Driver</option><option value="Conductor">Conductor</option><option value="Workshop">Workshop</option><option value="Break Down">Break Down</option><option value="Accident">Accident</option><option value="Traffic">Traffic</option><option value="Sunday">Sunday</option><option value="Route Change">Route Change</option><option value="Schedule Sp">Schedule Sp</option></select></td>';
+										innerHTML +=  '<td><select name="busIsCancelReason[]"  class="form-control input-sm"><option value="" selected>Select</option><option value="Driver">Driver</option><option value="Conductor">Conductor</option><option value="Workshop">Workshop</option><option value="Break Down">Break Down</option><option value="Accident">Accident</option><option value="Traffic">Traffic</option><option value="Sunday">Sunday</option><option value="Route Change">Route Change</option><option value="Schedule Sp">Schedule Sp</option></select></td>';
 										innerHTML +=  '<td><textarea name="comments[]"  class="form-control input-sm"></textarea></td>';
 										innerHTML +=  '</tr>';
 									}

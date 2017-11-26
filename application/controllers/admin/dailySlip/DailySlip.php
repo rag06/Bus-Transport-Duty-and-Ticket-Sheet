@@ -97,6 +97,7 @@ class DailySlip extends CI_Controller {
 				'conductor_daysslip_details_ActualKm' => $this->input->post('actKm'),
 				'conductor_daysslip_details_cancel' => $this->input->post('busIsCancel'),
 				'conductor_daysslip_details_Reason' => $this->input->post('busIsCancelReason'),
+				'ScheduleKm' => $this->input->post('km'),
 				'conductor_daysslip_details_comments' => $this->input->post('comments')
 				);
 				$data['details'] = array();
@@ -112,6 +113,10 @@ class DailySlip extends CI_Controller {
 							$temp['conductor_daysslip_details_cancel'] = $tempDetails['conductor_daysslip_details_cancel'][$i];
 							$temp['conductor_daysslip_details_comments'] = $tempDetails['conductor_daysslip_details_comments'][$i];
 							$temp['conductor_daysslip_details_Reason'] = $tempDetails['conductor_daysslip_details_Reason'][$i];
+							if($tempDetails['conductor_daysslip_details_cancel'][$i]){
+								$temp['conductor_daysslip_details_Diff'] = $tempDetails['ScheduleKm'][$i] - $tempDetails['conductor_daysslip_details_ActualKm'][$i];
+							}
+								
 							array_push($data['details'],$temp);
 						}
 					}
@@ -142,7 +147,7 @@ class DailySlip extends CI_Controller {
 		$data['busList'] = $this->bus_model->listBus();
 		$data['cancelReason'] = array();
 		
-		array_push($data['cancelReason'],"Cancel Trip","Driver","Conductor","Workshop","Break Down","Accident","Traffic","Sunday","Route Change","Schedule Sp");
+		array_push($data['cancelReason'],"Driver","Conductor","Workshop","Break Down","Accident","Traffic","Sunday","Route Change","Schedule Sp");
 		
 		$this->load->view('admin/dailySlip/editDailySlip',$data);
 		
@@ -172,6 +177,7 @@ class DailySlip extends CI_Controller {
 				'conductor_daysslip_details_ActualKm' => $this->input->post('actKm'),
 				'conductor_daysslip_details_cancel' => $this->input->post('busIsCancel'),
 				'conductor_daysslip_details_Reason' => $this->input->post('busIsCancelReason'),
+				'ScheduleKm' => $this->input->post('km'),
 				'conductor_daysslip_details_comments' => $this->input->post('comments')
 				);
 				$data['details'] = array();
@@ -189,6 +195,9 @@ class DailySlip extends CI_Controller {
 							$temp['conductor_daysslip_details_cancel'] = $tempDetails['conductor_daysslip_details_cancel'][$i];
 							$temp['conductor_daysslip_details_comments'] = $tempDetails['conductor_daysslip_details_comments'][$i];
 							$temp['conductor_daysslip_details_Reason'] = $tempDetails['conductor_daysslip_details_Reason'][$i];
+							if($tempDetails['conductor_daysslip_details_cancel'][$i]){
+								$temp['conductor_daysslip_details_Diff'] = $tempDetails['ScheduleKm'][$i] - $tempDetails['conductor_daysslip_details_ActualKm'][$i];
+							}
 							array_push($data['details'],$temp);
 						}
 					}
