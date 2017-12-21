@@ -78,9 +78,10 @@
 									</div>
 									<div class="">
 									
-										<div class="form-group col-md-6">
+										<div class="form-group col-md-3">
 										  <label for="driverEmpId">Driver </label>
 										  <select class="form-control select2" id="driverEmpId" name="driverEmpId">
+												<option value="">Select a Driver </option>
 										 <?php 
 												foreach($employees['result'] as $emp){
 													if($emp->Employee_Type == 0){
@@ -98,6 +99,7 @@
 										<div class="form-group col-md-3">
 										  <label for="busNumber ">Bus Number</label>
 										  <select type="text" class="form-control select2" id="busNumber" name="busNumber"  >
+										  <option value="">Select a Bus </option>
 										  <?php 
 												foreach($busList['result'] as $busrow){
 													if($busrow->bus_number == $result[0]['cashDeposit_slip_BusNumber']){
@@ -115,6 +117,10 @@
 										<div class="form-group col-md-3">
 										  <label for="slipDate">Slip Date</label>
 										  <input type="text" class="form-control input-date" id="slipDate" name="slipDate" placeholder="yyyy-mm-dd"  value="<?php echo $result[0]['cashDeposit_slip_Date']; ?>"  readonly>
+										</div>
+										<div class="form-group col-md-3">
+										  <label for="collectedAmount">Collected Amount</label>
+										  <input type="text" class="form-control" id="collectedAmount" name="collectedAmount"   value="<?php echo $result[0]['cashdeposit_slip_CollectedAmount']; ?>" required>
 										</div>
 									</div>
 								</fieldset>
@@ -181,6 +187,20 @@
 													<th colspan="5"></th>
 													<th> <span id="totalQty"><?php echo $grandQty;?></span></th>
 													<th>Rs. <span id="totalAmout"><?php echo $grandTotal;?></span></th>
+												</tr>
+												<tr>
+													<th colspan="5"></th>
+													<th>Extra Amount</th>
+													<th>Rs. <span id="lbl-extraAmount"><?php echo $result[0]['cashdeposit_slip_ExtraAmount']; ?></span>
+														<input type="hidden"  id="extraAmount" name="extraAmount"   value="<?php echo $result[0]['cashdeposit_slip_ExtraAmount']; ?>"  />
+													</th>
+												</tr>
+												<tr>
+													<th colspan="5"></th>
+													<th>Shot Amount</th>
+													<th>Rs. <span id="lbl-shotAmount"><?php echo $result[0]['cashdeposit_slip_ShotAmount']; ?></span>
+														<input type="hidden"  id="shotAmount" name="shotAmount"  value="<?php echo $result[0]['cashdeposit_slip_ShotAmount']; ?>"   />
+													</th>
 												</tr>
 											</tfoot>
 										<table>
@@ -269,6 +289,23 @@
 			});
 
 			$("#totalQty").text(qty); 
+			adjustExtraandShot(sum);
+		}
+		function adjustExtraandShot(sum){
+			var collected = $('#collectedAmount').val();
+			var extra = 0;
+			var shot =0;
+			if((collected - sum) >0 ){
+				extra = (collected - sum);
+			} else{
+				shot = sum - collected  ;
+			}
+			$('#extraAmount').val(extra);
+			$('#shotAmount').val(shot);
+			
+			$('#lbl-extraAmount').text(extra);
+			$('#lbl-shotAmount').text(shot);
+			
 		}
 	 </script>
 	  <script>
@@ -284,8 +321,6 @@
 		  },
 		  routeId: "required",
 		  slipNo: "required",
-		  driverEmpId: "required",
-		  busNumber: "required",
 		  slipDate: {
 			required:true,
 			date: true
@@ -296,8 +331,6 @@
 		  conductorEmpId: "Please select a valid Condutor",
 		  routeId: "Please select a valid  Duty ",
 		  slipNo: "Please enter a valid Waybill Number",
-		  driverEmpId: "Please select a valid Driver",
-		  busNumber: "Please enter a valid Bus Number",
 		  slipDate: "Please enter a valid Slip Date"
 		},
 		// Make sure the form is submitted to the destination defined

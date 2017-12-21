@@ -1,0 +1,3 @@
+ALTER TABLE cashdeposit_slip ADD COLUMN cashdeposit_slip_CollectedAmount decimal(10,2) DEFAULT 0;
+ALTER TABLE cashdeposit_slip ADD COLUMN cashdeposit_slip_ShotAmount decimal(10,2) DEFAULT 0;
+ALTER TABLE cashdeposit_slip ADD COLUMN cashdeposit_slip_ExtraAmount decimal(10,2) DEFAULT 0;

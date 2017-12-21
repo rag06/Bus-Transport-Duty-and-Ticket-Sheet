@@ -26,6 +26,9 @@
 										<td style="border: 1px solid black;">
 										  <label for="slipNo">Waybill Number: </label><?php echo $result[0]['cashDeposit_slip_Number']; ?>
 										</td>
+										<td style="border: 1px solid black;">
+										
+										</td>
 									</tr>
 									<tr class="">
 									
@@ -55,6 +58,9 @@
 										
 										<td style="border: 1px solid black;">
 										  <label for="slipDate">Slip Date: </label><?php echo $result[0]['cashDeposit_slip_Date']; ?>
+										</td>
+										<td style="border: 1px solid black;">
+										  <label for="">Collected Amount : </label><?php echo $result[0]['cashdeposit_slip_CollectedAmount']; ?>
 										</td>
 									</tr>
 									</table>
@@ -95,6 +101,18 @@
 													<th  style="border: 1px solid black;" colspan="4"></th>
 													<th  style="border: 1px solid black;"> <span id="totalQty"><?php echo $grandQty;?></span></th>
 													<th  style="border: 1px solid black;">Rs. <span id="totalAmout"><?php echo $grandTotal;?></span></th>
+												</tr>
+												<tr>
+													<th style="border: 1px solid black;"  colspan="4"></th>
+													<th style="border: 1px solid black;" >Extra Amount</th>
+													<th style="border: 1px solid black;" >Rs. <span id="lbl-extraAmount"><?php echo $result[0]['cashdeposit_slip_ExtraAmount']; ?></span>
+													</th>
+												</tr>
+												<tr>
+													<th style="border: 1px solid black;"  colspan="4"></th>
+													<th style="border: 1px solid black;" >Shot Amount</th>
+													<th style="border: 1px solid black;" >Rs. <span id="lbl-shotAmount"><?php echo $result[0]['cashdeposit_slip_ShotAmount']; ?></span>
+													</th>
 												</tr>
 									</table>
 								

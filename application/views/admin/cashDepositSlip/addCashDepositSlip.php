@@ -68,7 +68,7 @@
 									</div>
 									<div class="">
 									
-										<div class="form-group col-md-6">
+										<div class="form-group col-md-3">
 										  <label for="driverEmpId">Driver </label>
 										  <select class="form-control select2" id="driverEmpId" name="driverEmpId">
 												<option value="">Select a Driver </option>
@@ -96,6 +96,11 @@
 										  <label for="slipDate">Slip Date</label>
 										  <input type="text" class="form-control input-date" id="slipDate" name="slipDate" placeholder="yyyy-mm-dd" value="<?php echo date("Y-m-d");?>">
 										</div>
+										
+										<div class="form-group col-md-3">
+										  <label for="collectedAmount">Collected Amount</label>
+										  <input type="text" class="form-control" id="collectedAmount" name="collectedAmount"  value="0" required>
+										</div>
 									</div>
 								</fieldset>
 								
@@ -121,6 +126,20 @@
 													<th colspan="5"></th>
 													<th> <span id="totalQty">0</span></th>
 													<th>Rs. <span id="totalAmout">0</span></th>
+												</tr>
+												<tr>
+													<th colspan="5"></th>
+													<th>Extra Amount</th>
+													<th>Rs. <span id="lbl-extraAmount">0</span>
+														<input type="hidden"  id="extraAmount" name="extraAmount"  />
+													</th>
+												</tr>
+												<tr>
+													<th colspan="5"></th>
+													<th>Shot Amount</th>
+													<th>Rs. <span id="lbl-shotAmount">0</span>
+														<input type="hidden"  id="shotAmount" name="shotAmount"  />
+													</th>
 												</tr>
 											</tfoot>
 										</table>
@@ -299,6 +318,23 @@
 			});
 
 			$("#totalQty").text(qty); 
+			adjustExtraandShot(sum);
+		}
+		function adjustExtraandShot(sum){
+			var collected = $('#collectedAmount').val();
+			var extra = 0;
+			var shot =0;
+			if((collected - sum) >0 ){
+				extra = (collected - sum);
+			} else{
+				shot = sum - collected  ;
+			}
+			$('#extraAmount').val(extra);
+			$('#shotAmount').val(shot);
+			
+			$('#lbl-extraAmount').text(extra);
+			$('#lbl-shotAmount').text(shot);
+			
 		}
 	 </script>
 	  <script>
@@ -314,8 +350,7 @@
 		  },
 		  routeId: "required",
 		  slipNo: "required",
-		  driverEmpId: "required",
-		  busNumber: "required",
+		  collectedAmount: "required",
 		  slipDate: {
 			required:true,
 			date: true
@@ -326,8 +361,7 @@
 		  conductorEmpId: "Please select a valid Condutor",
 		  routeId: "Please select a valid  Duty ",
 		  slipNo: "Please enter a valid Waybill Number",
-		  driverEmpId: "Please select a valid Driver",
-		  busNumber: "Please enter a valid Bus Number",
+		  collectedAmount: "Please enter a valid  Collected Amount",
 		  slipDate: "Please enter a valid Slip Date"
 		},
 		// Make sure the form is submitted to the destination defined

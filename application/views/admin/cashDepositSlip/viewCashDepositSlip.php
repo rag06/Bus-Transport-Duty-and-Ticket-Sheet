@@ -78,7 +78,7 @@
 									</div>
 									<div class="">
 									
-										<div class="form-group col-md-6">
+										<div class="form-group col-md-3">
 										  <label for="driverEmpId">Driver </label>
 										  <select class="form-control" id="driverEmpId" name="driverEmpId" disabled >
 										 <?php 
@@ -115,6 +115,10 @@
 										<div class="form-group col-md-3">
 										  <label for="slipDate">Slip Date</label>
 										  <input type="text" class="form-control" id="slipDate" name="slipDate" placeholder="yyyy-mm-dd"  value="<?php echo $result[0]['cashDeposit_slip_Date']; ?>" disabled>
+										</div>
+										<div class="form-group col-md-3">
+										  <label for="collectedAmount">Collected Amount</label>
+										  <input type="text" class="form-control" id="collectedAmount" name="collectedAmount"   value="<?php echo $result[0]['cashdeposit_slip_CollectedAmount']; ?>" disabled>
 										</div>
 									</div>
 								</fieldset>
@@ -164,6 +168,20 @@
 													<th colspan="4"></th>
 													<th> <span id="totalQty"><?php echo $grandQty;?></span></th>
 													<th>Rs. <span id="totalAmout"><?php echo $grandTotal;?></span></th>
+												</tr>
+												<tr>
+													<th colspan="4"></th>
+													<th>Extra Amount</th>
+													<th>Rs. <span id="lbl-extraAmount"><?php echo $result[0]['cashdeposit_slip_ExtraAmount']; ?></span>
+														<input type="hidden"  id="extraAmount" name="extraAmount"   value="<?php echo $result[0]['cashdeposit_slip_ExtraAmount']; ?>"  />
+													</th>
+												</tr>
+												<tr>
+													<th colspan="4"></th>
+													<th>Shot Amount</th>
+													<th>Rs. <span id="lbl-shotAmount"><?php echo $result[0]['cashdeposit_slip_ShotAmount']; ?></span>
+														<input type="hidden"  id="shotAmount" name="shotAmount"  value="<?php echo $result[0]['cashdeposit_slip_ShotAmount']; ?>"   />
+													</th>
 												</tr>
 											</tfoot>
 										<table>

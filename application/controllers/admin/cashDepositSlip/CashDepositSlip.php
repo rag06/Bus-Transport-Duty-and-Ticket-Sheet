@@ -67,6 +67,9 @@ class CashDepositSlip extends CI_Controller {
 					'cashDeposit_slip_BusNumber' => $this->input->post('busNumber'),
 					'cashDeposit_slip_DriverEmpId' => $this->input->post('driverEmpId'),
 					'cashDeposit_slip_Date' => $this->input->post('slipDate'),
+					'cashdeposit_slip_CollectedAmount' => $this->input->post('collectedAmount'),
+					'cashdeposit_slip_ShotAmount' => $this->input->post('shotAmount'),
+					'cashdeposit_slip_ExtraAmount' => $this->input->post('extraAmount'),
 					'cashDeposit_slip_AddedDateTime' => date('Y-m-d H:i:s'),
 					'cashDeposit_slip_AddedBy' => $this->session->userdata['logged_in']['id']
 					
@@ -168,6 +171,9 @@ class CashDepositSlip extends CI_Controller {
 					'cashDeposit_slip_BusNumber' => $this->input->post('busNumber'),
 					'cashDeposit_slip_DriverEmpId' => $this->input->post('driverEmpId'),
 					'cashDeposit_slip_Date' => $this->input->post('slipDate'),
+					'cashdeposit_slip_CollectedAmount' => $this->input->post('collectedAmount'),
+					'cashdeposit_slip_ShotAmount' => $this->input->post('shotAmount'),
+					'cashdeposit_slip_ExtraAmount' => $this->input->post('extraAmount'),
 					'cashDeposit_slip_AddedDateTime' => date('Y-m-d H:i:s'),
 					'cashDeposit_slip_AddedBy' => $this->session->userdata['logged_in']['id']
 					
