@@ -368,4 +368,37 @@ class CashDepositSlip extends CI_Controller {
 		echo json_encode($response);
 	}
 	
+	public function downloadcashDepositExtraAandShotReport(){
+			//print_r($_REQUEST); die;
+		//load mPDF library
+		$this->load->library('m_pdf');
+		//now pass the data//
+		$this->data['title']="WaybillSlip";
+		$this->data['description']="Contains Waybillslip";
+		//now pass the data //
+		if(isset($_REQUEST['dateRange']))
+			$daterange = explode(' - ',$_REQUEST['dateRange']);
+		
+		$this->data['result'] = $this->cashdepositslip_model->listCashDepositExtraAandShotReports($_REQUEST['conductorEmpId'],$daterange[0],$daterange[1]);
+		$tempArray=array();
+		$this->data['employees'] = $this->emp_model->listEmployees();
+		foreach($this->data['employees']['result'] as $employees){
+			$tempArray[$employees->Employee_Id] = $employees;
+		}
+		$this->data['employees'] = $tempArray;
+		$html=$this->load->view('admin/cashDepositSlip/pdfCashDepositExtraAandShotReport',$this->data, true);
+		
+		
+		//this the the PDF filename that user will get to download
+		$pdfFilePath ="waybillExtraAandShotReportsCustom-".time()."-download.pdf";
+		 
+		//actually, you can pass mPDF parameter on this load() function
+		$pdf = $this->m_pdf->load();
+		
+		//generate the PDF!
+		$pdf->WriteHTML($html,2);
+		//offer it to user via browser download! (The PDF won't be saved on your server HDD)
+		$pdf->Output($pdfFilePath, "D");
+			
+	}
 }
