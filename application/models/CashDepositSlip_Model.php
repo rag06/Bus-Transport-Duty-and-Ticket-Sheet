@@ -90,11 +90,11 @@ Class CashDepositSlip_Model extends CI_Model {
 		$where = "";
 		$where .= "cashDeposit_slip_Date BETWEEN '".$startDate."' AND '".$endDate."'";
 		if(!empty($condutor))
-			$where .= " AND cashDeposit_slip_ConductorEmpId='".$conductor;
+			$where .= " AND cashDeposit_slip_ConductorEmpId='".$conductor."'";
 		if(!empty($dutyId))
-			$where .= " AND cashDeposit_slip_DutyId='".$dutyId;
+			$where .= " AND cashDeposit_slip_DutyId=".$dutyId ." ";
 		if(!empty($busNumber))
-			$where .= " AND cashDeposit_slip_BusNumber='".$busNumber;
+			$where .= " AND cashDeposit_slip_BusNumber='".$busNumber."'";
 			
 		$this->db->where($where);
 		$this->db->order_by('cashDeposit_slip_Date','desc');
@@ -112,7 +112,7 @@ Class CashDepositSlip_Model extends CI_Model {
 		$where = "";
 		$where .= "cashDeposit_slip_Date BETWEEN '".$startDate."' AND '".$endDate."'";
 		if(!empty($condutor))
-			$where .= " AND cashDeposit_slip_ConductorEmpId='".$conductor;
+			$where .= " AND cashDeposit_slip_ConductorEmpId=".$conductor;
 		$this->db->where($where);
 		$this->db->order_by('cashDeposit_slip_Date','desc');
 		$query = $this->db->get();
