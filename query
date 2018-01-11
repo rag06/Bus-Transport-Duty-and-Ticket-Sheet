@@ -1,0 +1,9 @@
+query
+
+SELECT  `cashDeposit_slip_details_TicketId` , (
+MAX( cashDeposit_slip_details_TicketEndSerial ) - MIN(  `cashDeposit_slip_details_TicketStartSerial` )
+) AS QTY, SUM(
+`cashDeposit_slip_details_CalculatedAmount`
+)
+FROM  `cashdeposit_slip_details` 
+GROUP BY cashDeposit_slip_details_TicketId ,`cashDeposit_slip_details_ticketSeries`
