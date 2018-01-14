@@ -87,47 +87,80 @@
 							</form>
 						  </div><!-- /.box-body -->
 					</div><!--box end-->
-					<div class="box box-primary">
-						<div class="box-header with-border">
-						  <h3 class="box-title">Shot and Extra Earning Reports</h3>
-						</div><!-- /.box-header -->
-						  <div class="box-body">
-							<form class="form" method="post" action="<?php echo base_url();?>admin/cashDepositSlip/cashDepositSlip/downloadcashDepositExtraAandShotReport" >
-								<div class="row">
-								<div class="col-md-6">
-									<div class="form-group">
-									  <label for="conductorEmpId">Conductor</label>
-									  <select class="form-control select2" id="conductorEmpId" name="conductorEmpId">
-											<option value="">Select Conductor Id</option>
-										<?php 
-											foreach($employees['result'] as $emp){
-												if($emp->Employee_Type == 1)
-												 echo '<option value="'.$emp->Employee_Id.'" >'.$emp->Employee_Number.' ( '.$emp->Employee_Name.' )</option>';
-											}
-										?>
-									  </select>
-									</div>
-								</div>
-								<div class="col-md-6">
-								  <!-- Date and time range -->
-								  <div class="form-group">
-									<label>Date range:</label>
+					<div class="clearfix">
+						<div class="col-md-6">
+								<div class="box box-primary">
+									<div class="box-header with-border">
+									  <h3 class="box-title">Shot and Extra Earning Reports</h3>
+									</div><!-- /.box-header -->
+									  <div class="box-body">
+										<form class="form" method="post" action="<?php echo base_url();?>admin/cashDepositSlip/cashDepositSlip/downloadcashDepositExtraAandShotReport" >
+											<div class="">
+											<div class="">
+												<div class="form-group">
+												  <label for="conductorEmpId">Conductor</label>
+												  <select class="form-control select2" id="conductorEmpId" name="conductorEmpId">
+														<option value="">Select Conductor Id</option>
+													<?php 
+														foreach($employees['result'] as $emp){
+															if($emp->Employee_Type == 1)
+															 echo '<option value="'.$emp->Employee_Id.'" >'.$emp->Employee_Number.' ( '.$emp->Employee_Name.' )</option>';
+														}
+													?>
+												  </select>
+												</div>
+											</div>
+											<div class="">
+											  <!-- Date and time range -->
+											  <div class="form-group">
+												<label>Date range:</label>
 
-									<div class="input-group">
-									  <input type="text" name="dateRange" class="btn btn-default pull-right" id="daterange-btn1" placeholder="Select Date Range" required />
-									</div>
-								  </div>
-								  <!-- /.form group -->
-								</div>
-								</div>
-								<div class="row">
-									<div class="col-md-3 pull-right">
-										<input type="submit" class="btn btn-info btn-sm  pull-right" value="Search"/>
-									</div>
-								</div>
-							</form>
-						  </div><!-- /.box-body -->
-					</div><!--box end-->
+												<div class="input-group">
+												  <input type="text" name="dateRange" class="btn btn-default pull-right" id="daterange-btn1" placeholder="Select Date Range" required />
+												</div>
+											  </div>
+											  <!-- /.form group -->
+											</div>
+											</div>
+											<div class="">
+												<div class="col-md-3 pull-right">
+													<input type="submit" class="btn btn-info btn-sm  pull-right" value="Search"/>
+												</div>
+											</div>
+										</form>
+									  </div><!-- /.box-body -->
+								</div><!--box end-->
+							</div>
+							<div class="col-md-6">
+							<div class="box box-primary">
+								<div class="box-header with-border">
+								  <h3 class="box-title">Ticket wise Reports</h3>
+								</div><!-- /.box-header -->
+								  <div class="box-body">
+									<form class="form" method="post" action="<?php echo base_url();?>admin/cashDepositSlip/cashDepositSlip/downloadcashDepositSlipReportByTickets" >
+										<div class="">
+										<div class="col-md-6">
+										  <!-- Date and time range -->
+										  <div class="form-group">
+											<label>Date range:</label>
+
+											<div class="input-group">
+											  <input type="text" name="dateRange" class="btn btn-default pull-right" id="daterange-btn2" placeholder="Select Date Range" required />
+											</div>
+										  </div>
+										  <!-- /.form group -->
+										</div>
+										</div>
+										<div class="row">
+											<div class="col-md-3 pull-right">
+												<input type="submit" class="btn btn-info btn-sm  pull-right" value="Search"/>
+											</div>
+										</div>
+									</form>
+								  </div><!-- /.box-body -->
+							</div><!--box end-->
+						</div>
+					</div>
 			</section><!-- /.content -->
       </div><!-- /.content-wrapper -->
      <?php $this->load->view('admin/layout/footer.php');?>
@@ -153,6 +186,25 @@
 		);
 		//Date range as a button
 		$('#daterange-btn1').daterangepicker(
+			{
+			  ranges: {
+				'Today': [moment(), moment()],
+				'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+				'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+				'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+				'This Month': [moment().startOf('month'), moment().endOf('month')],
+				'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+			  },
+			  format: "YYYY-MM-DD",
+			  startDate: moment().subtract(29, 'days'),
+			  endDate: moment()
+			},
+			function (start, end) {
+			  $('#daterange-btn').val(start.format('YYYY-MM-DD') + ' - ' + end.format('YYYY-MM-DD'));
+			}
+		);
+		//Date range as a button
+		$('#daterange-btn2').daterangepicker(
 			{
 			  ranges: {
 				'Today': [moment(), moment()],

@@ -401,4 +401,47 @@ class CashDepositSlip extends CI_Controller {
 		$pdf->Output($pdfFilePath, "D");
 			
 	}
+	
+	
+	
+	public function downloadcashDepositSlipReportByTickets(){
+			//print_r($_REQUEST); die;
+		//load mPDF library
+		$this->load->library('m_pdf');
+		//now pass the data//
+		$this->data['title']="Sell by Ticket";
+		$this->data['description']="Contains Sell by Ticket";
+		//now pass the data //
+		if(isset($_REQUEST['dateRange']))
+			$daterange = explode(' - ',$_REQUEST['dateRange']);
+		
+		$result = $this->cashdepositslip_model->listCashDepositSlipReportsByTickets($daterange[0],$daterange[1]);
+		$tempTickets=$this->tickets_model->listTickets();
+		$tempArray=array();
+		foreach($tempTickets['result'] as $tickets){
+			$tempArray[$tickets->tickets_Id] = $tickets;
+			$tempArray[$tickets->tickets_Id]->qty = 0;
+			
+		}
+		$this->data['tickets'] = $tempArray;
+		
+		foreach($result as $resultrow){
+			$this->data['tickets'][$resultrow['cashDeposit_slip_details_TicketId']]->qty += $resultrow['QTY']  ;
+		}
+		 //echo "<pre>";print_r($this->data);die;
+		$html=$this->load->view('admin/cashDepositSlip/pdfCashDepositSlipReportByTickets',$this->data, true);
+		
+		
+		//this the the PDF filename that user will get to download
+		$pdfFilePath ="waybillReportsCustomSellByTickets-".time()."-download.pdf";
+		 
+		//actually, you can pass mPDF parameter on this load() function
+		$pdf = $this->m_pdf->load();
+		
+		//generate the PDF!
+		$pdf->WriteHTML($html,2);
+		//offer it to user via browser download! (The PDF won't be saved on your server HDD)
+		$pdf->Output($pdfFilePath, "D");
+			
+	}
 }
