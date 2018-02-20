@@ -90,11 +90,11 @@ Class CashDepositSlip_Model extends CI_Model {
 		$where = "";
 		$where .= "cashDeposit_slip_Date BETWEEN '".$startDate."' AND '".$endDate."'";
 		if(!empty($condutor))
-			$where .= " AND cashDeposit_slip_ConductorEmpId='".$conductor;
+			$where .= " AND cashDeposit_slip_ConductorEmpId='".$conductor."'";
 		if(!empty($dutyId))
-			$where .= " AND cashDeposit_slip_DutyId='".$dutyId;
+			$where .= " AND cashDeposit_slip_DutyId=".$dutyId ." ";
 		if(!empty($busNumber))
-			$where .= " AND cashDeposit_slip_BusNumber='".$busNumber;
+			$where .= " AND cashDeposit_slip_BusNumber='".$busNumber."'";
 			
 		$this->db->where($where);
 		$this->db->order_by('cashDeposit_slip_Date','desc');
@@ -112,7 +112,7 @@ Class CashDepositSlip_Model extends CI_Model {
 		$where = "";
 		$where .= "cashDeposit_slip_Date BETWEEN '".$startDate."' AND '".$endDate."'";
 		if(!empty($condutor))
-			$where .= " AND cashDeposit_slip_ConductorEmpId='".$conductor;
+			$where .= " AND cashDeposit_slip_ConductorEmpId=".$conductor;
 		$this->db->where($where);
 		$this->db->order_by('cashDeposit_slip_Date','desc');
 		$query = $this->db->get();
@@ -155,6 +155,31 @@ Class CashDepositSlip_Model extends CI_Model {
 		
 			return false;
 		
+		
+	}
+	
+	public function listCashDepositSlipReportsByTickets($startDate,$endDate) {
+		
+		$this->db->select('cashDeposit_slip_Id');
+		$this->db->from('cashdeposit_slip');
+		$where = "";
+		$where .= "cashDeposit_slip_Date BETWEEN '".$startDate."' AND '".$endDate."'";
+		$this->db->where($where);
+		$this->db->order_by('cashDeposit_slip_Date','desc');
+		$query = $this->db->get();
+		$slipId = $query->result_array();
+		$actualId = array();
+		foreach($slipId  as $row){
+			array_push($actualId, $row['cashDeposit_slip_Id']);
+		}
+	//	 echo "<pre>";print_r($slipId);die;
+		if( empty($slipId)){
+			echo "No Data Found";die;
+		}
+		$querystring = "SELECT  `cashDeposit_slip_details_TicketId` , (MAX( cashDeposit_slip_details_TicketEndSerial ) - MIN(  `cashDeposit_slip_details_TicketStartSerial` )) AS QTY, SUM(`cashDeposit_slip_details_CalculatedAmount` ), cashDeposit_slip_details_SlipId FROM  `cashdeposit_slip_details` WHERE `cashDeposit_slip_details_SlipId` IN (".implode(",",$actualId).") GROUP BY cashDeposit_slip_details_TicketId ,`cashDeposit_slip_details_ticketSeries` ";
+		$query=$this->db->query($querystring);
+		
+		return $query->result_array();
 		
 	}
 	

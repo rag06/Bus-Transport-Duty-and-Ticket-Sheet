@@ -53,11 +53,11 @@ Class DailySlip_Model extends CI_Model {
 		$where = "";
 		$where .= "conductor_daysslip_date BETWEEN '".$startDate."' AND '".$endDate."'";
 		if(!empty($condutor))
-			$where .= " AND conductor_daysSlip_ConductorEmpId='".$conductor;
+			$where .= " AND conductor_daysSlip_ConductorEmpId=".$conductor;
 		if(!empty($dutyId))
-			$where .= " AND conductor_daysSlip_DutyId='".$dutyId;
+			$where .= " AND conductor_daysSlip_DutyId=".$dutyId;
 		if(!empty($busNumber))
-			$where .= " AND conductor_daysSlip_BusNumber='".$busNumber;
+			$where .= " AND conductor_daysSlip_BusNumber='".$busNumber."'";
 
 		$this->db->where($where);
 		$this->db->order_by('conductor_daysslip_date','desc');
