@@ -1,3 +1,13 @@
 ALTER TABLE cashdeposit_slip ADD COLUMN cashdeposit_slip_CollectedAmount decimal(10,2) DEFAULT 0;
 ALTER TABLE cashdeposit_slip ADD COLUMN cashdeposit_slip_ShotAmount decimal(10,2) DEFAULT 0;
 ALTER TABLE cashdeposit_slip ADD COLUMN cashdeposit_slip_ExtraAmount decimal(10,2) DEFAULT 0;
+
+
+
+SELECT  `cashDeposit_slip_details_TicketId` , (
+MAX( cashDeposit_slip_details_TicketEndSerial ) - MIN(  `cashDeposit_slip_details_TicketStartSerial` )
+) AS QTY, SUM(
+`cashDeposit_slip_details_CalculatedAmount`
+)
+FROM  `cashdeposit_slip_details` 
+GROUP BY cashDeposit_slip_details_TicketId ,`cashDeposit_slip_details_ticketSeries`
